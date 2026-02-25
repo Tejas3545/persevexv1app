@@ -307,8 +307,12 @@ export default function ExploreCoursesPage() {
             <div className="rounded-2xl border border-border bg-card p-5">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">Persevex Advantage</p>
-                <button onClick={() => setShowMore((v) => !v)} className="text-muted-foreground hover:text-foreground transition">
-                  <MoreHorizontal size={16} />
+                <button
+                  onClick={() => setShowMore((v) => !v)}
+                  aria-label={showMore ? "Show fewer benefits" : "Show more benefits"}
+                  className="text-muted-foreground hover:text-foreground transition"
+                >
+                  <MoreHorizontal size={16} aria-hidden="true" />
                 </button>
               </div>
               <p className="text-base font-extrabold tracking-tight mb-3">Outcomes you can verify</p>

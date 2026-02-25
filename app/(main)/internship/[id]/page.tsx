@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, use, Suspense, useCallback, useRef } from "react";
+import ProgressBar from "@/app/components/ProgressBar";
 import {
   Loader2,
   User,
@@ -532,19 +533,10 @@ export default function UserProfile({
                             </button>
                           ) : (
                             <div className="space-y-3">
-                              <div className="w-full h-2 bg-background rounded-full overflow-hidden">
-                                <div
-                                  className="h-full bg-primary/80 transition-all duration-1000 progress-bar-fill"
-                                  style={{
-                                    "--progress-width": `${Math.max(0, Math.min(100, Math.round(progressPercent || 0)))}%`
-                                  } as React.CSSProperties}
-                                  role="progressbar"
-                                  aria-valuenow={Math.round(progressPercent || 0)}
-                                  aria-valuemin={0}
-                                  aria-valuemax={100}
-                                  aria-label="Project completion progress"
-                                ></div>
-                              </div>
+                              <ProgressBar
+                                value={progressPercent}
+                                label="Project completion progress"
+                              />
                               <div className="flex justify-between text-xs text-muted-foreground font-medium">
                                 <span>
                                   {Math.round(progressPercent)}% Complete

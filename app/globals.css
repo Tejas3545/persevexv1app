@@ -197,6 +197,41 @@ h4, h5, h6 {
   to   { transform: rotate(360deg); }
 }
 
+/* ── Orbit animation utility classes ────────────────────── */
+.orbit-container  { width: 420px; height: 420px; }
+.orbit-ring-outer { width: 402px; height: 402px; }
+.orbit-ring-inner { width: 266px; height: 266px; }
+/* .orbit-glow, .orbit-ring-* colors set by scoped <style> per course slug */
+
+.orbit-item {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 46px; height: 46px;
+  margin-top: -23px; margin-left: -23px;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.orbit-item-cw  { animation-name: orbitCW;  animation-duration: 42s; }
+.orbit-item-ccw { animation-name: orbitCCW; animation-duration: 28s; }
+
+.orbit-arm-outer { transform: translateX(178px); }
+.orbit-arm-inner { transform: translateX(110px); }
+
+.orbit-icon {
+  width: 46px; height: 46px;
+  /* background, color, font-size, animation-delay set per slug */
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.orbit-icon-cw  { animation-name: counterOrbitCW;  animation-duration: 42s; }
+.orbit-icon-ccw { animation-name: counterOrbitCCW; animation-duration: 28s; }
+
+.orbit-center {
+  width: 90px; height: 90px;
+  /* background, box-shadow, font-size set per slug */
+  letter-spacing: -0.03em;
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -488,11 +523,6 @@ h4, h5, h6 {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari and Opera */
-}
-
-/* ===== PROGRESS BAR ===== */
-.progress-bar-fill {
-  width: var(--progress-width, 0%);
 }
 
 /* ===== CERTIFICATE SECTION ===== */

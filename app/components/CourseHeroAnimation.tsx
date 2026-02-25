@@ -345,152 +345,89 @@ interface Props {
   slug: string;
 }
 
-const ICON_SIZE = 46;
-const INNER_RADIUS = 110;
-const OUTER_RADIUS = 178;
+function buildOrbitCss(slug: string, data: typeof defaultOrbit): string {
+  const s = `os-${slug.replace(/[^a-z0-9]/gi, "-")}`;
+  const centerCfs = data.center.label.length > 2 ? "18px" : "22px";
+
+  const outerRules = data.outer.map((icon, i) => {
+    const delay = `-${(((i / data.outer.length) * 360) / 360) * 42}s`;
+    const ifs = icon.label.length > 4 ? "9px" : icon.label.length > 3 ? "10px" : "12px";
+    return (
+      `.${s} .oi-cw-${i}{animation-delay:${delay}}` +
+      `.${s} .oi-cw-ic-${i}{background:${icon.bg};color:${icon.textColor ?? "white"};font-size:${ifs};animation-delay:${delay}}`
+    );
+  }).join("");
+
+  const innerRules = data.inner.map((icon, i) => {
+    const delay = `-${(((i / data.inner.length) * 360) / 360) * 28}s`;
+    const ifs = icon.label.length > 4 ? "9px" : icon.label.length > 3 ? "10px" : "12px";
+    return (
+      `.${s} .oi-ccw-${i}{animation-delay:${delay}}` +
+      `.${s} .oi-ccw-ic-${i}{background:${icon.bg};color:${icon.textColor ?? "white"};font-size:${ifs};animation-delay:${delay}}`
+    );
+  }).join("");
+
+  return (
+    `.${s} .orbit-glow{background:radial-gradient(circle at center,${data.center.bg}25 0%,${data.center.bg}08 50%,transparent 75%)}` +
+    `.${s} .orbit-ring-outer{border-color:${data.center.bg}}` +
+    `.${s} .orbit-ring-inner{border-color:${data.center.bg}}` +
+    `.${s} .orbit-center{background:linear-gradient(135deg,${data.center.bg}EE,${data.center.bg}99);` +
+      `box-shadow:0 0 0 8px ${data.center.bg}22,0 0 40px ${data.center.bg}55;font-size:${centerCfs}}` +
+    outerRules +
+    innerRules
+  );
+}
 
 export default function CourseHeroAnimation({ slug }: Props) {
   const data = courseOrbitMap[slug] || defaultOrbit;
-  const containerW = OUTER_RADIUS * 2 + ICON_SIZE + 16;
+  const scope = `os-${slug.replace(/[^a-z0-9]/gi, "-")}`;
+  const css = buildOrbitCss(slug, data);
 
   return (
-    <div
-      className="relative flex items-center justify-center select-none"
-      style={{ width: containerW, height: containerW }}
-      aria-hidden="true"
-    >
-      {/* Radial glow */}
+    <>
+      {/* Scoped dynamic styles — no inline style attributes needed */}
+      <style dangerouslySetInnerHTML={{ __html: css }} />
+
       <div
-        className="absolute inset-0 rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle at center, ${data.center.bg}25 0%, ${data.center.bg}08 50%, transparent 75%)`,
-        }}
-      />
-
-      {/* Outer dashed orbit ring */}
-      <div
-        className="absolute rounded-full border border-dashed opacity-30"
-        style={{
-          width: OUTER_RADIUS * 2 + ICON_SIZE,
-          height: OUTER_RADIUS * 2 + ICON_SIZE,
-          borderColor: data.center.bg,
-        }}
-      />
-
-      {/* Inner dashed orbit ring */}
-      <div
-        className="absolute rounded-full border border-dashed opacity-20"
-        style={{
-          width: INNER_RADIUS * 2 + ICON_SIZE,
-          height: INNER_RADIUS * 2 + ICON_SIZE,
-          borderColor: data.center.bg,
-        }}
-      />
-
-      {/* Outer orbit — each icon orbits independently CW */}
-      {data.outer.map((icon, i) => {
-        const angle = (i / data.outer.length) * 360;
-        const delay = `-${(angle / 360) * 42}s`;
-        return (
-          <div
-            key={`outer-${i}`}
-            className="absolute"
-            style={{
-              top: "50%",
-              left: "50%",
-              width: ICON_SIZE,
-              height: ICON_SIZE,
-              marginTop: -ICON_SIZE / 2,
-              marginLeft: -ICON_SIZE / 2,
-              animationName: "orbitCW",
-              animationDuration: "42s",
-              animationTimingFunction: "linear",
-              animationIterationCount: "infinite",
-              animationDelay: delay,
-            }}
-          >
-            <div style={{ transform: `translateX(${OUTER_RADIUS}px)` }}>
-              <div
-                className="flex items-center justify-center rounded-xl font-bold shadow-md"
-                style={{
-                  width: ICON_SIZE,
-                  height: ICON_SIZE,
-                  background: icon.bg,
-                  color: icon.textColor || "white",
-                  fontSize: icon.label.length > 4 ? "9px" : icon.label.length > 3 ? "10px" : "12px",
-                  animationName: "counterOrbitCW",
-                  animationDuration: "42s",
-                  animationTimingFunction: "linear",
-                  animationIterationCount: "infinite",
-                  animationDelay: delay,
-                }}
-              >
-                {icon.label}
-              </div>
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Inner orbit — each icon orbits independently CCW */}
-      {data.inner.map((icon, i) => {
-        const angle = (i / data.inner.length) * 360;
-        const delay = `-${(angle / 360) * 28}s`;
-        return (
-          <div
-            key={`inner-${i}`}
-            className="absolute"
-            style={{
-              top: "50%",
-              left: "50%",
-              width: ICON_SIZE,
-              height: ICON_SIZE,
-              marginTop: -ICON_SIZE / 2,
-              marginLeft: -ICON_SIZE / 2,
-              animationName: "orbitCCW",
-              animationDuration: "28s",
-              animationTimingFunction: "linear",
-              animationIterationCount: "infinite",
-              animationDelay: delay,
-            }}
-          >
-            <div style={{ transform: `translateX(${INNER_RADIUS}px)` }}>
-              <div
-                className="flex items-center justify-center rounded-xl font-bold shadow-md"
-                style={{
-                  width: ICON_SIZE,
-                  height: ICON_SIZE,
-                  background: icon.bg,
-                  color: icon.textColor || "white",
-                  fontSize: icon.label.length > 4 ? "9px" : icon.label.length > 3 ? "10px" : "12px",
-                  animationName: "counterOrbitCCW",
-                  animationDuration: "28s",
-                  animationTimingFunction: "linear",
-                  animationIterationCount: "infinite",
-                  animationDelay: delay,
-                }}
-              >
-                {icon.label}
-              </div>
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Center circle */}
-      <div
-        className="relative z-10 flex items-center justify-center rounded-full text-white font-black shadow-2xl"
-        style={{
-          width: 90,
-          height: 90,
-          background: `linear-gradient(135deg, ${data.center.bg}EE, ${data.center.bg}99)`,
-          boxShadow: `0 0 0 8px ${data.center.bg}22, 0 0 40px ${data.center.bg}55`,
-          fontSize: data.center.label.length > 2 ? "18px" : "22px",
-          letterSpacing: "-0.03em",
-        }}
+        className={`relative flex items-center justify-center select-none orbit-container ${scope}`}
+        aria-hidden="true"
       >
-        {data.center.label}
+        {/* Radial glow */}
+        <div className="absolute inset-0 rounded-full pointer-events-none orbit-glow" />
+
+        {/* Outer dashed orbit ring */}
+        <div className="absolute rounded-full border border-dashed opacity-30 orbit-ring-outer" />
+
+        {/* Inner dashed orbit ring */}
+        <div className="absolute rounded-full border border-dashed opacity-20 orbit-ring-inner" />
+
+        {/* Outer orbit — CW */}
+        {data.outer.map((icon, i) => (
+          <div key={`outer-${i}`} className={`orbit-item orbit-item-cw oi-cw-${i}`}>
+            <div className="orbit-arm-outer">
+              <div className={`flex items-center justify-center rounded-xl font-bold shadow-md orbit-icon orbit-icon-cw oi-cw-ic-${i}`}>
+                {icon.label}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Inner orbit — CCW */}
+        {data.inner.map((icon, i) => (
+          <div key={`inner-${i}`} className={`orbit-item orbit-item-ccw oi-ccw-${i}`}>
+            <div className="orbit-arm-inner">
+              <div className={`flex items-center justify-center rounded-xl font-bold shadow-md orbit-icon orbit-icon-ccw oi-ccw-ic-${i}`}>
+                {icon.label}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Center circle */}
+        <div className="relative z-10 flex items-center justify-center rounded-full text-white font-black shadow-2xl orbit-center">
+          {data.center.label}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
