@@ -2,8 +2,6 @@
 
 import React, { use, useEffect, useRef } from 'react';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
-import Image from 'next/image';
 import { faqsData } from '@/app/constants/faqsData';
 import { managementCourses } from '@/app/constants/courseConstant';
 import { allDomains, CourseType } from '@/app/constants/courseConstant';
@@ -14,8 +12,10 @@ import CertificationSection from '@/app/components/CertificationSection';
 import TrainingPartners from '@/app/components/TrainingPartners';
 import FrequentlyAskedQuestionsSection from '@/app/components/FrequentlyAskedQuestions';
 import CourseFooterSection from '@/app/components/CourseFooterSection';
+import CourseHeroAnimation from '@/app/components/CourseHeroAnimation';
 import { useCourseScroll } from '../../contexts/courseScrollContext';
 import Link from 'next/link';
+import { Clock, Monitor, FolderOpen, Award } from 'lucide-react';
 
 const managementFooterLinks = [
   {
@@ -82,73 +82,130 @@ export default function CoursePage({ params }: { params: Promise<{ course: strin
   const footerLinksToShow = isManagementCourse ? managementFooterLinks : technicalFooterLinks;
   const courseFaqs = faqsData[course.slug] || [];
 
+  // Derive stats
+  const projectCount = course.projects?.length ?? 4;
+  const totalWeeks = course.modules?.reduce((sum, m) => {
+    const match = m.duration?.match(/(\d+)/);
+    return sum + (match ? parseInt(match[1]) : 2);
+  }, 0) ?? 12;
+  const durationLabel = `${totalWeeks}-Week Program`;
+
   return (
     <main className="relative min-h-screen w-full text-foreground bg-background overflow-x-hidden">
-      
 
-      <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-12 items-center">
-            <div className="flex justify-center items-center order-1 md:order-2">
-              <Image
-                  src={course.image}
-                  alt={course.title}
-                  width={500}
-                  height={500}
-                  className="rounded-lg object-contain w-full h-auto max-w-sm md:max-w-none"
-                  priority
-              />
-            </div>
-            <div className="flex flex-col gap-6 order-2 md:order-1 items-center text-center md:items-start md:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight">
+      {/* Hero Section */}
+      <section className="relative z-10 overflow-hidden">
+        {/* Subtle hero bg tint */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-background to-background dark:from-blue-950/20 dark:via-background dark:to-background pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-center">
+
+            {/* Left: Content */}
+            <div className="flex flex-col gap-5 order-2 lg:order-1 items-center text-center lg:items-start lg:text-left">
+
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-sm font-semibold tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                Most Popular Program
+              </div>
+
+              {/* Title */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-[-0.03em] text-primary leading-[1.05]">
                 {course.title}
               </h1>
-              <div className="w-1/2 h-0.5 bg-card/80" />
-              <p className="text-sm lg:text-lg text-muted-foreground max-w-xl">
+
+              {/* Description */}
+              <p className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
                 {course.large_description}
               </p>
-              <div className="mt-6">
-                <div className="relative w-fit">
-                  <Link href='/fees' className="relative z-10 px-10 py-3 bg-primary rounded-full font-semibold text-lg shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors duration-300">
-                    Enroll Now
-                  </Link>
-                </div>
+
+              {/* Stats row */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-xl mt-1">
+                {[
+                  { icon: <Clock size={16} />, label: "Duration", value: durationLabel },
+                  { icon: <Monitor size={16} />, label: "Format", value: "Expert-Led + LMS" },
+                  { icon: <FolderOpen size={16} />, label: "Projects", value: `${projectCount}+ Live Projects` },
+                  { icon: <Award size={16} />, label: "Certificate", value: "Industry Verified" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="flex flex-col gap-1.5 p-3 rounded-xl bg-card border border-border"
+                  >
+                    <div className="flex items-center gap-1.5 text-primary">
+                      {stat.icon}
+                      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        {stat.label}
+                      </span>
+                    </div>
+                    <p className="text-sm font-bold text-foreground leading-tight">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 mt-2 justify-center lg:justify-start">
+                <Link
+                  href="/fees"
+                  className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold text-base shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all duration-200 hover:scale-[1.02]"
+                >
+                  Enroll Now
+                </Link>
+                <a
+                  href="#curriculum"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="inline-flex items-center gap-2 px-8 py-3 border-2 border-primary text-primary rounded-full font-semibold text-base hover:bg-primary/5 transition-all duration-200"
+                >
+                  View Curriculum →
+                </a>
               </div>
             </div>
+
+            {/* Right: Orbital Animation */}
+            <div className="flex justify-center items-center order-1 lg:order-2">
+              <div className="relative">
+                <CourseHeroAnimation slug={course.slug} />
+              </div>
+            </div>
+
           </div>
         </div>
+      </section>
 
-        <div ref={aboutRef}>
-          <AboutProgramSection course={course} />
+      {/* Remaining sections */}
+      <div id="about" ref={aboutRef}>
+        <AboutProgramSection course={course} />
+      </div>
+
+      {course.modules && course.modules.length > 0 && (
+        <div id="curriculum" ref={curriculumRef}>
+          <CurriculumSection modules={course.modules} />
         </div>
+      )}
 
-        {course.modules && course.modules.length > 0 && (
-          <div ref={curriculumRef}>
-            <CurriculumSection modules={course.modules} />
-          </div>
-        )}
-
-        {course.projects && course.projects.length > 0 && (
-          <div ref={projectsRef}>
-            <ProjectsSection projects={course.projects} />
-          </div>
-        )}
-
-        <div ref={certificationRef}>
-          <CertificationSection />
+      {course.projects && course.projects.length > 0 && (
+        <div ref={projectsRef}>
+          <ProjectsSection projects={course.projects} />
         </div>
+      )}
 
-        <div ref={partnersRef}>
-          <TrainingPartners />
-        </div>
+      <div ref={certificationRef}>
+        <CertificationSection />
+      </div>
 
-        <div ref={faqsRef}>
-          <FrequentlyAskedQuestionsSection faqs={courseFaqs} />
-        </div>
+      <div ref={partnersRef}>
+        <TrainingPartners />
+      </div>
 
-        <div ref={footerRef}>
-          <CourseFooterSection links={footerLinksToShow} />
-        </div>
+      <div ref={faqsRef}>
+        <FrequentlyAskedQuestionsSection faqs={courseFaqs} />
+      </div>
+
+      <div ref={footerRef}>
+        <CourseFooterSection links={footerLinksToShow} />
       </div>
     </main>
   );

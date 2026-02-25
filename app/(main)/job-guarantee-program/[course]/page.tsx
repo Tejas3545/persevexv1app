@@ -1,10 +1,10 @@
 "use client";
 
-import React, { use, useEffect, useRef } from 'react';
+import React, { use, useRef } from 'react';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
-import Image from 'next/image';
+import { Clock, Monitor, FolderOpen, Award } from 'lucide-react';
 import { faqsData } from '@/app/constants/faqsData';
+import CourseHeroAnimation from '@/app/components/CourseHeroAnimation';
 import { managementCourses } from '@/app/constants/courseConstant';
 import { allDomains, CourseType } from '@/app/constants/courseConstant';
 import AboutProgramSection from '@/app/components/AboutProgramSection';
@@ -78,51 +78,88 @@ export default function IndividualJGPCoursePage({ params }: { params: Promise<{ 
     });
   };
 
+  const totalWeeks = course.modules
+    ? course.modules.reduce((sum, m) => {
+        const n = parseInt(m.duration ?? "1");
+        return sum + (isNaN(n) ? 1 : n);
+      }, 0)
+    : 12;
+  const projectCount = course.projects?.length ?? 4;
+
   return (
     <main className="relative min-h-screen w-full text-foreground bg-background overflow-x-hidden">
-      
 
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-12 items-center">
-            <div className="flex justify-center items-center order-1 md:order-2">
-              <Image
-                  src={course.image}
-                  alt={course.title}
-                  width={500}
-                  height={500}
-                  className="rounded-lg object-contain w-full h-auto max-w-sm md:max-w-none"
-                  priority
-              />
-            </div>
-            <div className="flex flex-col gap-6 order-2 md:order-1 items-center text-center md:items-start md:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight">
-                {course.title}
-              </h1>
-              <div className="w-1/2 h-0.5 bg-card/80" />
-              <p className="text-sm lg:text-lg text-muted-foreground max-w-xl">
-                {course.large_description}
-              </p>
-              <div className="mt-6">
-                <div className="relative w-fit">
-                   <button
+        {/* Hero */}
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5 dark:from-primary/10 dark:to-blue-900/10 pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+              {/* Left: text */}
+              <div className="flex flex-col gap-5 items-start text-left">
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  Job Guarantee Program
+                </span>
+                <h1 className="text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] text-primary leading-tight">
+                  {course.title}
+                </h1>
+                <p className="text-base text-muted-foreground max-w-xl leading-relaxed">
+                  {course.large_description}
+                </p>
+
+                {/* Stats row */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mt-1">
+                  {[
+                    { icon: Clock,      label: "Duration",    value: `${totalWeeks} Weeks` },
+                    { icon: Monitor,    label: "Format",      value: "Live + Recorded" },
+                    { icon: FolderOpen, label: "Projects",    value: `${projectCount}+ Real` },
+                    { icon: Award,      label: "Certificate", value: "Verified" },
+                  ].map(({ icon: Icon, label, value }) => (
+                    <div key={label} className="flex flex-col items-center gap-1 rounded-xl bg-secondary/60 border border-border px-3 py-3 text-center">
+                      <Icon size={16} className="text-primary" />
+                      <p className="text-xs text-muted-foreground font-medium">{label}</p>
+                      <p className="text-sm font-bold text-foreground leading-tight">{value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3 mt-2">
+                  <button
                     onClick={handleEnrollClick}
-                    className="relative z-10 px-10 py-3 bg-primary rounded-full font-semibold text-lg shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors duration-300"
+                    className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold text-base shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors duration-300"
                   >
                     Enroll Now
                   </button>
+                  <a
+                    href="#curriculum"
+                    className="px-6 py-3 rounded-full border border-border text-foreground font-semibold text-base hover:border-primary/50 hover:text-primary transition-colors duration-300"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    View Curriculum &rarr;
+                  </a>
                 </div>
               </div>
+
+              {/* Right: orbital animation */}
+              <div className="flex justify-center items-center">
+                <CourseHeroAnimation slug={course.slug} />
+              </div>
+
             </div>
           </div>
         </div>
 
-        <div ref={aboutRef}>
+        <div ref={aboutRef} id="about">
           <AboutProgramSection course={course} />
         </div>
 
         {course.modules && course.modules.length > 0 && (
-          <div ref={curriculumRef}>
+          <div ref={curriculumRef} id="curriculum">
             <CurriculumSection modules={course.modules} />
           </div>
         )}
