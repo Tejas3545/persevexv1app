@@ -121,7 +121,7 @@ const contactOptions = [
     title: "WhatsApp",
     description: "Quick responses on WhatsApp",
     contact: "Chat with us",
-    href: "https://wa.me/917400484725",
+    href: "https://wa.me/918660128339",
     color: "bg-emerald-500/10 text-emerald-500",
   },
 ];

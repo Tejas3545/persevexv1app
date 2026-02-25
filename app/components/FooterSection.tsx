@@ -44,7 +44,7 @@ const socialLinks = [
   { name: "LinkedIn", icon: <FiLinkedin size={18} />, href: "https://www.linkedin.com/company/persevex/" },
   { name: "YouTube", icon: <FiYoutube size={18} />, href: "https://www.youtube.com/@persevex" },
   { name: "X", icon: <FaXTwitter size={18} />, href: "https://twitter.com/persevex" },
-  { name: "WhatsApp", icon: <FaWhatsapp size={18} />, href: "https://wa.me/917400484725" },
+  { name: "WhatsApp", icon: <FaWhatsapp size={18} />, href: "https://wa.me/918660128339" },
 ];
 
 const legalLinks = [

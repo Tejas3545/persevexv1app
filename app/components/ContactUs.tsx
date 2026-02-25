@@ -24,7 +24,7 @@ const contactInfo = [
     icon: <FaWhatsapp size={20} />,
     label: "WhatsApp",
     value: "Chat with us",
-    href: "https://wa.me/917400484725",
+    href: "https://wa.me/918660128339",
     color: "bg-emerald-500/10 text-emerald-500",
   },
   {
@@ -40,7 +40,7 @@ const socialLinks = [
   { icon: <FiInstagram size={18} />, href: "https://www.instagram.com/persevex/", label: "Instagram", color: "hover:bg-pink-500" },
   { icon: <FiLinkedin size={18} />, href: "https://www.linkedin.com/company/persevex/", label: "LinkedIn", color: "hover:bg-[#0077B5]" },
   { icon: <FiYoutube size={18} />, href: "https://www.youtube.com/@persevex", label: "YouTube", color: "hover:bg-red-500" },
-  { icon: <FaWhatsapp size={18} />, href: "https://wa.me/917400484725", label: "WhatsApp", color: "hover:bg-green-500" },
+  { icon: <FaWhatsapp size={18} />, href: "https://wa.me/918660128339", label: "WhatsApp", color: "hover:bg-green-500" },
 ];
 
 export default function ContactUs() {
