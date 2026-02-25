@@ -4,8 +4,8 @@ import Script from "next/script";
 import "./globals.css";
 
 const dmSans = DM_Sans({
-  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-dm-sans",
 });
 
