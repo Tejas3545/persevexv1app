@@ -22,6 +22,9 @@ const OurEdgeSection = dynamic(() => import("./OurEdgeSection"), {
 const PartnersSection = dynamic(() => import("./PartnersSection"), {
   loading: () => <SectionSkeleton />,
 });
+const LmsSection = dynamic(() => import("./LmsSection"), {
+  loading: () => <SectionSkeleton />,
+});
 const Testimonials = dynamic(() => import("./Testimonials"), {
   loading: () => <SectionSkeleton />,
 });
@@ -118,6 +121,9 @@ export default function LandingPage() {
       <div ref={partnersRef}>
         <PartnersSection />
       </div>
+
+      {/* LMS Section */}
+      <LmsSection />
 
       {/* Testimonials */}
       <div ref={testimonialsRef}>
