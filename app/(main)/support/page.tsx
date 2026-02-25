@@ -28,7 +28,7 @@ const supportFaqs = [
       {
         question: "Can I switch courses after enrollment?",
         answer:
-          "Yes, you can switch courses within the first 7 days of enrollment. Please contact our support team at info@persevex.com or call us at +91 74004 84725 to initiate the switch.",
+          "Yes, you can switch courses within the first 7 days of enrollment. Please contact our support team at support@persevex.com or call us at +91 74004 84725 to initiate the switch.",
       },
       {
         question: "Are the courses available online or offline?",
@@ -88,7 +88,7 @@ const supportFaqs = [
       {
         question: "I cannot access the LMS portal. What should I do?",
         answer:
-          "First, try clearing your browser cache and cookies. If the issue persists, try a different browser. If you still cannot access the portal, contact us at info@persevex.com with your enrollment ID.",
+          "First, try clearing your browser cache and cookies. If the issue persists, try a different browser. If you still cannot access the portal, contact us at support@persevex.com with your enrollment ID.",
       },
       {
         question: "How do I reset my LMS password?",
@@ -104,8 +104,8 @@ const contactOptions = [
     icon: <FiMail size={24} />,
     title: "Email Support",
     description: "Get a response within 24 hours",
-    contact: "info@persevex.com",
-    href: "mailto:info@persevex.com",
+    contact: "support@persevex.com",
+    href: "mailto:support@persevex.com",
     color: "bg-blue-500/10 text-blue-500",
   },
   {

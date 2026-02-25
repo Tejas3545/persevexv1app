@@ -92,34 +92,22 @@ export default function AboutUsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ delay: index * 0.15 }}
-              className="group bg-card rounded-2xl border border-border overflow-hidden card-hover"
+              className="group bg-card rounded-2xl border border-border overflow-hidden card-hover p-8"
             >
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden bg-muted">
-                <Image
-                  src={card.imageSrc}
-                  alt={card.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className={`absolute inset-0 bg-linear-to-t ${card.color} opacity-60`} />
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex items-end p-5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
-                      {card.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{card.title}</h3>
-                  </div>
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                  {card.icon}
                 </div>
+                <h3 className="text-xl font-bold text-foreground">
+                  {card.title}
+                </h3>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {card.content}
-                </p>
-              </div>
+              <p className="text-muted-foreground leading-relaxed text-sm">
+                {card.content}
+              </p>
             </motion.div>
           ))}
         </div>

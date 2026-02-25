@@ -104,14 +104,6 @@ export default function OurEdgeSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            className="inline-block text-primary text-sm font-semibold uppercase tracking-wider mb-3"
-          >
-            Why Choose Us
-          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -119,7 +111,7 @@ export default function OurEdgeSection() {
             transition={{ delay: 0.1 }}
             className="section-title text-foreground mb-4"
           >
-            The Persevex <span className="gradient-text-blue">Edge</span>
+            Why Choose <span className="gradient-text-blue">Us?</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

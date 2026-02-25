@@ -107,36 +107,30 @@ export default function CoursesSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.08 }}
                 onClick={() => handleCourseClick(course)}
-                className="group bg-white dark:bg-slate-900 rounded-3xl border border-border overflow-hidden card-hover cursor-pointer"
+                className="group bg-white dark:bg-slate-900 rounded-3xl border border-border overflow-hidden card-hover cursor-pointer flex flex-col"
               >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden bg-muted">
-                  <Image
-                    src={course.image}
-                    alt={course.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute top-3 right-3">
-                    <span className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm text-primary text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
-                      {course.domain}
-                    </span>
+                {/* Icon Header */}
+                <div className="relative p-6 pb-0 flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <course.icon className="w-6 h-6" />
                   </div>
+                  <span className="bg-primary/5 text-primary text-xs font-bold px-3 py-1.5 rounded-full shadow-sm border border-primary/10">
+                    {course.domain}
+                  </span>
                 </div>
 
                 {/* Content */}
-                <div className="p-5">
+                <div className="p-6 pt-4 flex-1 flex flex-col">
                   <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                     {course.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                  <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-1">
                     {course.description}
                   </p>
 
-                  <div className="flex items-center justify-end pt-3 border-t border-border">
-                    <span className="text-primary text-sm font-semibold group-hover:translate-x-1 transition-transform">
-                      View Course →
+                  <div className="flex items-center justify-end pt-4 border-t border-border mt-auto">
+                    <span className="text-primary text-sm font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                      View Course <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                     </span>
                   </div>
                 </div>

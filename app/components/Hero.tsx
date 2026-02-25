@@ -72,13 +72,13 @@ function FloatingParticle({ x, y, size, delay, duration }: {
 }) {
   return (
     <motion.div
-      className="absolute rounded-full bg-primary/20"
+      className="absolute rounded-full bg-primary/40 dark:bg-primary/60 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
       style={{ left: `${x}%`, top: `${y}%`, width: size, height: size }}
       animate={{
-        y: [0, -30, 0],
-        x: [0, 15, 0],
-        opacity: [0.2, 0.6, 0.2],
-        scale: [1, 1.2, 1],
+        y: [0, -40, 0],
+        x: [0, 20, 0],
+        opacity: [0.3, 0.8, 0.3],
+        scale: [1, 1.5, 1],
       }}
       transition={{
         duration,
@@ -99,6 +99,10 @@ const particles = [
   { x: 90, y: 80, size: 4, delay: 2, duration: 3.5 },
   { x: 35, y: 40, size: 9, delay: 0.3, duration: 7 },
   { x: 60, y: 30, size: 5, delay: 1.2, duration: 4 },
+  { x: 15, y: 45, size: 7, delay: 0.7, duration: 5 },
+  { x: 80, y: 40, size: 6, delay: 1.8, duration: 6.5 },
+  { x: 45, y: 15, size: 8, delay: 0.2, duration: 4.8 },
+  { x: 25, y: 85, size: 5, delay: 1.1, duration: 5.2 },
 ];
 
 export default function Hero() {
@@ -107,6 +111,20 @@ export default function Hero() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
@@ -123,26 +141,56 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[95vh] flex items-center bg-slate-50 dark:bg-card overflow-hidden"
+      className="relative min-h-[95vh] flex items-center bg-white dark:bg-[#000000] overflow-hidden"
     >
-      {/* Clean Background Details */}
+      {/* Interactive Premium Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Soft highlight orb */}
+        {/* Mouse following glow */}
         <motion.div
-          className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl"
-          animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.4, 0.3] }}
+          className="absolute w-[800px] h-[800px] rounded-full bg-primary/15 dark:bg-primary/20 blur-[120px] -translate-x-1/2 -translate-y-1/2"
+          animate={{
+            x: mousePosition.x,
+            y: mousePosition.y,
+          }}
+          transition={{ type: "tween", ease: "easeOut", duration: 1.5 }}
+        />
+        
+        {/* Static ambient orbs */}
+        <motion.div
+          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-[120px]"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-purple-500/10 dark:bg-purple-600/15 blur-[120px]"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         />
 
         {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle,#0052cc_1px,transparent_1px)] bg-size-[40px_40px]" />
+        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04] bg-[radial-gradient(circle,#000_1px,transparent_1px)] dark:bg-[radial-gradient(circle,#fff_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-        {/* Animated line */}
+        {/* Glowing Lines */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent"
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         />
+        <motion.div
+          className="absolute top-2/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"
+          animate={{ x: ["100%", "-100%"] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute top-3/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent"
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Floating Particles */}
+        {particles.map((p, i) => (
+          <FloatingParticle key={i} {...p} />
+        ))}
       </div>
 
       <motion.div
@@ -212,7 +260,7 @@ export default function Hero() {
             variants={textVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-2xl mb-8 border border-border bg-white dark:bg-slate-900 rounded-full p-2 flex items-center shadow-sm hover:shadow-md transition-shadow duration-300"
+            className="max-w-2xl mb-8 border border-border bg-white dark:bg-[#0a0a0a] rounded-full p-2 flex items-center shadow-sm hover:shadow-md transition-shadow duration-300"
           >
             <div className="pl-4 text-muted-foreground mr-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -238,16 +286,16 @@ export default function Hero() {
             variants={textVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap items-center gap-4"
           >
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Link href="/enroll" className="btn-aptisure text-base inline-flex items-center gap-2">
+              <Link href="/enroll" className="btn-aptisure text-base inline-flex items-center justify-center gap-2 px-6 py-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 Talk to Career Expert
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Link href="/campus-ambassador" className="btn-outline rounded-full! text-base bg-white dark:bg-slate-900 border-border text-foreground hover:bg-muted">
+              <Link href="/campus-ambassador" className="btn-outline rounded-full! text-base bg-white dark:bg-[#0a0a0a] border-border text-foreground hover:bg-muted px-6 py-3 inline-flex items-center justify-center">
                 Campus Ambassador
               </Link>
             </motion.div>

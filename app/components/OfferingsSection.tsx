@@ -80,7 +80,7 @@ export default function OfferingsSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-50px" }}
                             transition={{ delay: index * 0.15 }}
-                            className="group relative bg-white dark:bg-slate-900 rounded-3xl border border-border p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                            className="group relative bg-white dark:bg-[#0a0a0a] rounded-3xl border border-border p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                         >
                             {/* Icon */}
                             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">

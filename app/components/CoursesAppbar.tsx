@@ -22,42 +22,54 @@ export default function CoursePageNavbar() {
     {
       branch: 'CSE / IT',
       items: [
-        { key: 'c1', name: 'Machine Learning', href: '/courses/machine-learning' },
-        { key: "c2", name: 'Web Development', href: '/courses/web-development' },
-        { key: 'c3', name: 'Artificial Intelligence', href: '/courses/artificial-intelligence' },
-        { key: 'c4', name: 'Cyber Security', href: '/courses/cybersecurity' },
-        { key: 'c5', name: 'Data Science', href: '/courses/data-science' },
+        { key: 'c2', name: 'Full Stack Web Development', href: '/courses/web-development' },
         { key: 'c6', name: 'Cloud Computing', href: '/courses/cloud-computing' },
+        { key: 'c1', name: 'Machine Learning', href: '/courses/machine-learning' },
+        { key: 'c3', name: 'Artificial Intelligence', href: '/courses/artificial-intelligence' },
+        { key: 'c5', name: 'Data Science', href: '/courses/data-science' },
+        { key: 'c4', name: 'Cyber Security', href: '/courses/cybersecurity' },
+        { key: 'c7', name: 'Generative (Gen) AI and Prompt Engineering', href: '/coming-soon' },
       ],
-    },
-    {
-      branch: 'Business & Finance',
-      items: [
-        { key: 'b1', name: 'Finance', href: '/courses/finance' },
-        { key: 'b2', name: 'Digital Marketing', href: '/courses/digital-marketing' },
-        { key: 'b3', name: 'Modern Human Resourse', href: '/courses/human-resource' },
-        { key: 'b4', name: 'Stockmarket & Cryptocurrency', href: '/courses/stock-market-crypto' }
-      ],
-    },
-    {
-      branch: 'ECE / EEE',
-      items: [
-        { key: 'e1', name: 'Embedded Systems', href: '/courses/embedded-systems' },
-        { key: 'e2', name: 'Internet of Things(IOT)', href: '/courses/iot' }
-      ],
-    },
-    {
-      branch: 'Mechanical',
-      items: [
-        { key: 'm1', name: 'AutoCAD: 2D & 3D Design', href: '/courses/autocad ' }
-      ]
     },
     {
       branch: 'Civil',
       items: [
-        { key: 'ci1', name: 'AutoCAD: 2D & 3D Design', href: '/courses/autocad' }
+        { key: 'ci1', name: 'AutoCAD', href: '/courses/autocad' }
       ]
-    }
+    },
+    {
+      branch: 'Mechanical',
+      items: [
+        { key: 'm1', name: 'AutoCAD', href: '/courses/autocad ' },
+        { key: 'm2', name: 'Drone Mechanics', href: '/courses/drone-mechanics' },
+        { key: 'm3', name: 'HEVs', href: '/courses/hev' },
+      ]
+    },
+    {
+      branch: 'Business Law',
+      items: [
+        { key: 'bl1', name: 'Coming Soon', href: '/coming-soon' }
+      ]
+    },
+    {
+      branch: 'Electronics and Electrical',
+      items: [
+        { key: 'e2', name: 'IOT (internet of things)', href: '/courses/iot' },
+        { key: 'e1', name: 'Embedded Systems', href: '/courses/embedded-systems' },
+        { key: 'e3', name: 'VLSI', href: '/courses/vlsi-design' },
+      ],
+    },
+    {
+      branch: 'Management and Commerce',
+      items: [
+        { key: 'b3', name: 'HR', href: '/courses/human-resource' },
+        { key: 'b2', name: 'Digital Marketing', href: '/courses/digital-marketing' },
+        { key: 'b1', name: 'Finance', href: '/courses/finance' },
+        { key: 'b5', name: 'Logistics and Supply Chain', href: '/courses/logistics-supply-chain' },
+        { key: 'b6', name: 'Business Analytics', href: '/courses/business-analytics' },
+        { key: 'b4', name: 'Stock Market and Crypto Currency', href: '/courses/stock-market-crypto' }
+      ],
+    },
   ];
 
   const placementProgramCategories: ProgramCategory[] = [

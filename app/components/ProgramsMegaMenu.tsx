@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 const MotionLink = motion.create(Link);
 
-type ProgramItem = { name: string; href: string };
+type ProgramItem = { key: string; name: string; href: string };
 type ProgramCategory = { branch: string; items: ProgramItem[] };
 
 interface ProgramsMegaMenuProps {
@@ -22,6 +22,7 @@ interface ProgramsMegaMenuProps {
   placementData: ProgramCategory[];
   onClose: () => void;
 }
+
 
 const megaMenuVariants: Variants = {
   hidden: {

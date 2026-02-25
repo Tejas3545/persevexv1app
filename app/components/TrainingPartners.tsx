@@ -4,12 +4,10 @@ import Image from "next/image";
 const partnersList = [
   { src: "/nsdc.png", alt: "NSDC" },
   { src: "/skill.png", alt: "Skill India" },
+  { src: "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/IIT_Guwahati_Logo.svg/1200px-IIT_Guwahati_Logo.svg.png", alt: "IIT Guwahati Alcheringa" },
   { src: "/nsdc.png", alt: "NSDC" },
   { src: "/skill.png", alt: "Skill India" },
-  { src: "/nsdc.png", alt: "NSDC" },
-  { src: "/skill.png", alt: "Skill India" },
-  { src: "/nsdc.png", alt: "NSDC" },
-  { src: "/skill.png", alt: "Skill India" },
+  { src: "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/IIT_Guwahati_Logo.svg/1200px-IIT_Guwahati_Logo.svg.png", alt: "IIT Guwahati Alcheringa" },
 ];
 
 export default function TrainingPartners() {
@@ -43,7 +41,7 @@ export default function TrainingPartners() {
                   alt={partner.alt}
                   width={160}
                   height={80}
-                  className="max-h-[200px] w-auto"
+                  className="max-h-[100px] w-auto object-contain transition-all duration-300"
                 />
               </div>
             ))}
@@ -54,7 +52,7 @@ export default function TrainingPartners() {
                   alt={partner.alt}
                   width={160}
                   height={80}
-                  className="max-h-[200px] w-auto"
+                  className="max-h-[100px] w-auto object-contain transition-all duration-300"
                 />
               </div>
             ))}

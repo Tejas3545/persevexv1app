@@ -44,7 +44,7 @@ const faqs = [
   {
     question: "Can I switch courses after enrollment?",
     answer:
-      "Yes, you can switch courses within the first 7 days of enrollment at no extra charge. After 7 days, a nominal switching fee may apply. Contact our support team at info@persevex.com to initiate a course switch.",
+      "Yes, you can switch courses within the first 7 days of enrollment at no extra charge. After 7 days, a nominal switching fee may apply. Contact our support team at support@persevex.com to initiate a course switch.",
   },
 ];
 
@@ -157,8 +157,8 @@ export default function FaqSection() {
               <FiArrowRight size={14} />
             </Link>
             <a
-              href="mailto:info@persevex.com"
-              className="btn-outline rounded-full text-sm bg-white dark:bg-slate-900 text-foreground border border-border hover:bg-muted"
+              href="mailto:support@persevex.com"
+              className="btn-outline rounded-full text-sm bg-white dark:bg-slate-900 text-foreground border border-border hover:bg-muted px-6 py-3 inline-flex items-center justify-center"
             >
               Email Us
             </a>

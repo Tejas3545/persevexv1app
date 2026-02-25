@@ -108,11 +108,11 @@ export default function FooterSection() {
             {/* Contact Info */}
             <div className="space-y-2 mb-6">
               <a
-                href="mailto:info@persevex.com"
+                href="mailto:support@persevex.com"
                 className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
               >
                 <FiMail size={14} />
-                info@persevex.com
+                support@persevex.com
               </a>
               <a
                 href="tel:+917400484725"

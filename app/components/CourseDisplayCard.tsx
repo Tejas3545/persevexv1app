@@ -17,25 +17,15 @@ const CourseDisplayCard = ({ course }: { course: CourseType }) => {
                        hover:-translate-y-2 hover:scale-[1.02]
                        group cursor-pointer">
             
-            {/* Image Container with Better Aspect Ratio */}
-            <div className="relative w-full h-64 overflow-hidden">
-                <Image 
-                    src={course.cardBg_image} 
-                    alt={course.title} 
-                    fill
-                    className="object-cover transition-all duration-700 
-                              group-hover:scale-105 group-hover:brightness-110"
-                />
-                {/* Subtle Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card/40" />
-                
-                {/* Glowing Border Effect on Hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                               bg-gradient-to-br from-accent/10 via-transparent to-accent/10" />
+            {/* Icon Container */}
+            <div className="relative w-full p-6 pb-0 flex items-center justify-start">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
+                    <Icon className="w-6 h-6" />
+                </div>
             </div>
 
             {/* Content Container */}
-            <div className="relative p-5 space-y-3">
+            <div className="relative p-6 pt-4 space-y-3">
                 {/* Title */}
                 <h3 className="text-lg font-bold text-foreground mb-2 
                                leading-tight tracking-wide

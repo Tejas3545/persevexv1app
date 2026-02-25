@@ -9,8 +9,8 @@ const contactInfo = [
   {
     icon: <FiMail size={20} />,
     label: "Email",
-    value: "info@persevex.com",
-    href: "mailto:info@persevex.com",
+    value: "support@persevex.com",
+    href: "mailto:support@persevex.com",
     color: "bg-blue-500/10 text-blue-500",
   },
   {

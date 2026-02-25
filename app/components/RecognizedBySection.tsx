@@ -90,26 +90,36 @@ export default function RecognizedBySection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-6 mb-12 p-6 bg-gradient-to-r from-primary/5 via-accent to-primary/5 rounded-2xl border border-border"
+          className="flex flex-col items-center justify-center gap-4 mb-12 p-8 bg-gradient-to-r from-primary/5 via-accent to-primary/5 rounded-2xl border border-border text-center"
         >
-          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <FiShield size={18} className="text-primary" />
-            Government Recognized
+          <div className="flex items-center gap-3 text-lg md:text-xl font-bold text-foreground">
+            <FiShield size={24} className="text-primary" />
+            We are an GOVERNMENT AUTHORISED PLATFORM
           </div>
-          <div className="w-px h-5 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <FiAward size={18} className="text-primary" />
-            ISO 9001:2015 Certified
-          </div>
-          <div className="w-px h-5 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <FiShield size={18} className="text-primary" />
-            NSDC & AICTE Approved
-          </div>
-          <div className="w-px h-5 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <FiAward size={18} className="text-primary" />
-            Startup India Recognized
+          <p className="text-muted-foreground max-w-3xl leading-relaxed">
+            If anyone needs any type of clarification kindly go through this Government website and search with <span className="font-bold text-foreground">DIPP206131</span> this number, your doubts will be clarified or you can ask me for further guidance.
+            <br /><br />
+            Go to the LINK Scroll down and select Certificate OF Recognition and then type the NUMBER GIVEN. Thank you.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
+            <a 
+              href="https://www.startupindia.gov.in/content/sih/en/startupgov/validate-startup-recognition.html" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-[#0a0a0a] border border-border text-foreground rounded-full font-semibold hover:bg-muted transition-colors"
+            >
+              <FiShield size={18} />
+              Validate on Startup India
+            </a>
+            <a 
+              href="/DOC-20250722-WA0013.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-colors"
+            >
+              <FiAward size={18} />
+              View Authorization Certificate
+            </a>
           </div>
         </motion.div>
 
@@ -123,9 +133,9 @@ export default function RecognizedBySection() {
               viewport={{ once: true, margin: "-30px" }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-border bg-white hover:border-primary/30 hover:shadow-md transition-all duration-300 group cursor-default"
+              className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-border bg-white dark:bg-[#0a0a0a] hover:border-primary/30 hover:shadow-md transition-all duration-300 group cursor-default"
             >
-              <div className="w-16 h-16 relative grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-300">
+              <div className="w-16 h-16 relative transition-all duration-300">
                 <Image
                   src={rec.logo}
                   alt={rec.name}
@@ -135,11 +145,11 @@ export default function RecognizedBySection() {
                 />
               </div>
               <div className="text-center">
-                <span className="text-xs font-bold text-gray-700 block mb-1">
+                <span className="text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:text-primary transition-colors duration-300 block mb-1">
                   {rec.name}
                 </span>
                 <span
-                  className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${typeColors[rec.type]}`}
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-medium transition-all duration-300 ${typeColors[rec.type]}`}
                 >
                   {rec.type}
                 </span>
