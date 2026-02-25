@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 const hiringPartners = [
   { name: "Accenture", logo: "/Accenture.png" },
   { name: "Amazon", logo: "/amazon.png" },
-  { name: "TCS", logo: "/tcs.png" },
+  { name: "TCS", logo: "/TCS.png" },
   { name: "Infosys", logo: "/infosys.png" },
 ];
 
