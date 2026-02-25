@@ -1,45 +1,9 @@
-import { useState, FormEvent, useRef } from 'react'; 
 import { FAQType } from '../constants/faqsData';
 import AccordionItem from './Framer/AccordianItem';
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAYwB174Qk9X9nJYWIAiRC81NkYJOgLJOjJtu9txvHmeaVlz0HraJdPGfgEQwYRfaToQ/exec"; 
+import Link from 'next/link';
+import { FiArrowRight } from 'react-icons/fi';
 
 export default function FrequentlyAskedQuestionsSection({ faqs }: { faqs: FAQType[] }) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!formRef.current) return;
-    
-    setIsSubmitting(true);
-    
-    const formData = new FormData(formRef.current);
-    const data = Object.fromEntries(formData.entries());
-
-    try {
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      
-      const result = await response.json();
-
-      if (result.result === "success") {
-        alert("Thank you for your question! We will get back to you soon.");
-        formRef.current?.reset();
-      } else {
-        throw new Error(result.message || "An unknown error occurred.");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to send message. Please try again later.";
-      alert(`Error: ${errorMessage}`);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   if (!faqs || faqs.length === 0) {
     return null;
   }
@@ -75,88 +39,22 @@ export default function FrequentlyAskedQuestionsSection({ faqs }: { faqs: FAQTyp
       </div>
 
       <div id="contact-form" className="mt-20 scroll-mt-24">
-        <div className="max-w-5xl mx-auto p-6 sm:p-8 rounded-2xl backdrop-blur-xs border border-border ">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-semibold text-foreground mb-2">
-              Still have questions?
-            </h3>
-            <p className="text-muted-foreground">
-              Our team is here to help you get started on your internship journey.
-            </p>
-          </div>
-
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-muted-foreground mb-2">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
-                  placeholder="Enter your full name"
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-muted-foreground mb-2">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  required
-                  className="w-full px-4 py-3 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
-                  placeholder="Enter your phone number"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-2">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="w-full px-4 py-3 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
-                placeholder="Enter your email address"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-muted-foreground mb-2">
-                Your Message / Question *
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={4}
-                className="w-full px-4 py-3 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none"
-                placeholder="Please describe your question or concern..."
-              />
-            </div>
-
-            <div className="pt-4 flex items-center justify-center">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-primary w-fit px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
-            </div>
-          </form>
-
-          <p className="text-xs text-muted text-center mt-6">
-            We respect your privacy. Your information will only be used to respond to your inquiry.
+        <div className="text-center p-8 bg-secondary/50 rounded-3xl">
+          <h3 className="text-2xl font-semibold text-foreground mb-2">
+            Still have questions?
+          </h3>
+          <p className="text-sm font-medium text-muted-foreground mb-6">
+            Can't find the answer you're looking for? Please chat to our friendly team.
           </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/support"
+              className="btn-primary text-sm inline-flex items-center gap-2 px-6 py-3 rounded-full"
+            >
+              Get in touch
+              <FiArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </div>
     </div>

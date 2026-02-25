@@ -77,30 +77,6 @@ const steps = [
   },
 ];
 
-const ambassadorTestimonials = [
-  {
-    name: "Priya Sharma",
-    college: "Delhi Technological University",
-    quote:
-      "Being a Persevex Campus Ambassador helped me build my personal brand and connect with amazing people. The experience was truly transformative!",
-    image: "/c3.webp",
-  },
-  {
-    name: "Rahul Verma",
-    college: "VIT Vellore",
-    quote:
-      "I earned great incentives and got an internship through Persevex. The ambassador program is a game-changer for students who want real-world experience.",
-    image: "/c2.webp",
-  },
-  {
-    name: "Ananya Singh",
-    college: "BITS Pilani",
-    quote:
-      "The leadership skills I developed as a campus ambassador have been invaluable. I highly recommend this program to every ambitious student.",
-    image: "/c5.webp",
-  },
-];
-
 export default function CampusAmbassadorPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -313,75 +289,6 @@ export default function CampusAmbassadorPage() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {step.description}
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ambassador Testimonials */}
-      <section className="section-padding bg-white dark:bg-slate-900">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <div className="text-center mb-14">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-block text-primary text-sm font-bold uppercase tracking-widest mb-3 bg-primary/10 px-4 py-1.5 rounded-full"
-            >
-              Ambassador Stories
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="section-title text-foreground mb-4"
-            >
-              Hear from Our{" "}
-              <span className="text-primary">Ambassadors</span>
-            </motion.h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {ambassadorTestimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-slate-50 dark:bg-card rounded-3xl border border-border p-8 shadow-sm hover:shadow-md transition-all duration-300"
-              >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <FiStar
-                      key={i}
-                      size={14}
-                      className="text-yellow-400 fill-yellow-400"
-                    />
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6 italic">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                <div className="flex items-center gap-3 pt-4 border-t border-border">
-                  <div className="w-10 h-10 rounded-full bg-accent overflow-hidden shrink-0">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-foreground">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      {testimonial.college}
-                    </p>
-                  </div>
-                </div>
               </motion.div>
             ))}
           </div>

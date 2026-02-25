@@ -143,25 +143,22 @@ export default function FaqSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-12 p-8 bg-white dark:bg-slate-900 rounded-3xl border border-border shadow-sm"
+          className="text-center mt-12 p-8 bg-secondary/50 rounded-3xl"
         >
+          <h3 className="text-2xl font-semibold text-foreground mb-2">
+            Still have questions?
+          </h3>
           <p className="text-sm font-medium text-muted-foreground mb-6">
-            Still have questions? Our support team is here to help.
+            Can't find the answer you're looking for? Please chat to our friendly team.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/support"
-              className="btn-aptisure text-sm inline-flex items-center gap-2"
+              className="btn-primary text-sm inline-flex items-center gap-2 px-6 py-3 rounded-full"
             >
-              Visit Support Center
+              Get in touch
               <FiArrowRight size={14} />
             </Link>
-            <a
-              href="mailto:support@persevex.com"
-              className="btn-outline rounded-full text-sm bg-white dark:bg-slate-900 text-foreground border border-border hover:bg-muted px-6 py-3 inline-flex items-center justify-center"
-            >
-              Email Us
-            </a>
           </div>
         </motion.div>
       </div>

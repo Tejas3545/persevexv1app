@@ -55,6 +55,7 @@ export default function LmsSection() {
                     src={tech.logo}
                     alt={tech.name}
                     fill
+                    sizes="(max-width: 768px) 128px, 160px"
                     className="object-contain"
                   />
                 </div>

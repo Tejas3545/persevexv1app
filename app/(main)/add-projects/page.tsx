@@ -92,10 +92,14 @@ export default function AddProjectPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-muted mb-2">
+              <label
+                htmlFor="slug"
+                className="block text-sm font-medium text-muted mb-2"
+              >
                 Slug (URL Friendly)
               </label>
               <input
+                id="slug"
                 type="text"
                 required
                 value={formData.slug}
@@ -103,21 +107,27 @@ export default function AddProjectPage() {
                   setFormData({ ...formData, slug: e.target.value })
                 }
                 className="w-full p-2 border border-muted rounded focus:ring-2 focus:ring-primary outline-none bg-muted"
+                title="Slug (URL Friendly)"
               />
             </div>
           </div>
 
           {}
           <div>
-            <label className="block text-sm font-medium text-muted mb-2">
+            <label
+              htmlFor="domain"
+              className="block text-sm font-medium text-muted mb-2"
+            >
               Domain
             </label>
             <select
+              id="domain"
               value={formData.domain}
               onChange={(e) =>
                 setFormData({ ...formData, domain: e.target.value })
               }
               className="w-full p-2 border border-muted rounded focus:ring-2 focus:ring-primary outline-none"
+              title="Select Domain"
             >
               <option value="Data Science">Data Science</option>
               <option value="Cybersecurity">Cybersecurity</option>

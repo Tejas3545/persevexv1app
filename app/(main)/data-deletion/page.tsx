@@ -1,6 +1,7 @@
 "use client";
 import React, { Suspense } from "react";
 import Link from "next/link";
+import { Mail, Globe } from "lucide-react";
 
 export default function DataDeletionInstructionsPage() {
   return (
@@ -53,7 +54,9 @@ export default function DataDeletionInstructionsPage() {
 
             <div className="pl-4 border-l-2 border-primary/50 space-y-6 my-6">
               <div>
-                <strong className="text-foreground block text-xl mb-2">📧 Email Request</strong>
+                <strong className="text-foreground flex items-center gap-2 text-xl mb-2">
+                  <Mail className="w-5 h-5 text-primary" /> Email Request
+                </strong>
                 <p className="mb-2">Send an email to: <a href="mailto:support@persevex.com" className="text-primary hover:text-primary/80 underline">support@persevex.com</a></p>
                 <p className="mb-2">Subject line: <strong>“Request for Data Deletion”</strong></p>
                 <p>Include the following:</p>
@@ -69,7 +72,9 @@ export default function DataDeletionInstructionsPage() {
               </div>
 
               <div>
-                <strong className="text-foreground block text-xl mb-2">🌐 Contact Form Submission</strong>
+                <strong className="text-foreground flex items-center gap-2 text-xl mb-2">
+                  <Globe className="w-5 h-5 text-primary" /> Contact Form Submission
+                </strong>
                 <p>Submit your request through our website: <a href="/contact" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline">https://www.persevex.com/contact</a></p>
               </div>
             </div>

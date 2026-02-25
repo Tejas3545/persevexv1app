@@ -42,7 +42,7 @@ function LogoCarousel({ partners }: { partners: typeof hiringPartners }) {
                 alt={partner.name}
                 fill
                 className="object-contain"
-                sizes="144px"
+                sizes="(max-width: 640px) 144px, 176px"
                 onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                   const target = e.currentTarget;
                   target.style.display = 'none';

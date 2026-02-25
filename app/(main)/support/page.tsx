@@ -93,7 +93,7 @@ const supportFaqs = [
       {
         question: "How do I reset my LMS password?",
         answer:
-          "Visit lms.persevex.com and click on 'Forgot Password'. Enter your registered email address and follow the instructions sent to your inbox. If you don't receive the email, check your spam folder.",
+          "Go to the LMS login page and click on 'Forgot Password'. Enter your registered email address and follow the instructions sent to your inbox. If you don't receive the email, check your spam folder.",
       },
     ],
   },

@@ -19,10 +19,7 @@ export default function HeroContent() {
         className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2"
         aria-hidden="true"
       >
-        <h2
-          className="select-none text-[12rem] font-black text-transparent opacity-10 sm:text-[20rem] lg:text-[24rem]"
-          style={{ WebkitTextStroke: "1px rgba(255, 255, 255, 0.3)" }}
-        >
+        <h2 className="select-none text-[12rem] font-black text-transparent opacity-10 sm:text-[20rem] lg:text-[24rem] text-stroke-white-30">
           PERSEVEX
         </h2>
       </div>

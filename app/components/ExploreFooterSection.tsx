@@ -26,7 +26,7 @@ const exploreFooterLinkColumns: FooterColumn[] = [
   {
     title: "Quick Links",
     links: [
-      { text: "LMS", href: "https://lms.persevex.com/login/index.php" },
+      { text: "LMS", href: "/internship" },
       { text: "Blogs", href: "/blogs" },
     ],
   },

@@ -33,11 +33,13 @@ const cardData = [
   },
 ];
 
+import { GraduationCap, Briefcase, Trophy, Star } from "lucide-react";
+
 const stats = [
-  { number: "5000+", label: "Students Enrolled", icon: "👨‍🎓" },
-  { number: "100+", label: "Industry Projects", icon: "💼" },
-  { number: "20+", label: "Expert Mentors", icon: "🏆" },
-  { number: "95%", label: "Success Rate", icon: "⭐" },
+  { number: "5000+", label: "Students Enrolled", icon: <GraduationCap className="w-6 h-6" /> },
+  { number: "100+", label: "Industry Projects", icon: <Briefcase className="w-6 h-6" /> },
+  { number: "20+", label: "Expert Mentors", icon: <Trophy className="w-6 h-6" /> },
+  { number: "95%", label: "Success Rate", icon: <Star className="w-6 h-6" /> },
 ];
 
 const milestones = [
@@ -128,7 +130,7 @@ export default function AboutUsSection() {
               transition={{ delay: index * 0.1 }}
               className="bg-card rounded-2xl border border-border p-6 text-center card-hover"
             >
-              <div className="text-3xl mb-2">{stat.icon}</div>
+              <div className="text-3xl mb-2 flex justify-center text-primary">{stat.icon}</div>
               <div className="text-3xl md:text-4xl font-bold gradient-text-blue mb-2">
                 {stat.number}
               </div>

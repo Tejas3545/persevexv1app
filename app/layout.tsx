@@ -52,6 +52,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "./components/ThemeProvider";
+import ChatWidget from "./components/ChatWidget";
 
 export default function RootLayout({
   children,
@@ -119,6 +120,7 @@ export default function RootLayout({
           </noscript>
 
           {children}
+          <ChatWidget />
         </ThemeProvider>
       </body>
     </html>

@@ -35,7 +35,6 @@ export interface CourseType {
   slug: string;
   image: string;
   large_description: string;
-  cardBg_image: string;
   programCardsHeading?: string[];
   modules?: ModuleType[];
   projects?: ProjectsType[];
@@ -67,7 +66,6 @@ export const managementCourses: CourseType[] = [
     route: "/courses/digital-marketing",
     slug: "digital-marketing",
     image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/digital.webp",
     skillsCovered: [
       "Search Engine Optimization (SEO)",
       "Search Engine Marketing (SEM) with Google Ads",
@@ -224,7 +222,6 @@ export const managementCourses: CourseType[] = [
     route: "/courses/human-resource",
     slug: "human-resource",
     image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/human.webp",
     skillsCovered: [
       "Talent Acquisition & Advanced Interviewing",
       "Employee Onboarding & Lifecycle Management",
@@ -378,7 +375,6 @@ export const managementCourses: CourseType[] = [
     route: "/courses/finance",
     slug: "finance",
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/financepng.webp",
     projects: [
       {
         name: "Financial Modeling",
@@ -514,7 +510,6 @@ export const managementCourses: CourseType[] = [
     route: "/courses/stock-market-crypto",
     slug: "stock-market-crypto",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/stockplanet.webp",
     projects: [
       {
         name: "Equity Research Report",
@@ -652,7 +647,6 @@ export const managementCourses: CourseType[] = [
     icon: Building2,
     route: "/courses/logistics-supply-chain",
     slug: "logistics-supply-chain",
-    cardBg_image: "/lscplanet.png",
     skillsCovered: [
       "Supply Chain Network Design",
       "Inventory Management & Control",
@@ -807,7 +801,6 @@ export const managementCourses: CourseType[] = [
     route: "/courses/business-analytics",
     slug: "business-analytics",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/digital.webp",
     large_description:
       "Business Analytics is the practice of using data, statistical analysis, and quantitative methods to drive business decisions. This course equips you with the skills to collect, process, and analyze business data to uncover insights that drive strategy. You will learn to use tools like Excel, SQL, Power BI, and Python for data analysis. The curriculum covers descriptive, predictive, and prescriptive analytics, along with data visualization and storytelling. By the end, you will be able to translate complex data into actionable business recommendations.",
     programCardsHeading: [
@@ -909,7 +902,6 @@ export const technicalCourses: CourseType[] = [
     route: "/courses/web-development",
     slug: "web-development",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/web.webp",
     skillsCovered: [
       "HTML5, CSS3, & Responsive Design",
       "JavaScript (ES6+) & TypeScript",
@@ -1063,7 +1055,6 @@ export const technicalCourses: CourseType[] = [
     route: "/courses/artificial-intelligence",
     slug: "artificial-intelligence",
     image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/artifi.webp",
     projects: [
       {
         name: "Image Recognition System",
@@ -1207,7 +1198,6 @@ export const technicalCourses: CourseType[] = [
     route: "/courses/machine-learning",
     slug: "machine-learning",
     image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/machine.webp",
     projects: [
       {
         name: "Product Recommendation System",
@@ -1348,7 +1338,6 @@ export const technicalCourses: CourseType[] = [
     route: "/courses/cloud-computing",
     slug: "cloud-computing",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/cloud.webp",
     projects: [
       {
         name: "Deploy a 3-Tier Web Application",
@@ -1484,7 +1473,6 @@ export const technicalCourses: CourseType[] = [
     route: "/courses/cybersecurity",
     slug: "cybersecurity",
     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/cyber.webp",
     projects: [
       {
         name: "Network Security Assessment",
@@ -1624,7 +1612,6 @@ export const technicalCourses: CourseType[] = [
     route: "/courses/data-science",
     slug: "data-science",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/data.webp",
     projects: [
       {
         name: "Customer Segmentation",
@@ -1769,7 +1756,6 @@ export const ElectronicsCourses: CourseType[] = [
     route: "/courses/iot",
     slug: "iot",
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/iotplanet.webp",
     projects: [
       {
         name: "Smart Home Automation",
@@ -1906,7 +1892,6 @@ export const ElectronicsCourses: CourseType[] = [
     route: "/courses/embedded-systems",
     slug: "embedded-systems",
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/embeddedplanet.webp",
     projects: [
       {
         name: "Digital Thermometer with LCD",
@@ -2043,7 +2028,6 @@ export const ElectronicsCourses: CourseType[] = [
   route: "/courses/vlsi-design",
   slug: "vlsi-design",
   image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&auto=format&fit=crop&q=80",
-  cardBg_image: "/vlsiplanet.webp",
   projects: [
     {
       name: "8-bit ALU Design",
@@ -2183,7 +2167,6 @@ export const MechanicalCourses: CourseType[] = [
     route: "/courses/autocad",
     slug: "autocad",
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/autocadplanet.webp",
     projects: [
       {
         name: "Architectural Floor Plan",
@@ -2319,7 +2302,6 @@ export const MechanicalCourses: CourseType[] = [
     route: "/courses/drone-mechanics",
     slug: "drone-mechanics",
     image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/droneplanet.png",
     projects: [
       {
         name: "Quadcopter Frame Assembly",
@@ -2445,7 +2427,6 @@ export const MechanicalCourses: CourseType[] = [
     route: "/courses/hev",
     slug: "hev",
     image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/droneplanet.png",
     large_description:
       "The Hybrid Electric Vehicles (HEVs) course provides a comprehensive understanding of the technology powering the future of transportation. You will explore the fundamental principles of electric motors, battery management systems, regenerative braking, and power electronics. The course covers both hybrid and fully electric vehicle architectures, including series, parallel, and series-parallel configurations. You will also learn about charging infrastructure, vehicle diagnostics, and the environmental impact of electrification. By the end, you will have the knowledge to work in the rapidly growing EV industry.",
     programCardsHeading: [
@@ -2547,7 +2528,6 @@ export const CivilCourses: CourseType[] = [
     route: "/courses/autocad",
     slug: "autocad",
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&auto=format&fit=crop&q=80",
-    cardBg_image: "/autocadplanet.webp",
     projects: [
       {
         name: "Architectural Floor Plan",

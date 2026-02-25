@@ -36,7 +36,7 @@ const companyLinks = [
 const toolLinks = [
   { name: "Resume Builder", href: "https://resumate-create.vercel.app/", external: true },
   { name: "Project Hub", href: "https://projects-hub-platform.vercel.app/", external: true },
-  { name: "LMS Portal", href: "https://lms.persevex.com/login/index.php", external: true },
+  { name: "LMS Portal", href: "/internship", external: false },
 ];
 
 const socialLinks = [
@@ -58,16 +58,16 @@ export default function FooterSection() {
   const { scrollToSection } = useScroll();
 
   return (
-    <footer className="bg-slate-950 text-white border-t border-border" id="footer">
+    <footer className="bg-card text-foreground border-t border-border" id="footer">
       {/* Newsletter Banner */}
-      <div className="border-b border-white/10">
+      <div className="border-b border-border">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-foreground mb-2">
                 Stay Updated with Persevex
               </h3>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-muted-foreground">
                 Get the latest course updates, career tips, and industry insights.
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function FooterSection() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 md:w-72 px-5 py-3 rounded-full bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="flex-1 md:w-72 px-5 py-3 rounded-full bg-secondary border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
               <button className="px-8 py-3 bg-primary text-white rounded-full text-sm font-bold shadow-md hover:shadow-primary/20 hover:-translate-y-0.5 transition-all whitespace-nowrap">
                 Subscribe
@@ -91,15 +91,22 @@ export default function FooterSection() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
               <Image
+                src="/logo.png"
+                alt="Persevex Logo"
+                width={36}
+                height={36}
+                className="rounded-lg dark:hidden"
+              />
+              <Image
                 src="/whitelogo.png"
                 alt="Persevex Logo"
                 width={36}
                 height={36}
-                className="rounded-lg"
+                className="rounded-lg hidden dark:block"
               />
-              <span className="text-xl font-bold tracking-wide">PERSEVEX</span>
+              <span className="text-xl font-bold tracking-wide text-foreground">PERSEVEX</span>
             </Link>
-            <p className="text-sm text-slate-300 leading-relaxed mb-6 max-w-xs">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">
               Empowering the next generation with real-world skills, expert
               mentorship, and career-ready outcomes. Join 5000+ students
               building their future.
@@ -109,19 +116,19 @@ export default function FooterSection() {
             <div className="space-y-2 mb-6">
               <a
                 href="mailto:support@persevex.com"
-                className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <FiMail size={14} />
                 support@persevex.com
               </a>
               <a
                 href="tel:+917400484725"
-                className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <FiPhone size={14} />
                 +91 74004 84725
               </a>
-              <div className="flex items-center gap-2 text-sm text-slate-300">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <FiMapPin size={14} />
                 Greater Noida, UP, India
               </div>
@@ -135,7 +142,7 @@ export default function FooterSection() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-primary transition-colors text-slate-300 hover:text-white"
+                  className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary transition-colors text-muted-foreground hover:text-white"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -146,7 +153,7 @@ export default function FooterSection() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-white">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -154,7 +161,7 @@ export default function FooterSection() {
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.key)}
-                    className="text-sm text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer text-left"
                   >
                     {link.name}
                   </button>
@@ -165,7 +172,7 @@ export default function FooterSection() {
 
           {/* Programs */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-white">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
               Programs
             </h4>
             <ul className="space-y-3">
@@ -173,7 +180,7 @@ export default function FooterSection() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-300 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -184,7 +191,7 @@ export default function FooterSection() {
 
           {/* Company */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-white">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
               Company
             </h4>
             <ul className="space-y-3">
@@ -192,7 +199,7 @@ export default function FooterSection() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-300 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -203,7 +210,7 @@ export default function FooterSection() {
 
           {/* Tools */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-white">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
               Tools
             </h4>
             <ul className="space-y-3">
@@ -213,7 +220,7 @@ export default function FooterSection() {
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-slate-300 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.name}
                   </a>
@@ -223,14 +230,14 @@ export default function FooterSection() {
 
             {/* Recognition badges */}
             <div className="mt-8">
-              <h4 className="text-sm font-bold uppercase tracking-wider mb-4 text-white">
+              <h4 className="text-sm font-bold uppercase tracking-wider mb-4 text-foreground">
                 Recognized By
               </h4>
               <div className="flex flex-wrap gap-2">
                 {["NSDC", "AICTE", "ISO", "MSME"].map((badge) => (
                   <span
                     key={badge}
-                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10 hover:text-white transition-colors cursor-default"
+                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-secondary text-muted-foreground border border-border hover:bg-accent hover:text-foreground transition-colors cursor-default"
                   >
                     {badge}
                   </span>
@@ -241,8 +248,8 @@ export default function FooterSection() {
         </div>
 
         {/* Divider + Copyright */}
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-400">
+        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Persevex. All rights reserved. Empowering careers since 2023.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
@@ -250,7 +257,7 @@ export default function FooterSection() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-xs text-slate-400 hover:text-white transition-colors"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.name}
               </Link>

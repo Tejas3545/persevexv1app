@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use, Suspense, useCallback } from "react";
+import { useEffect, useState, use, Suspense, useCallback, useRef } from "react";
 import {
   Loader2,
   User,
@@ -535,13 +535,15 @@ export default function UserProfile({
                               <div className="w-full h-2 bg-background rounded-full overflow-hidden">
                                 <div
                                   className="h-full bg-primary/80 transition-all duration-1000 progress-bar-fill"
-                                  style={{ '--progress-width': `${Math.max(0, Math.min(100, Math.round(progressPercent || 0)))}%` } as React.CSSProperties}
+                                  style={{
+                                    "--progress-width": `${Math.max(0, Math.min(100, Math.round(progressPercent || 0)))}%`
+                                  } as React.CSSProperties}
                                   role="progressbar"
                                   aria-valuenow={Math.round(progressPercent || 0)}
                                   aria-valuemin={0}
                                   aria-valuemax={100}
                                   aria-label="Project completion progress"
-                                />
+                                ></div>
                               </div>
                               <div className="flex justify-between text-xs text-muted-foreground font-medium">
                                 <span>
@@ -629,7 +631,7 @@ export default function UserProfile({
             </div>
 
             { }
-            <div className="flex-1 p-8 overflow-y-auto custom-scrollbar">
+            <div className="relative flex-1 p-8 overflow-y-auto custom-scrollbar">
               <article className="prose prose-invert prose-primary max-w-none prose-headings:font-bold prose-p:text-muted-foreground prose-strong:text-foreground prose-ul:text-muted-foreground">
                 <ReactMarkdown>{viewingProject.content}</ReactMarkdown>
               </article>

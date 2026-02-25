@@ -446,6 +446,30 @@ body {
   width: var(--progress-width, 0%);
 }
 
+/* ===== CERTIFICATE SECTION ===== */
+.cert-preview-container {
+  height: 320px;
+}
+
+.cert-preview-iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+.cert-modal-wrapper {
+  height: 85vh;
+}
+
+.cert-modal-iframe {
+  border: none;
+  height: calc(85vh - 53px);
+}
+
+.text-stroke-white-30 {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+}
+
 /* ===== PARTNER SCROLL ===== */
 @layer utilities {
   @keyframes infinite-scroll-partners {

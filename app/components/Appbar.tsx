@@ -218,9 +218,7 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3 xl:gap-4">
           <Link
-            href="https://lms.persevex.com/login/index.php"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/internship"
             className="btn-aptisure flex items-center gap-2"
           >
             Persevex LMS <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
@@ -358,9 +356,7 @@ export default function Navbar() {
 
             <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
               <Link
-                href="https://lms.persevex.com/login/index.php"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/internship"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-lg font-semibold text-foreground block"
               >

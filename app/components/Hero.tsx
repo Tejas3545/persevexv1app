@@ -3,6 +3,11 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { 
+  Code2, Database, Cpu, Globe, Layout, Smartphone, 
+  Server, Shield, Terminal, Wifi, Cloud, Blocks,
+  CheckCircle2
+} from "lucide-react";
 
 // Animated counter hook
 function useCounter(end: number, duration: number = 2000) {
@@ -105,6 +110,128 @@ const particles = [
   { x: 25, y: 85, size: 5, delay: 1.1, duration: 5.2 },
 ];
 
+function OrbitIcon({ icon: Icon, color, radius, initialAngle, duration, reverse = false, size = 48 }: any) {
+  return (
+    <motion.div
+      className="absolute left-1/2 top-1/2"
+      initial={{ rotate: initialAngle }}
+      animate={{ rotate: initialAngle + (reverse ? -360 : 360) }}
+      transition={{ duration, repeat: Infinity, ease: "linear" }}
+      style={{ width: radius * 2, height: radius * 2, marginLeft: -radius, marginTop: -radius }}
+    >
+      <motion.div
+        className="absolute flex items-center justify-center"
+        style={{ 
+          width: size, 
+          height: size, 
+          left: '50%', 
+          top: 0, 
+          marginLeft: -size / 2, 
+          marginTop: -size / 2,
+        }}
+        initial={{ rotate: -initialAngle }}
+        animate={{ rotate: -(initialAngle + (reverse ? -360 : 360)) }}
+        transition={{ duration, repeat: Infinity, ease: "linear" }}
+      >
+        {/* Glowing background */}
+        <div className={`absolute inset-0 rounded-full opacity-20 blur-md bg-current ${color}`} />
+        {/* Glassmorphism container */}
+        <div className="relative w-full h-full bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-sm border border-border/50 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
+          <Icon className={`w-1/2 h-1/2 ${color}`} />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function OrbitingAnimation() {
+  return (
+    <div className="relative w-full max-w-[600px] aspect-square flex items-center justify-center mx-auto">
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl" />
+
+      {/* Central Core */}
+      <div className="absolute z-20 flex items-center justify-center">
+        {/* Pulsing rings */}
+        <motion.div 
+          className="absolute w-32 h-32 rounded-full border-2 border-primary/30"
+          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute w-32 h-32 rounded-full border-2 border-primary/20"
+          animate={{ scale: [1, 2, 1], opacity: [0.3, 0, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        />
+        
+        {/* Core Logo */}
+        <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-[0_0_40px_rgba(59,130,246,0.5)]">
+          <div className="absolute inset-1 rounded-full bg-white/10 backdrop-blur-sm" />
+          <span className="relative text-5xl font-bold text-white drop-shadow-lg">P</span>
+        </div>
+      </div>
+
+      {/* SVG Connecting Lines (Static background pattern) */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 dark:opacity-30" viewBox="0 0 600 600">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="currentColor" className="text-primary" stopOpacity="1" />
+            <stop offset="100%" stopColor="currentColor" className="text-primary" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="300" cy="300" r="110" fill="none" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 8" />
+        <circle cx="300" cy="300" r="180" fill="none" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
+        <circle cx="300" cy="300" r="250" fill="none" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 16" />
+        
+        {/* Cross lines */}
+        <line x1="300" y1="50" x2="300" y2="550" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
+        <line x1="50" y1="300" x2="550" y2="300" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
+        <line x1="123" y1="123" x2="477" y2="477" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
+        <line x1="123" y1="477" x2="477" y2="123" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
+      </svg>
+
+      {/* Orbit 1 - Inner */}
+      <motion.div 
+        className="absolute w-[220px] h-[220px] rounded-full border border-primary/20"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      >
+        <div className="absolute top-0 left-1/2 w-32 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent -translate-x-1/2" />
+      </motion.div>
+      <OrbitIcon icon={Code2} color="text-blue-500" radius={110} initialAngle={0} duration={20} size={44} />
+      <OrbitIcon icon={Database} color="text-green-500" radius={110} initialAngle={120} duration={20} size={44} />
+      <OrbitIcon icon={Layout} color="text-purple-500" radius={110} initialAngle={240} duration={20} size={44} />
+
+      {/* Orbit 2 - Middle */}
+      <motion.div 
+        className="absolute w-[360px] h-[360px] rounded-full border border-primary/15"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+      >
+        <div className="absolute bottom-0 left-1/2 w-48 h-[1px] bg-gradient-to-r from-transparent via-blue-400 to-transparent -translate-x-1/2" />
+      </motion.div>
+      <OrbitIcon icon={Globe} color="text-cyan-500" radius={180} initialAngle={45} duration={30} reverse size={52} />
+      <OrbitIcon icon={Smartphone} color="text-pink-500" radius={180} initialAngle={135} duration={30} reverse size={52} />
+      <OrbitIcon icon={Server} color="text-orange-500" radius={180} initialAngle={225} duration={30} reverse size={52} />
+      <OrbitIcon icon={Shield} color="text-red-500" radius={180} initialAngle={315} duration={30} reverse size={52} />
+
+      {/* Orbit 3 - Outer */}
+      <motion.div 
+        className="absolute w-[500px] h-[500px] rounded-full border border-primary/10"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+      >
+        <div className="absolute top-1/2 right-0 w-64 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent -translate-y-1/2 origin-right rotate-90" />
+      </motion.div>
+      <OrbitIcon icon={Terminal} color="text-emerald-500" radius={250} initialAngle={30} duration={40} size={56} />
+      <OrbitIcon icon={Wifi} color="text-indigo-500" radius={250} initialAngle={102} duration={40} size={56} />
+      <OrbitIcon icon={Cloud} color="text-sky-500" radius={250} initialAngle={174} duration={40} size={56} />
+      <OrbitIcon icon={Blocks} color="text-yellow-500" radius={250} initialAngle={246} duration={40} size={56} />
+      <OrbitIcon icon={Cpu} color="text-rose-500" radius={250} initialAngle={318} duration={40} size={56} />
+    </div>
+  );
+}
+
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -197,120 +324,132 @@ export default function Hero() {
         style={{ y, opacity }}
         className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full py-20"
       >
-        <div className="max-w-4xl">
-          {/* Badge */}
-          <motion.div
-            custom={0}
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.span
-              className="inline-flex items-center gap-2 bg-accent text-primary text-sm font-semibold px-4 py-1.5 rounded-full mb-6 border border-border"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-2xl">
+            {/* Badge */}
+            <motion.div
+              custom={0}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
             >
               <motion.span
-                className="w-2 h-2 rounded-full bg-primary"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                className="inline-flex items-center gap-2 bg-accent text-primary text-sm font-semibold px-4 py-1.5 rounded-full mb-6 border border-border"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                <motion.span
+                  className="w-2 h-2 rounded-full bg-primary"
+                  animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                />
+                Empowering Careers Since 2023
+              </motion.span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              custom={1}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="section-title text-foreground mb-6 leading-tight"
+            >
+              Empowering the Next{" "}
+              <br className="hidden md:block" />
+              Generation with{" "}
+              <span className="gradient-text-blue relative">
+                Real-World Skills
+                <motion.span
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-linear-to-r from-primary to-blue-400"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+                />
+              </span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              custom={2}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="section-subtitle mb-10 max-w-xl"
+            >
+              Experience hands-on learning with AI guidance, expert-curated
+              projects, and career-ready outcomes. Join thousands of students
+              building their future with Persevex.
+            </motion.p>
+
+            {/* Aptisure-Style Search Bar */}
+            <motion.div
+              custom={3}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="max-w-xl mb-8 border border-border bg-white dark:bg-[#0a0a0a] rounded-full p-2 flex items-center shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <div className="pl-4 text-muted-foreground mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Search any program (AI, DSA, DevOps...)"
+                className="flex-1 bg-transparent py-2 px-2 text-foreground outline-none text-base placeholder:text-muted-foreground w-full"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    window.location.href = '/explore-courses';
+                  }
+                }}
               />
-              Empowering Careers Since 2023
-            </motion.span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            custom={1}
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            className="section-title text-foreground mb-6 leading-tight"
-          >
-            Empowering the Next{" "}
-            <br className="hidden md:block" />
-            Generation with{" "}
-            <span className="gradient-text-blue relative">
-              Real-World Skills
-              <motion.span
-                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-linear-to-r from-primary to-blue-400"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-              />
-            </span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            custom={2}
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            className="section-subtitle mb-10 max-w-2xl"
-          >
-            Experience hands-on learning with AI guidance, expert-curated
-            projects, and career-ready outcomes. Join thousands of students
-            building their future with Persevex.
-          </motion.p>
-
-          {/* Aptisure-Style Search Bar */}
-          <motion.div
-            custom={3}
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            className="max-w-2xl mb-8 border border-border bg-white dark:bg-[#0a0a0a] rounded-full p-2 flex items-center shadow-sm hover:shadow-md transition-shadow duration-300"
-          >
-            <div className="pl-4 text-muted-foreground mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </div>
-            <input
-              type="text"
-              placeholder="Search any program (AI, DSA, DevOps, Finance...)"
-              className="flex-1 bg-transparent py-2 px-2 text-foreground outline-none text-base placeholder:text-muted-foreground"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  window.location.href = '/explore-courses';
-                }
-              }}
-            />
-            <Link href="/explore-courses" className="btn-aptisure py-3! px-6! mx-1 whitespace-nowrap hidden sm:flex items-center gap-2">
-              Explore <span className="hidden sm:inline">Programs</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-            </Link>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            custom={4}
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-wrap items-center gap-4"
-          >
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Link href="/enroll" className="btn-aptisure text-base inline-flex items-center justify-center gap-2 px-6 py-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                Talk to Career Expert
+              <Link href="/explore-courses" className="btn-aptisure py-3! px-6! mx-1 whitespace-nowrap hidden sm:flex items-center gap-2">
+                Explore <span className="hidden sm:inline">Programs</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Link href="/campus-ambassador" className="btn-outline rounded-full! text-base bg-white dark:bg-[#0a0a0a] border-border text-foreground hover:bg-muted px-6 py-3 inline-flex items-center justify-center">
-                Campus Ambassador
-              </Link>
-            </motion.div>
-          </motion.div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-wrap gap-8 mt-14 pt-8 border-t border-border"
+            {/* CTA Buttons */}
+            <motion.div
+              custom={4}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-wrap items-center gap-4"
+            >
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Link href="/enroll" className="btn-aptisure text-base inline-flex items-center justify-center gap-2 px-6 py-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  Talk to Career Expert
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Link href="/campus-ambassador" className="btn-outline rounded-full! text-base bg-white dark:bg-[#0a0a0a] border-border text-foreground hover:bg-muted px-6 py-3 inline-flex items-center justify-center">
+                  Campus Ambassador
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-wrap gap-8 mt-14 pt-8 border-t border-border"
+            >
+              {stats.map((stat, i) => (
+                <StatCounter key={stat.label} stat={stat} delay={0.7 + i * 0.1} />
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right Column - Orbiting Animation */}
+          <motion.div 
+            className="hidden lg:flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
           >
-            {stats.map((stat, i) => (
-              <StatCounter key={stat.label} stat={stat} delay={0.7 + i * 0.1} />
-            ))}
+            <OrbitingAnimation />
           </motion.div>
         </div>
       </motion.div>
