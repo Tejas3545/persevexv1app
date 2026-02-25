@@ -13,9 +13,6 @@ const OfferingsSection = dynamic(() => import("./OfferingsSection"), {
 const HowWeWorkSection = dynamic(() => import("./HowWeWorkSection"), {
   loading: () => <SectionSkeleton />,
 });
-const CoursesSection = dynamic(() => import("./CoursesSection"), {
-  loading: () => <SectionSkeleton />,
-});
 const OurEdgeSection = dynamic(() => import("./OurEdgeSection"), {
   loading: () => <SectionSkeleton />,
 });
@@ -31,13 +28,7 @@ const Testimonials = dynamic(() => import("./Testimonials"), {
 const RecognizedBySection = dynamic(() => import("./RecognizedBySection"), {
   loading: () => <SectionSkeleton />,
 });
-const AboutUsSection = dynamic(() => import("./AboutUsSection"), {
-  loading: () => <SectionSkeleton />,
-});
 const FaqSection = dynamic(() => import("./FaqSection"), {
-  loading: () => <SectionSkeleton />,
-});
-const ContactUs = dynamic(() => import("./ContactUs"), {
   loading: () => <SectionSkeleton />,
 });
 const FooterSection = dynamic(() => import("./FooterSection"), {
@@ -60,27 +51,21 @@ export default function LandingPage() {
   const { setSectionRefs, scrollToSection } = useScroll();
 
   // Section refs
-  const coursesRef = useRef<HTMLDivElement>(null!);
   const ourEdgeRef = useRef<HTMLDivElement>(null!);
   const partnersRef = useRef<HTMLDivElement>(null!);
   const testimonialsRef = useRef<HTMLDivElement>(null!);
   const recognizedByRef = useRef<HTMLDivElement>(null!);
-  const aboutUsRef = useRef<HTMLDivElement>(null!);
   const faqRef = useRef<HTMLDivElement>(null!);
-  const contactUsRef = useRef<HTMLDivElement>(null!);
   const footerRef = useRef<HTMLDivElement>(null!);
 
   // Register section refs with scroll context
   useEffect(() => {
     setSectionRefs({
-      courses: coursesRef,
       ourEdge: ourEdgeRef,
       partners: partnersRef,
       testimonials: testimonialsRef,
       recognizedBy: recognizedByRef,
-      aboutUs: aboutUsRef,
       faq: faqRef,
-      contactUs: contactUsRef,
       footer: footerRef,
     });
   }, [setSectionRefs]);
@@ -107,10 +92,33 @@ export default function LandingPage() {
       {/* How We Work — 5-step process */}
       <HowWeWorkSection />
 
-      {/* Courses */}
-      <div ref={coursesRef}>
-        <CoursesSection />
-      </div>
+      {/* Explore Programs CTA */}
+      <section className="section-padding bg-slate-50 dark:bg-slate-950">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Programs</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
+            30+ Internship &amp; Certification Programs<br />
+            <span className="gradient-text-blue">across 10+ Domains.</span>
+          </h2>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-8 max-w-xl mx-auto">
+            From Full Stack Development and AI to Digital Marketing and Finance — pick a track, build real projects, and earn a certificate that carries proof.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <a
+              href="/explore-courses"
+              className="btn-aptisure inline-flex items-center gap-2 px-6 py-3 text-sm"
+            >
+              Explore all programs &rarr;
+            </a>
+            <a
+              href="/enroll"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+            >
+              Talk to an advisor
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* Our Edge */}
       <div ref={ourEdgeRef}>
@@ -135,19 +143,9 @@ export default function LandingPage() {
         <RecognizedBySection />
       </div>
 
-      {/* About Us */}
-      <div ref={aboutUsRef}>
-        <AboutUsSection />
-      </div>
-
       {/* FAQ */}
       <div ref={faqRef}>
         <FaqSection />
-      </div>
-
-      {/* Contact Us */}
-      <div ref={contactUsRef}>
-        <ContactUs />
       </div>
 
       {/* Footer */}

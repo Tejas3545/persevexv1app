@@ -20,7 +20,7 @@ const cardData = [
     imageSrc: "/ourstory.png",
     icon: <FiStar size={20} />,
     content:
-      "Founded in 2023, Persevex was born from a simple belief: that perseverance, when guided by the right tools, can unlock limitless possibilities. Through innovation, meaningful experiences and a focus on real-world application, we are committed to making education accessible to everyone, everywhere.",
+      "Founded in 2025, Persevex was born from a simple belief: that perseverance, when guided by the right tools, can unlock limitless possibilities. Through innovation, meaningful experiences and a focus on real-world application, we are committed to making education accessible to everyone, everywhere.",
     color: "from-green-500/20 to-teal-500/20",
   },
   {
@@ -43,8 +43,8 @@ const stats = [
 ];
 
 const milestones = [
-  { year: "2023", event: "Persevex Founded", description: "Started with a vision to democratize quality education" },
-  { year: "2023", event: "First 500 Students", description: "Reached our first milestone of 500 enrolled students" },
+  { year: "2025", event: "Persevex Founded", description: "Started with a vision to democratize quality education" },
+  { year: "2025", event: "First 500 Students", description: "Reached our first milestone of 500 enrolled students" },
   { year: "2024", event: "NSDC Recognition", description: "Received official recognition from NSDC and AICTE" },
   { year: "2024", event: "5000+ Students", description: "Crossed 5000 students across 20+ courses" },
   { year: "2025", event: "Expanding Domains", description: "Launched new domains including Drone Mechanics and HEVs" },

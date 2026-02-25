@@ -250,7 +250,7 @@ export default function FooterSection() {
         {/* Divider + Copyright */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Persevex. All rights reserved. Empowering careers since 2023.
+            © {new Date().getFullYear()} Persevex. All rights reserved. Empowering careers since 2025.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             {legalLinks.map((link) => (

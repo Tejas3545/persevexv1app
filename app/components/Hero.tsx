@@ -254,7 +254,6 @@ export default function Hero() {
   }, []);
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const textVariants = {
     hidden: { opacity: 0, y: 40 },
@@ -321,7 +320,7 @@ export default function Hero() {
       </div>
 
       <motion.div
-        style={{ y, opacity }}
+        style={{ y }}
         className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full py-20"
       >
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -343,7 +342,7 @@ export default function Hero() {
                   animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
-                Empowering Careers Since 2023
+                Empowering Careers Since 2025
               </motion.span>
             </motion.div>
 
@@ -452,27 +451,6 @@ export default function Hero() {
             <OrbitingAnimation />
           </motion.div>
         </div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <span className="text-xs text-muted-foreground">Scroll to explore</span>
-        <motion.div
-          className="w-5 h-8 rounded-full border-2 border-border flex items-start justify-center pt-1.5"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <motion.div
-            className="w-1 h-2 rounded-full bg-primary"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </motion.div>
       </motion.div>
     </section>
   );

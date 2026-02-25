@@ -118,7 +118,7 @@ export default function Navbar() {
   const scrollButtons: { name: string; key: SectionKey }[] = [
     { name: "Why choose us?", key: "ourEdge" },
     { name: "Companies", key: "partners" },
-    { name: "Linkedin Reviews", key: "testimonials" },
+    { name: "Reviews", key: "testimonials" },
   ];
 
   const mobileMenuVariants: Variants = {
