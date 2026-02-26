@@ -797,3 +797,10 @@ h4, h5, h6 {
   border: 2px solid currentColor;
   animation: pulse-ring 1.5s ease-out infinite;
 }
+
+/* Decorative grid pattern used as a subtle background overlay */
+.bg-grid-pattern {
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 40px, currentColor 40px, currentColor 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, currentColor 40px, currentColor 41px);
+}

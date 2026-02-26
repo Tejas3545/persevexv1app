@@ -34,7 +34,7 @@ function LogoCarousel({ partners }: { partners: typeof hiringPartners }) {
         {doubled.map((partner, index) => (
           <div
             key={`${partner.name}-${index}`}
-            className="shrink-0 w-36 sm:w-44 px-6 transition-all duration-300 opacity-60 hover:opacity-100"
+            className="shrink-0 w-36 sm:w-44 px-6 transition-all duration-300 opacity-80 hover:opacity-100"
           >
             <div className="relative h-14 w-full flex items-center justify-center">
               <Image

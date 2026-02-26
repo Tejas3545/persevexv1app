@@ -77,22 +77,21 @@ export default function ExploreFooterSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 bg-card rounded-xl p-2 shadow-xl flex items-center justify-center">
-                  <Image
-                    className="w-full h-full object-contain"
-                    src="/whitelogo.png"
-                    alt="Persevex logo"
-                    height={80}
-                    width={80}
-                  />
-                </div>
-              </div>
-              <div>
-                <h2 className="text-3xl font-serif text-foreground">Persevex</h2>
-                <p className="text-muted-foreground">Empowering careers.</p>
-              </div>
+            <div className="flex items-center mb-4">
+              <Image
+                src="/logo.png"
+                alt="Persevex"
+                width={56}
+                height={56}
+                className="h-14 w-auto object-contain block dark:hidden"
+              />
+              <Image
+                src="/whitelogo.png"
+                alt="Persevex"
+                width={56}
+                height={56}
+                className="h-14 w-auto object-contain hidden dark:block"
+              />
             </div>
             <p className="text-muted-foreground max-w-sm">
               Elevate your career with our cutting-edge courses in financial

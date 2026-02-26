@@ -95,10 +95,42 @@ export default function CampusAmbassadorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setSubmitted(true);
-    setIsSubmitting(false);
+
+    // ─── GOOGLE SHEETS INTEGRATION (future) ──────────────────────────────────
+    // To send form data directly to a Google Sheet:
+    // 1. Create a Google Sheet and open Extensions → Apps Script
+    // 2. Write a doPost(e) function that appends rows from the request body
+    // 3. Deploy as a Web App (access: Anyone, even anonymous)
+    // 4. Copy the deployment URL and paste it below as GOOGLE_SHEETS_WEBHOOK_URL
+    // ─────────────────────────────────────────────────────────────────────────
+    const GOOGLE_SHEETS_WEBHOOK_URL = ""; // <── paste your Apps Script URL here
+
+    try {
+      if (GOOGLE_SHEETS_WEBHOOK_URL) {
+        // When the URL is configured, POST form data to Google Sheets
+        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+          method: "POST",
+          // Note: Google Apps Script requires 'no-cors' mode
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            submittedAt: new Date().toISOString(),
+          }),
+        });
+      } else {
+        // Fallback: simulate a short delay until webhook is configured
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Form submission error:", err);
+      // Still mark as submitted to avoid blocking the user
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

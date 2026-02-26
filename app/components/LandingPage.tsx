@@ -28,6 +28,9 @@ const Testimonials = dynamic(() => import("./Testimonials"), {
 const RecognizedBySection = dynamic(() => import("./RecognizedBySection"), {
   loading: () => <SectionSkeleton />,
 });
+const JobPortalSection = dynamic(() => import("./JobPortalSection"), {
+  loading: () => <SectionSkeleton />,
+});
 const FaqSection = dynamic(() => import("./FaqSection"), {
   loading: () => <SectionSkeleton />,
 });
@@ -142,6 +145,9 @@ export default function LandingPage() {
       <div ref={recognizedByRef}>
         <RecognizedBySection />
       </div>
+
+      {/* Job Portal */}
+      <JobPortalSection />
 
       {/* FAQ */}
       <div ref={faqRef}>

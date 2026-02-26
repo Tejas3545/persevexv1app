@@ -48,7 +48,7 @@ export default function LmsSection() {
             {[...techLogos, ...techLogos, ...techLogos].map((tech, index) => (
               <div
                 key={`${tech.name}-${index}`}
-                className="mx-8 md:mx-12 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300"
+                className="mx-8 md:mx-12 flex items-center justify-center opacity-85 hover:opacity-100 transition-opacity duration-300"
               >
                 <div className="relative h-12 w-32 md:h-16 md:w-40">
                   <Image

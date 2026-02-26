@@ -27,27 +27,10 @@ type PricingPlan = {
 
 const pricingPlans: PricingPlan[] = [
   {
-    title: "Self Paced",
-    price: "5000",
+    title: "Foundation",
+    price: "5500",
     color: "cyan",
     paymentLink: "https://payments.cashfree.com/forms/PERSEVE_REGISTRATION",
-    features: [
-      { text: "Recorded Lectures", included: true },
-      { text: "Real Time Projects", included: true },
-      { text: "4+ Hrs of Live Sessions", included: true },
-      { text: "One On One Doubt Sessions", included: true },
-      { text: "Certifications", included: true },
-      { text: "Mentor Support", included: false },
-      { text: "Placement Guidance", included: false },
-      { text: "Interview Assistance", included: false },
-    ],
-    popular: false,
-  },
-  {
-    title: "Mentor Led",
-    price: "9000",
-    color: "lime",
-    paymentLink: "https://payments.cashfree.com/forms/ADVANCE_REGS",
     features: [
       { text: "Recorded Lectures", included: true },
       { text: "Real Time Projects", included: true },
@@ -55,16 +38,18 @@ const pricingPlans: PricingPlan[] = [
       { text: "One On One Doubt Sessions", included: true },
       { text: "Certifications", included: true },
       { text: "Mentor Support", included: true },
-      { text: "Placement Guidance", included: false },
+      { text: "Resume Builder", included: false },
+      { text: "ATS Checker", included: false },
+      { text: "Placement Support", included: false },
       { text: "Interview Assistance", included: false },
     ],
-    popular: true,
+    popular: false,
   },
   {
-    title: "Advance",
-    price: "13000",
-    color: "orange",
-    paymentLink: "https://payments.cashfree.com/forms/ADV_REGS",
+    title: "Advanced",
+    price: "7500",
+    color: "lime",
+    paymentLink: "https://payments.cashfree.com/forms/ADVANCE_REGS",
     features: [
       { text: "Recorded Lectures", included: true },
       { text: "Real Time Projects", included: true },
@@ -72,10 +57,12 @@ const pricingPlans: PricingPlan[] = [
       { text: "One On One Doubt Sessions", included: true },
       { text: "Certifications", included: true },
       { text: "Mentor Support", included: true },
-      { text: "Placement Guidance", included: true },
+      { text: "Resume Builder", included: true },
+      { text: "ATS Checker", included: true },
+      { text: "Placement Support", included: true },
       { text: "Interview Assistance", included: true },
     ],
-    popular: false,
+    popular: true,
   },
 ];
 
@@ -254,7 +241,7 @@ export default function FeesPage() {
             We offer a range of flexible plans designed to fit your learning
             style and career goals.
           </motion.p>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-4xl">
             {pricingPlans.map((plan, index) => (
               <PricingCard key={plan.title} plan={plan} index={index} />
             ))}

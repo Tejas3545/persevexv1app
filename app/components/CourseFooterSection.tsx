@@ -56,22 +56,24 @@ export default function CourseFooterSection({ links }: { links: FooterLinkColumn
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
           <div className="flex items-start gap-6 w-full">
-            <div className="flex-shrink-0">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-card rounded-xl p-2 shadow-lg flex items-center justify-center">
-                <Image
-                  className="w-full h-full object-contain"
-                  src='/whitelogo.png'
-                  alt="Persevex logo"
-                  height={80}
-                  width={80}
-                />
-              </div>
+            <div className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Persevex"
+                width={56}
+                height={56}
+                className="h-14 w-auto object-contain block dark:hidden"
+              />
+              <Image
+                src="/whitelogo.png"
+                alt="Persevex"
+                width={56}
+                height={56}
+                className="h-14 w-auto object-contain hidden dark:block"
+              />
             </div>
 
             <div className="flex flex-col justify-center min-h-[4rem] md:min-h-[5rem]">
-              <h2 className="text-3xl md:text-4xl font-serif text-muted-foreground leading-tight">
-                Persevex
-              </h2>
               <p className="mt-2 text-muted-foreground leading-relaxed">
                 Empowering careers through practical education.
               </p>

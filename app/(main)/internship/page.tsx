@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Lock, CheckCircle2, ArrowUpRight, Sparkles } from "lucide-react";
 import Link from "next/link";
@@ -21,6 +21,18 @@ export default function UserLoginPage() {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [college, setCollege] = useState("");
+
+  // ─── COOKIE / TOKEN BYPASS LOGIC ─────────────────────────────────────────
+  // Every time the LMS page loads, check for an existing auth token.
+  // If a token is present, the user has already registered/logged in before.
+  // Skip the form entirely and redirect them straight to the LMS.
+  // ─────────────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const lmsToken = localStorage.getItem("persevex_lms_token");
+    if (lmsToken) {
+      window.location.href = "https://persevex.com/login/index.php";
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,12 +63,29 @@ export default function UserLoginPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate registration delay
-    setTimeout(() => {
+
+    try {
+      // ─── STORE AUTH TOKEN ──────────────────────────────────────────────────
+      // Set a persistent token in localStorage so returning users bypass this
+      // registration form and are sent directly to the LMS on their next visit.
+      // ──────────────────────────────────────────────────────────────────────
+      const tokenData = {
+        email,
+        name: fullName,
+        plan,
+        payment,
+        registeredAt: new Date().toISOString(),
+      };
+      localStorage.setItem("persevex_lms_token", JSON.stringify(tokenData));
+
+      // ─── REDIRECT TO LMS ───────────────────────────────────────────────────
+      // Immediately redirect to the Persevex LMS login page after registration.
+      // ──────────────────────────────────────────────────────────────────────
+      window.location.href = "https://persevex.com/login/index.php";
+    } catch (err) {
+      console.error("Registration error:", err);
       setLoading(false);
-      // In a real app, this would call a registration API
-      alert("Registration functionality to be implemented");
-    }, 1000);
+    }
   };
 
   return (
@@ -160,7 +189,7 @@ export default function UserLoginPage() {
                       onClick={() => setPayment('reserve')}
                     >
                       <div className="font-semibold mb-1">Reserve seat</div>
-                      <div className={`text-sm ${payment === 'reserve' ? 'text-primary-foreground/90' : 'text-muted-foreground'}`}>₹1000 now</div>
+                      <div className={`text-sm ${payment === 'reserve' ? 'text-primary-foreground/90' : 'text-muted-foreground'}`}>₹1,500 now</div>
                     </div>
                     <div 
                       className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${payment === 'full' ? 'border-primary bg-primary text-primary-foreground' : 'border-border hover:border-primary/50 bg-background'}`} 
@@ -207,7 +236,7 @@ export default function UserLoginPage() {
                     disabled={loading}
                     className="w-full py-3.5 bg-[#4F81FF] hover:bg-[#3b6ceb] text-white font-semibold rounded-xl transition-all shadow-md flex justify-center items-center gap-2"
                   >
-                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : `Pay ${payment === 'reserve' ? '₹1,000 • Reserve seat' : `₹${plan === 'advanced' ? '4,500' : '3,500'} • Pay in full`}`}
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : `Pay ${payment === 'reserve' ? '₹1,500 • Reserve seat' : `₹${plan === 'advanced' ? '4,500' : '3,500'} • Pay in full`}`}
                   </button>
                   <p className="text-xs text-muted-foreground font-medium">Secure checkout • Instant access</p>
                 </div>

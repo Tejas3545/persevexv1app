@@ -89,22 +89,21 @@ export default function FooterSection() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
-            <Link href="/" className="flex items-center gap-2.5 mb-4">
+            <Link href="/" className="mb-4 inline-flex">
               <Image
                 src="/logo.png"
-                alt="Persevex Logo"
-                width={36}
-                height={36}
-                className="rounded-lg dark:hidden"
+                alt="Persevex"
+                width={48}
+                height={48}
+                className="h-12 w-auto object-contain block dark:hidden"
               />
               <Image
                 src="/whitelogo.png"
-                alt="Persevex Logo"
-                width={36}
-                height={36}
-                className="rounded-lg hidden dark:block"
+                alt="Persevex"
+                width={48}
+                height={48}
+                className="h-12 w-auto object-contain hidden dark:block"
               />
-              <span className="text-xl font-bold tracking-wide text-foreground">PERSEVEX</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">
               Empowering the next generation with real-world skills, expert

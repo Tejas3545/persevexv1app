@@ -115,11 +115,8 @@ export default function Navbar() {
     },
   ];
 
-  const scrollButtons: { name: string; key: SectionKey }[] = [
-    { name: "Why choose us?", key: "ourEdge" },
-    { name: "Companies", key: "partners" },
-    { name: "Reviews", key: "testimonials" },
-  ];
+  // Dedicated page navigation links (replaces old scrollTo architecture)
+  // Each section is now reachable as its own standalone page.
 
   const mobileMenuVariants: Variants = {
     hidden: { opacity: 0, x: "100%", transition: { duration: 0.3, ease: "easeOut" } },
@@ -149,20 +146,25 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          className="flex items-center gap-2.5 cursor-pointer"
+          className="flex items-center cursor-pointer"
           onClick={handleGoHome}
         >
           <Image
-            src="/whitelogo.png"
-            alt="Persevex Logo"
-            width={36}
-            height={36}
-            className="rounded-lg"
+            src="/logo.png"
+            alt="Persevex"
+            width={44}
+            height={44}
+            className="h-11 w-auto object-contain block dark:hidden"
             priority
           />
-          <span className="text-xl md:text-2xl font-bold tracking-wide text-primary">
-            PERSEVEX
-          </span>
+          <Image
+            src="/whitelogo.png"
+            alt="Persevex"
+            width={44}
+            height={44}
+            className="h-11 w-auto object-contain hidden dark:block"
+            priority
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-2 xl:gap-3 bg-secondary/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-border">
@@ -205,15 +207,25 @@ export default function Navbar() {
             Support
           </Link>
 
-          {scrollButtons.map((button) => (
-            <button
-              key={button.name}
-              onClick={() => handleNavigationAndScroll(button.key)}
-              className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
-            >
-              {button.name}
-            </button>
-          ))}
+          <Link
+            href="/reviews"
+            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
+          >
+            Reviews
+          </Link>
+          <Link
+            href="/careers"
+            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
+          >
+            Careers
+          </Link>
+          <Link
+            href="/job-portal"
+            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full flex items-center gap-1.5"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Job Portal
+          </Link>
         </nav>
 
         <div className="hidden lg:flex items-center gap-3 xl:gap-4">
@@ -356,6 +368,37 @@ export default function Navbar() {
 
             <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
               <Link
+                href="/reviews"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-lg font-semibold text-foreground block"
+              >
+                Reviews
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+              <Link
+                href="/careers"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-lg font-semibold text-foreground block"
+              >
+                Careers
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+              <Link
+                href="/job-portal"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-lg font-bold text-primary flex items-center gap-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                Job Portal
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+              <Link
                 href="/internship"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-lg font-semibold text-foreground block"
@@ -363,17 +406,6 @@ export default function Navbar() {
                 LMS
               </Link>
             </motion.div>
-
-            {scrollButtons.map((button) => (
-              <motion.button
-                key={button.name}
-                variants={mobileLinkVariants}
-                onClick={() => handleNavigationAndScroll(button.key)}
-                className="text-lg font-semibold text-foreground py-3 text-left border-b border-border w-full"
-              >
-                {button.name}
-              </motion.button>
-            ))}
 
             <motion.div variants={mobileLinkVariants} className="mt-6">
               <button

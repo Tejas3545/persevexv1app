@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { CourseSectionKey, useCourseScroll } from '../(course-pages)/contexts/courseScrollContext';
 import ProgramsMegaMenu from './ProgramsMegaMenu';
@@ -111,11 +112,23 @@ export default function CoursePageNavbar() {
     <>
       <header className="sticky top-0 left-0 right-0 z-50 h-16 flex items-center justify-between p-6 md:p-8 text-foreground bg-card/90 backdrop-blur-md border-b border-border">
         <div className='flex items-center justify-center gap-4'>
-          <Link
-            href="/"
-            className="text-2xl cursor-pointer md:text-3xl font-bold tracking-wider"
-          >
-            PERSEVEX
+          <Link href="/" className="cursor-pointer flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Persevex"
+              width={44}
+              height={44}
+              className="h-11 w-auto object-contain block dark:hidden"
+              priority
+            />
+            <Image
+              src="/whitelogo.png"
+              alt="Persevex"
+              width={44}
+              height={44}
+              className="h-11 w-auto object-contain hidden dark:block"
+              priority
+            />
           </Link>
         </div>
         <nav className="hidden md:flex items-center gap-8 lg:gap-12">
