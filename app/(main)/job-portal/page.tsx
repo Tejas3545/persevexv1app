@@ -30,8 +30,8 @@ type Job = {
   role: string;
   company: string;
   logo: string;
-  logoColor: string;
-  logoTextColor?: string;
+  accentBg: string;   // Tailwind bg class, e.g. "bg-blue-600"
+  accentText: string; // Tailwind text class, e.g. "text-white"
   location: string;
   type: "Full-time" | "Internship" | "Remote";
   domain: Exclude<Domain, "All">;
@@ -52,7 +52,8 @@ const ALL_JOBS: Job[] = [
     role: "Full Stack Developer",
     company: "TCS",
     logo: "TC",
-    logoColor: "#0066cc",
+    accentBg: "bg-blue-600",
+    accentText: "text-white",
     location: "Bangalore, IN",
     type: "Full-time",
     domain: "Tech",
@@ -71,7 +72,8 @@ const ALL_JOBS: Job[] = [
     role: "Data Analyst",
     company: "Deloitte",
     logo: "DL",
-    logoColor: "#86BC25",
+    accentBg: "bg-lime-500",
+    accentText: "text-white",
     location: "Remote",
     type: "Internship",
     domain: "Data",
@@ -90,7 +92,8 @@ const ALL_JOBS: Job[] = [
     role: "Digital Marketing Executive",
     company: "Wipro",
     logo: "WP",
-    logoColor: "#341a6e",
+    accentBg: "bg-violet-950",
+    accentText: "text-white",
     location: "Hyderabad, IN",
     type: "Full-time",
     domain: "Marketing",
@@ -109,7 +112,8 @@ const ALL_JOBS: Job[] = [
     role: "Cloud Engineer",
     company: "Amazon",
     logo: "AM",
-    logoColor: "#FF9900",
+    accentBg: "bg-amber-500",
+    accentText: "text-white",
     location: "Pune, IN",
     type: "Full-time",
     domain: "Tech",
@@ -128,8 +132,8 @@ const ALL_JOBS: Job[] = [
     role: "Finance Analyst",
     company: "EY",
     logo: "EY",
-    logoColor: "#FFE600",
-    logoTextColor: "#2E2E38",
+    accentBg: "bg-yellow-300",
+    accentText: "text-gray-900",
     location: "Mumbai, IN",
     type: "Full-time",
     domain: "Finance",
@@ -148,7 +152,8 @@ const ALL_JOBS: Job[] = [
     role: "ML Engineer",
     company: "Infosys",
     logo: "IN",
-    logoColor: "#007CC3",
+    accentBg: "bg-sky-600",
+    accentText: "text-white",
     location: "Chennai, IN",
     type: "Full-time",
     domain: "Data",
@@ -167,7 +172,8 @@ const ALL_JOBS: Job[] = [
     role: "HR Management Trainee",
     company: "PwC",
     logo: "PW",
-    logoColor: "#E0301E",
+    accentBg: "bg-red-600",
+    accentText: "text-white",
     location: "Delhi, IN",
     type: "Internship",
     domain: "Management",
@@ -186,7 +192,8 @@ const ALL_JOBS: Job[] = [
     role: "Cybersecurity Analyst",
     company: "KPMG",
     logo: "KP",
-    logoColor: "#00338D",
+    accentBg: "bg-blue-900",
+    accentText: "text-white",
     location: "Remote",
     type: "Remote",
     domain: "Tech",
@@ -205,7 +212,8 @@ const ALL_JOBS: Job[] = [
     role: "Embedded Systems Engineer",
     company: "Harman",
     logo: "HR",
-    logoColor: "#1E1E1E",
+    accentBg: "bg-neutral-900",
+    accentText: "text-white",
     location: "Bangalore, IN",
     type: "Full-time",
     domain: "Tech",
@@ -224,7 +232,8 @@ const ALL_JOBS: Job[] = [
     role: "UX Designer",
     company: "Accenture",
     logo: "AC",
-    logoColor: "#A100FF",
+    accentBg: "bg-purple-600",
+    accentText: "text-white",
     location: "Bangalore, IN",
     type: "Full-time",
     domain: "Design",
@@ -243,7 +252,8 @@ const ALL_JOBS: Job[] = [
     role: "Business Analyst Intern",
     company: "Deloitte",
     logo: "DL",
-    logoColor: "#86BC25",
+    accentBg: "bg-lime-500",
+    accentText: "text-white",
     location: "Remote",
     type: "Internship",
     domain: "Finance",
@@ -262,7 +272,8 @@ const ALL_JOBS: Job[] = [
     role: "DevOps Engineer",
     company: "IBM",
     logo: "IB",
-    logoColor: "#0062FF",
+    accentBg: "bg-blue-500",
+    accentText: "text-white",
     location: "Hyderabad, IN",
     type: "Full-time",
     domain: "Tech",
@@ -297,7 +308,6 @@ const SORT_OPTIONS: { label: string; value: SortKey }[] = [
 function JobCard({ job, index }: { job: Job; index: number }) {
   const [expanded, setExpanded] = useState(false);
 
-  const logoTextColor = job.logoTextColor ?? "#ffffff";
 
   return (
     <motion.div
@@ -310,8 +320,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
     >
       {/* Accent top bar */}
       <div
-        className="absolute top-0 inset-x-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: `linear-gradient(90deg, ${job.logoColor}, transparent)` }}
+        className={`${job.accentBg} absolute top-0 inset-x-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
       />
 
       <div className="p-5">
@@ -319,8 +328,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
             <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-black flex-shrink-0 shadow-sm"
-              style={{ backgroundColor: job.logoColor, color: logoTextColor }}
+              className={`${job.accentBg} ${job.accentText} w-12 h-12 rounded-xl flex items-center justify-center text-sm font-black flex-shrink-0 shadow-sm`}
             >
               {job.logo}
             </div>

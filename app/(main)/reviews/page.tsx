@@ -51,7 +51,7 @@ const testimonials: Testimonial[] = [
     category: ["Mentorship", "Placement"],
     initials: "PM",
     colorClass: "bg-violet-600",
-    logoSrc: "/Deloitte.png",
+    logoSrc: "/companies/deloitte.webp",
   },
   {
     id: 3,
@@ -65,7 +65,7 @@ const testimonials: Testimonial[] = [
     category: ["Course"],
     initials: "RV",
     colorClass: "bg-emerald-600",
-    logoSrc: "/infosys.png",
+    logoSrc: "/companies/infosys.webp",
   },
   {
     id: 4,
@@ -79,7 +79,7 @@ const testimonials: Testimonial[] = [
     category: ["Mentorship", "Course"],
     initials: "SP",
     colorClass: "bg-amber-600",
-    logoSrc: "/wip.png",
+    logoSrc: "/companies/wipro.png",
   },
   {
     id: 5,
@@ -93,7 +93,7 @@ const testimonials: Testimonial[] = [
     category: ["Placement", "Course"],
     initials: "KN",
     colorClass: "bg-red-600",
-    logoSrc: "/amazon.png",
+    logoSrc: "/companies/amazon.webp",
   },
   {
     id: 6,
@@ -107,7 +107,7 @@ const testimonials: Testimonial[] = [
     category: ["Course", "Mentorship"],
     initials: "AG",
     colorClass: "bg-cyan-600",
-    logoSrc: "/pwclogo.png",
+    logoSrc: "/PwC.png",
   },
   {
     id: 7,
@@ -193,18 +193,18 @@ function StatItem({ target, suffix, label, icon: Icon }: { target: number; suffi
 // ─── Ticker Card (jyesta placement style) ────────────────────────────────────
 function TickerCard({ t }: { t: Testimonial }) {
   return (
-    <div className="flex-shrink-0 w-44 mx-3 bg-white dark:bg-[#111] border border-border rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col items-center text-center gap-2">
+    <div className="flex-shrink-0 w-44 mx-3 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col items-center text-center gap-2">
       {/* Large initial circle */}
       <div className={`w-14 h-14 rounded-full flex items-center justify-center text-white text-lg font-black flex-shrink-0 ${t.colorClass}`}>
         {t.initials}
       </div>
       {/* Name + role */}
       <div>
-        <p className="text-sm font-bold text-foreground leading-tight">{t.name}</p>
-        <p className="text-xs text-muted-foreground mt-0.5 leading-tight">{t.role}</p>
+        <p className="text-sm font-bold text-gray-900 leading-tight">{t.name}</p>
+        <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t.role}</p>
       </div>
       {/* Company logo */}
-      <div className="mt-auto pt-2 border-t border-border/60 w-full flex justify-center">
+      <div className="mt-auto pt-2 border-t border-gray-100 w-full flex justify-center">
         <div className="relative h-7 w-20">
           <Image src={t.logoSrc} alt={t.company} fill className="object-contain" />
         </div>
@@ -341,18 +341,18 @@ function GridCard({ t, index }: { t: Testimonial; index: number }) {
 
 // ─── Alumni Company Logos ────────────────────────────────────────────────────
 const alumniCompanies = [
-  { name: "TCS", logo: "/TCS.png" },
-  { name: "Infosys", logo: "/infosys.png" },
-  { name: "Wipro", logo: "/wip.png" },
-  { name: "Amazon", logo: "/amazon.png" },
-  { name: "Deloitte", logo: "/Deloitte.png" },
-  { name: "PwC", logo: "/pwclogo.png" },
-  { name: "KPMG", logo: "/kpmg.png" },
-  { name: "EY", logo: "/ey.png" },
-  { name: "Harman", logo: "/harman.png" },
-  { name: "Accenture", logo: "/Accenture.png" },
-  { name: "IBM", logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg", darkInvert: true },
-  { name: "HCL", logo: "https://upload.wikimedia.org/wikipedia/commons/6/6a/HCL_Technologies_logo.svg", darkInvert: true },
+  { name: "TCS",       logo: "/TCS.png" },
+  { name: "Infosys",   logo: "/companies/infosys.webp" },
+  { name: "Wipro",     logo: "/companies/wipro.png" },
+  { name: "Amazon",    logo: "/companies/amazon.webp" },
+  { name: "Deloitte",  logo: "/companies/deloitte.webp" },
+  { name: "PwC",       logo: "/PwC.png" },
+  { name: "KPMG",      logo: "/kpmg.png" },
+  { name: "EY",        logo: "/ey.png" },
+  { name: "Harman",    logo: "/harman.png" },
+  { name: "Accenture", logo: "/companies/accenture.svg" },
+  { name: "IBM",       logo: "/companies/ibm.svg" },
+  { name: "HCL",       logo: "https://upload.wikimedia.org/wikipedia/commons/6/6a/HCL_Technologies_logo.svg" },
 ];
 const alumniMarqueeItems = [...alumniCompanies, ...alumniCompanies, ...alumniCompanies];
 
@@ -564,13 +564,13 @@ export default function ReviewsPage() {
             {alumniMarqueeItems.map((c, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 w-40 h-16 px-6 bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-sm flex items-center justify-center hover:shadow-md hover:border-primary/30 transition-all duration-200"
+                className="flex-shrink-0 w-40 h-16 px-6 bg-white border border-gray-100 rounded-2xl shadow-sm flex items-center justify-center hover:shadow-md transition-all duration-200"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={c.logo}
                   alt={c.name}
-                  className={`max-h-8 w-full object-contain ${'darkInvert' in c && c.darkInvert ? "dark:brightness-0 dark:invert" : ""}`}
+                  className="max-h-8 w-full object-contain"
                 />
               </div>
             ))}
