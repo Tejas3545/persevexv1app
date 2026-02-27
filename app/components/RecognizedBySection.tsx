@@ -30,7 +30,7 @@ export default function RecognizedBySection() {
   const [modalPdf, setModalPdf] = useState<string | null>(null);
 
   return (
-    <section className="py-20 bg-slate-50 dark:bg-background" id="recognized-by">
+    <section className="py-14 bg-slate-50 dark:bg-background" id="recognized-by">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

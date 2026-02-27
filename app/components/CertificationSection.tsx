@@ -31,8 +31,8 @@ export default function CertificationSection() {
   };
 
   return (
-    <div className="min-h-screen text-foreground flex flex-col items-center justify-center py-20 px-4">
-      <div className="text-center mb-16">
+    <div className="text-foreground flex flex-col items-center justify-center py-16 px-4">
+      <div className="text-center mb-10">
         <div className="inline-flex mb-4 items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 backdrop-blur-sm">
           <span className="text-primary text-sm font-medium">
             Certificates

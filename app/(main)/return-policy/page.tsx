@@ -11,7 +11,7 @@ export default function CancellationRefundPage() {
         <div className="bg-card/20 backdrop-blur-md border border-border rounded-2xl p-4 md:p-12">
           
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-muted bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
               Cancellation & Refund Policy
             </h1>
             <p className="text-muted-foreground italic mt-4">

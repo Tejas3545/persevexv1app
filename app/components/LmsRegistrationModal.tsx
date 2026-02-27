@@ -1,0 +1,367 @@
+"use client";
+
+/**
+ * LmsRegistrationModal
+ * ──────────────────────────────────────────────────────────────────────────────
+ * Intercepts the "Persevex LMS" button click:
+ *   • If the user has already registered (cookie exists) → direct redirect.
+ *   • Otherwise → show this modal, collect lead data, then redirect on submit.
+ *
+ * Cookie key  : "pvx_lms_access"
+ * Redirect URL: https://persevex.com/login/index.php
+ *
+ * To integrate: import { useLmsAccess } from "./LmsRegistrationModal" in
+ * Appbar and call openLms() on the LMS button click.
+ * ──────────────────────────────────────────────────────────────────────────────
+ */
+
+import React, { useState, useEffect, createContext, useContext, useCallback } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { X, ArrowUpRight, Shield, CheckCircle2 } from "lucide-react";
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+const LMS_REDIRECT_URL = "https://persevex.com/login/index.php";
+const COOKIE_KEY = "pvx_lms_access";
+const COOKIE_DAYS = 365;
+
+// ─── Plan / Payment data ──────────────────────────────────────────────────────
+const PLANS = [
+  { id: "advanced", label: "Advanced", price: 4500 },
+  { id: "foundation", label: "Foundation", price: 3500 },
+] as const;
+
+type PlanId = (typeof PLANS)[number]["id"];
+
+const RESERVE_SEAT_AMOUNT = 1500;
+
+// ─── Cookie helpers ───────────────────────────────────────────────────────────
+function setCookie(days: number) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${COOKIE_KEY}=1; expires=${expires}; path=/; SameSite=Lax`;
+}
+
+function hasCookie(): boolean {
+  if (typeof document === "undefined") return false;
+  return document.cookie.split(";").some((c) => c.trim().startsWith(`${COOKIE_KEY}=`));
+}
+
+// ─── Context ──────────────────────────────────────────────────────────────────
+interface LmsContextValue {
+  openLms: () => void;
+}
+
+const LmsContext = createContext<LmsContextValue>({ openLms: () => {} });
+
+export function useLmsAccess() {
+  return useContext(LmsContext);
+}
+
+// ─── Provider + Modal ────────────────────────────────────────────────────────
+export function LmsAccessProvider({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  // Prevent body scroll when modal open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isOpen]);
+
+  /**
+   * openLms — called whenever the "Persevex LMS" button is clicked.
+   * Checks the cookie; if exists, bypass the form entirely.
+   */
+  const openLms = useCallback(() => {
+    if (hasCookie()) {
+      window.location.href = LMS_REDIRECT_URL;
+    } else {
+      setIsOpen(true);
+    }
+  }, []);
+
+  return (
+    <LmsContext.Provider value={{ openLms }}>
+      {children}
+      <AnimatePresence>
+        {isOpen && (
+          <LmsModal onClose={() => setIsOpen(false)} />
+        )}
+      </AnimatePresence>
+    </LmsContext.Provider>
+  );
+}
+
+// ─── Modal ────────────────────────────────────────────────────────────────────
+function LmsModal({ onClose }: { onClose: () => void }) {
+  // Form state
+  const [selectedPlan, setSelectedPlan] = useState<PlanId>("advanced");
+  const [payFull, setPayFull] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", email: "", college: "" });
+  const [errors, setErrors] = useState<Partial<typeof form>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const selectedPlanObj = PLANS.find((p) => p.id === selectedPlan)!;
+  const payableAmount = payFull ? selectedPlanObj.price : RESERVE_SEAT_AMOUNT;
+  const paymentLabel = payFull ? "Pay in full" : "Reserve seat";
+
+  // ── Validation ─────────────────────────────────────────────────────────────
+  function validate() {
+    const errs: Partial<typeof form> = {};
+    if (!form.name.trim()) errs.name = "Full name is required";
+    if (!form.phone.trim() || !/^\d{7,15}$/.test(form.phone.replace(/\s/g, "")))
+      errs.phone = "Enter a valid phone number";
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+      errs.email = "Enter a valid email";
+    if (!form.college.trim()) errs.college = "College name is required";
+    return errs;
+  }
+
+  // ── Submit ─────────────────────────────────────────────────────────────────
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    setSubmitting(true);
+
+    /**
+     * TODO: Replace the URL below with your Google Sheets Webhook / embed URL.
+     * The fetch is wrapped in try/catch so a network error won't block access.
+     *
+     * Example body keys expected by a Google Apps Script endpoint:
+     *   name, phone, email, college, plan, paymentType, amount
+     */
+    const GOOGLE_SHEETS_WEBHOOK_URL = ""; // ← paste your webhook URL here
+
+    if (GOOGLE_SHEETS_WEBHOOK_URL) {
+      try {
+        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: form.name,
+            phone: form.phone,
+            email: form.email,
+            college: form.college,
+            plan: selectedPlan,
+            paymentType: payFull ? "full" : "reserve",
+            amount: payableAmount,
+          }),
+        });
+      } catch {
+        // Non-blocking — proceed regardless
+      }
+    }
+
+    // Set persistent cookie so future clicks bypass the form
+    setCookie(COOKIE_DAYS);
+
+    // Redirect to LMS
+    window.location.href = LMS_REDIRECT_URL;
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+  return (
+    // Backdrop
+    <motion.div
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      {/* Panel */}
+      <motion.div
+        className="relative w-full max-w-md bg-card border border-border rounded-3xl shadow-2xl overflow-hidden"
+        initial={{ scale: 0.95, y: 24, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.95, y: 24, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 400, damping: 32 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
+          <div>
+            <h2 className="text-xl font-black text-foreground tracking-tight">Register or login</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">Minimal steps, Secure checkout.</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href={LMS_REDIRECT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-primary hover:underline flex items-center gap-0.5"
+            >
+              Login <ArrowUpRight size={12} />
+            </a>
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="ml-2 p-1.5 rounded-full hover:bg-muted text-muted-foreground transition-colors"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
+
+          {/* ── Plan Selection ─────────────────────────────────────────── */}
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Select Plan</p>
+            <div className="grid grid-cols-2 gap-2">
+              {PLANS.map((plan) => (
+                <button
+                  key={plan.id}
+                  type="button"
+                  onClick={() => setSelectedPlan(plan.id)}
+                  className={`relative flex flex-col items-start p-3.5 rounded-xl border-2 transition-all duration-200 text-left ${
+                    selectedPlan === plan.id
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/40 bg-secondary/50"
+                  }`}
+                >
+                  {selectedPlan === plan.id && (
+                    <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />
+                  )}
+                  <span className="text-sm font-bold text-foreground">{plan.label}</span>
+                  <span className="text-lg font-black text-primary mt-0.5">₹{plan.price.toLocaleString("en-IN")}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Payment Selection ──────────────────────────────────────── */}
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Payment Option</p>
+            <div className="grid grid-cols-2 gap-2">
+              {/* Reserve Seat */}
+              <button
+                type="button"
+                onClick={() => setPayFull(false)}
+                className={`flex flex-col items-start p-3.5 rounded-xl border-2 transition-all duration-200 text-left relative ${
+                  !payFull ? "border-primary bg-primary/5" : "border-border hover:border-primary/40 bg-secondary/50"
+                }`}
+              >
+                {!payFull && <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />}
+                <span className="text-sm font-bold text-foreground">Reserve seat</span>
+                <span className="text-lg font-black text-primary mt-0.5">₹{RESERVE_SEAT_AMOUNT.toLocaleString("en-IN")}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Pay now</span>
+              </button>
+              {/* Pay in Full */}
+              <button
+                type="button"
+                onClick={() => setPayFull(true)}
+                className={`flex flex-col items-start p-3.5 rounded-xl border-2 transition-all duration-200 text-left relative ${
+                  payFull ? "border-primary bg-primary/5" : "border-border hover:border-primary/40 bg-secondary/50"
+                }`}
+              >
+                {payFull && <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />}
+                <span className="text-sm font-bold text-foreground">Pay in full</span>
+                <span className="text-lg font-black text-primary mt-0.5">₹{selectedPlanObj.price.toLocaleString("en-IN")}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Best value</span>
+              </button>
+            </div>
+          </div>
+
+          {/* ── Form Fields ────────────────────────────────────────────── */}
+          <div className="space-y-3">
+            {/* Full Name */}
+            <div>
+              <input
+                type="text"
+                placeholder="Full name"
+                value={form.name}
+                onChange={(e) => { setForm((f) => ({ ...f, name: e.target.value })); setErrors((er) => ({ ...er, name: "" })); }}
+                className={`w-full px-4 py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors ${errors.name ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
+              />
+              {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+            </div>
+
+            {/* Phone */}
+            <div>
+              <div className={`flex rounded-xl border overflow-hidden bg-background transition-colors ${errors.phone ? "border-red-400" : "border-border focus-within:border-primary"}`}>
+                <div className="flex items-center gap-1.5 px-3 py-3 bg-muted border-r border-border text-sm font-semibold text-muted-foreground shrink-0">
+                  🇮🇳 <span>+91</span>
+                </div>
+                <input
+                  type="tel"
+                  placeholder="Phone number"
+                  value={form.phone}
+                  onChange={(e) => { setForm((f) => ({ ...f, phone: e.target.value })); setErrors((er) => ({ ...er, phone: "" })); }}
+                  className="flex-1 px-3 py-3 text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none"
+                />
+              </div>
+              {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+            </div>
+
+            {/* Email */}
+            <div>
+              <input
+                type="email"
+                placeholder="Email address"
+                value={form.email}
+                onChange={(e) => { setForm((f) => ({ ...f, email: e.target.value })); setErrors((er) => ({ ...er, email: "" })); }}
+                className={`w-full px-4 py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors ${errors.email ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
+              />
+              {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+            </div>
+
+            {/* College */}
+            <div>
+              <input
+                type="text"
+                placeholder="College name"
+                value={form.college}
+                onChange={(e) => { setForm((f) => ({ ...f, college: e.target.value })); setErrors((er) => ({ ...er, college: "" })); }}
+                className={`w-full px-4 py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors ${errors.college ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
+              />
+              {errors.college && <p className="text-xs text-red-500 mt-1">{errors.college}</p>}
+            </div>
+          </div>
+
+          {/* ── Footer / CTA ───────────────────────────────────────────── */}
+          <div className="pt-1">
+            <p className="text-[11px] text-muted-foreground text-center mb-3">
+              By signing up, you agree to our{" "}
+              <a href="/terms-&-conditions" className="underline hover:text-foreground">T&amp;C</a>{" "}
+              and{" "}
+              <a href="/privacy-policy" className="underline hover:text-foreground">Privacy Policy</a>
+            </p>
+
+            {/* Dynamic CTA */}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-aptisure w-full flex items-center justify-center gap-2 text-sm font-black disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {submitting ? (
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              ) : (
+                <>
+                  Pay ₹{payableAmount.toLocaleString("en-IN")} &bull; {paymentLabel}
+                </>
+              )}
+            </button>
+
+            {/* Trust badge */}
+            <p className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground mt-2.5">
+              <Shield size={11} />
+              Secure checkout &bull; Instant access
+            </p>
+          </div>
+        </form>
+      </motion.div>
+    </motion.div>
+  );
+}

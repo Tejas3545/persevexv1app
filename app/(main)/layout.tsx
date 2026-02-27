@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Navbar from "../components/Appbar"; 
 import { ScrollProvider } from "../contexts/scrollContext"; 
+import { LmsAccessProvider } from "../components/LmsRegistrationModal";
 
 export const metadata: Metadata = {
   title: "Persevex",
@@ -15,8 +16,10 @@ export default function MainLayout({
 }) {
   return (
     <ScrollProvider>
-      <Navbar />
-      {children}
+      <LmsAccessProvider>
+        <Navbar />
+        {children}
+      </LmsAccessProvider>
     </ScrollProvider>
   );
 }

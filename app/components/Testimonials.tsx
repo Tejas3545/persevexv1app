@@ -7,10 +7,10 @@ import { FiStar, FiPhone } from "react-icons/fi";
 interface Review {
   name: string;
   role: string;
+  company: string;
   domain: string;
-  domainColor: string;
+  avatarColor: string;
   quote: string;
-  outcome: string;
   rating: number;
 }
 
@@ -18,82 +18,109 @@ const reviews: Review[] = [
   {
     name: "Kiran Kumar",
     role: "Full Stack Developer",
+    company: "Infosys",
     domain: "Web Dev",
-    domainColor: "text-blue-600",
+    avatarColor: "bg-blue-500",
     quote: "The mentors pushed me to build production-ready projects. The guidance on architecture and deployment was exactly what real interviews test for.",
-    outcome: "Real projects + deployment experience",
     rating: 5,
   },
   {
     name: "Anjali Sharma",
     role: "Data Science Intern",
+    company: "Wipro",
     domain: "Data Science",
-    domainColor: "text-purple-600",
+    avatarColor: "bg-purple-500",
     quote: "Hands-on exposure to real datasets and ML pipelines. I went from zero Python to building models I could actually explain in interviews.",
-    outcome: "ML pipelines + interview confidence",
     rating: 5,
   },
   {
     name: "Rahul Verma",
     role: "AI Engineer",
+    company: "TCS",
     domain: "Artificial Intelligence",
-    domainColor: "text-emerald-600",
+    avatarColor: "bg-emerald-500",
     quote: "The AI projects weren't toy examples — they were real NLP and CV tasks. That's exactly what recruiters ask about in technical rounds.",
-    outcome: "NLP + Computer Vision projects",
     rating: 5,
   },
   {
     name: "Priya Nair",
     role: "Digital Marketing Executive",
+    company: "Amazon",
     domain: "Digital Marketing",
-    domainColor: "text-pink-600",
+    avatarColor: "bg-pink-500",
     quote: "Covered SEO, paid ads, analytics, and strategy — all with live campaigns. The certificate and the skills both carry weight in interviews.",
-    outcome: "Live campaigns + certified skills",
     rating: 5,
   },
   {
     name: "Aditya Raj",
     role: "Cloud Engineer",
+    company: "Google",
     domain: "Cloud Computing",
-    domainColor: "text-sky-600",
+    avatarColor: "bg-sky-500",
     quote: "AWS, Azure, Docker — all hands-on. The mentors didn't just teach the theory, they made me build and deploy. That experience is priceless.",
-    outcome: "Cloud deployments + hands-on labs",
     rating: 5,
   },
   {
     name: "Sneha Patil",
     role: "HR Executive",
+    company: "Deloitte",
     domain: "Human Resources",
-    domainColor: "text-orange-600",
+    avatarColor: "bg-orange-500",
     quote: "The HR internship gave me practical exposure to recruitment, payroll, and employee engagement that I couldn't have got from a textbook.",
-    outcome: "Recruitment + HR operations experience",
     rating: 5,
   },
   {
     name: "Vikram Nair",
     role: "IoT Developer",
+    company: "Microsoft",
     domain: "IoT",
-    domainColor: "text-teal-600",
+    avatarColor: "bg-teal-500",
     quote: "Built actual embedded IoT prototypes. The project depth and documentation standards they enforced made my resume stand out instantly.",
-    outcome: "IoT prototypes + strong portfolio",
     rating: 5,
   },
   {
     name: "Meghna Iyer",
     role: "Finance Analyst",
+    company: "IBM",
     domain: "Finance",
-    domainColor: "text-yellow-600",
+    avatarColor: "bg-yellow-500",
     quote: "Financial modelling, stock analysis, and investment frameworks — all covered practically. My internship felt like a real analyst role.",
-    outcome: "Financial modelling + analyst skills",
     rating: 5,
   },
   {
     name: "Rohan Desai",
-    role: "Cybersecurity Intern",
+    role: "Cybersecurity Analyst",
+    company: "Meta",
     domain: "Cyber Security",
-    domainColor: "text-red-600",
+    avatarColor: "bg-red-500",
     quote: "Ethical hacking labs, vulnerability assessments, and real tools. Persevex made me job-ready in a domain that's incredibly hard to break into.",
-    outcome: "Ethical hacking + security labs",
+    rating: 5,
+  },
+  {
+    name: "Divya Menon",
+    role: "ML Engineer",
+    company: "Accenture",
+    domain: "Machine Learning",
+    avatarColor: "bg-indigo-500",
+    quote: "From Python basics to deploying ML models in production — the curriculum was intense but worth every hour. Landed my first ML role in 4 months.",
+    rating: 5,
+  },
+  {
+    name: "Arjun Mehta",
+    role: "Backend Developer",
+    company: "Capgemini",
+    domain: "Web Dev",
+    avatarColor: "bg-cyan-500",
+    quote: "Real API design, database optimization, and system design practice — Persevex covered it all. My interview skills improved dramatically.",
+    rating: 5,
+  },
+  {
+    name: "Pooja Singh",
+    role: "Business Analyst",
+    company: "HCL",
+    domain: "Business Analytics",
+    avatarColor: "bg-rose-500",
+    quote: "The case studies were real, the mentors were sharp, and the feedback was brutally honest. That's exactly what you need to grow fast.",
     rating: 5,
   },
 ];
@@ -107,13 +134,17 @@ const stats = [
 
 const pills = ["Outcome-focused", "Certificate-backed", "Real projects"];
 
+// Split into two marquee rows
+const row1 = reviews.slice(0, 6);
+const row2 = reviews.slice(6);
+
 function StarRow({ count }: { count: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
         <FiStar
           key={i}
-          size={14}
+          size={13}
           className={i < count ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
         />
       ))}
@@ -121,43 +152,48 @@ function StarRow({ count }: { count: number }) {
   );
 }
 
-function ReviewCard({ review, index }: { review: Review; index: number }) {
+function ReviewCard({ review }: { review: Review }) {
+  const initials = review.name.split(" ").map((n) => n[0]).join("").toUpperCase();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.08, duration: 0.45 }}
-      className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-5 flex flex-col gap-4 hover:shadow-md transition-shadow duration-300"
-    >
-      {/* Top row */}
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h4 className="font-bold text-sm text-foreground">{review.name}</h4>
-          <p className="text-xs text-muted-foreground mt-0.5">{review.role}</p>
+    <div className="w-72 shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-border p-5 flex flex-col gap-3 shadow-sm mx-2">
+      {/* Avatar + name + company */}
+      <div className="flex items-center gap-3">
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-black shrink-0 ${review.avatarColor}`}>
+          {initials}
         </div>
-        <span className={`text-xs font-bold shrink-0 ${review.domainColor}`}>
+        <div>
+          <p className="text-sm font-bold text-foreground leading-tight">{review.name}</p>
+          <p className="text-xs text-primary font-semibold">@{review.company}</p>
+        </div>
+      </div>
+
+      {/* Stars + domain */}
+      <div className="flex items-center justify-between">
+        <StarRow count={review.rating} />
+        <span className="text-[10px] font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
           {review.domain}
         </span>
       </div>
 
-      {/* Stars */}
-      <StarRow count={review.rating} />
+      {/* Quote */}
+      <p className="text-xs text-foreground/75 leading-relaxed line-clamp-4">
+        &ldquo;{review.quote}&rdquo;
+      </p>
+    </div>
+  );
+}
 
-      {/* Quote box */}
-      <div className="border border-border rounded-xl p-3.5 bg-slate-50 dark:bg-slate-800/60">
-        <span className="text-primary font-black text-lg leading-none select-none">&ldquo;&rdquo;</span>
-        <p className="text-sm text-foreground/80 leading-relaxed mt-1">{review.quote}</p>
+// Duplicate 3× for seamless infinite scroll
+function MarqueeRow({ items, reverse = false }: { items: Review[]; reverse?: boolean }) {
+  const tripled = [...items, ...items, ...items];
+  return (
+    <div className="overflow-hidden w-full">
+      <div className={`flex w-max ${reverse ? "animate-marquee-reverse-slow" : "animate-marquee-slow"}`}>
+        {tripled.map((r, i) => (
+          <ReviewCard key={`${r.name}-${i}`} review={r} />
+        ))}
       </div>
-
-      {/* Outcome pill */}
-      <div className="inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-semibold">
-        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-        </svg>
-        {review.outcome}
-      </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -167,7 +203,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto">
 
         {/* ── Two-column hero row ── */}
-        <div className="grid lg:grid-cols-[1fr_1.6fr] gap-12 items-start mb-16">
+        <div className="grid lg:grid-cols-[1fr_1.8fr] gap-12 items-start">
 
           {/* Left — heading & meta */}
           <motion.div
@@ -179,11 +215,11 @@ export default function Testimonials() {
           >
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Reviews</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight mb-4">
-              REVIEWS THAT SHOW<br />
-              <span className="gradient-text-blue">REAL OUTCOMES.</span>
+              LOVED BY THOUSANDS<br />
+              <span className="gradient-text-blue">OF STUDENTS.</span>
             </h2>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-sm">
-              Short, specific feedback with the kind of details hiring managers actually care about. Real interns, real projects, real results.
+              Real interns, real projects, real results. Hear from students who turned their Persevex experience into careers at top companies.
             </p>
 
             {/* Feature pills */}
@@ -228,12 +264,17 @@ export default function Testimonials() {
             </div>
           </motion.div>
 
-          {/* Right — review cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {reviews.map((review, i) => (
-              <ReviewCard key={review.name} review={review} index={i} />
-            ))}
-          </div>
+          {/* Right — scrolling marquee rows */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col gap-4 overflow-hidden"
+          >
+            <MarqueeRow items={row1} />
+            <MarqueeRow items={row2} reverse />
+          </motion.div>
         </div>
 
       </div>

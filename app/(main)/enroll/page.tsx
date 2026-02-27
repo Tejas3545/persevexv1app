@@ -52,7 +52,7 @@ export default function EnrollPage() {
         <div className="bg-card/20 backdrop-blur-md border border-border rounded-2xl p-6 md:p-6 overflow-hidden">
           {}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl p-4 font-bold bg-linear-to-r from-white to-muted bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl p-4 font-bold text-foreground">
               Student Registration
             </h1>
             <p className="text-muted-foreground mt-2 text-lg">

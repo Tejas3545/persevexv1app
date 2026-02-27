@@ -100,13 +100,13 @@ export default function UserLoginPage() {
             </div>
             <div className="flex items-center gap-2 text-sm font-semibold text-primary bg-primary/10 px-4 py-1.5 rounded-full">
               <Sparkles className="w-4 h-4" />
-              AI-Powered LMS
+              Placement-Focused
             </div>
           </div>
 
           <div className="space-y-6">
             <h1 className="text-5xl xl:text-6xl font-bold text-foreground leading-[1.15] tracking-tight">
-              Pioneering Career Focused Education with <span className="text-primary">AI Powered</span> Expert-Led Training.
+              Pioneering Career Focused Education with <span className="text-primary">Expert-Led</span> Mentor-Driven Training.
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
               Get a personalised roadmap, smart checkpoints, and AI-assisted practice then prove skills through mentor-reviewed, internship-grade projects inside a clean, secure LMS.

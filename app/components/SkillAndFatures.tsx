@@ -79,7 +79,7 @@ export default function SkillsAndFeatures({
 
               <ul className="space-y-3 list-disc list-inside">
                 {section.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-muted">
+                  <li key={itemIndex} className="text-foreground/85">
                     {item}
                   </li>
                 ))}

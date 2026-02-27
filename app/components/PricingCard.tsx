@@ -74,7 +74,7 @@ export default function PricingCard() {
                   className="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
                   aria-hidden="true"
                 />
-                <span className="text-muted">{feature}</span>
+                <span className="text-foreground/80">{feature}</span>
               </li>
             ))}
           </ul>
@@ -88,7 +88,7 @@ export default function PricingCard() {
               <Zap size={18} />
               Select Plan
             </a>
-            <p className="mt-2 text-center text-xs text-muted">
+            <p className="mt-2 text-center text-xs text-muted-foreground">
               Secured by Razorpay
             </p>
           </div>

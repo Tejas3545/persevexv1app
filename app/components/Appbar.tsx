@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useScroll, SectionKey } from "../contexts/scrollContext";
@@ -8,6 +8,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import ProgramsMegaMenu from "./ProgramsMegaMenu";
 import Image from "next/image";
 import { ThemeToggle } from "./ThemeToggle";
+import { useLmsAccess } from "./LmsRegistrationModal";
 
 type ProgramItem = { key: string; name: string; href: string };
 type ProgramCategory = { branch: string; items: ProgramItem[] };
@@ -16,13 +17,42 @@ export default function Navbar() {
   const { scrollToSection } = useScroll();
   const router = useRouter();
   const pathname = usePathname();
+  const { openLms } = useLmsAccess();
 
   const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileProgramsOpen, setIsMobileProgramsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === "/";
+
+  // Close search on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setIsSearchOpen(false);
+        setSearchQuery("");
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Focus input when search opens
+  useEffect(() => {
+    if (isSearchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 50);
+    }
+  }, [isSearchOpen]);
+
+  const openSearch = useCallback(() => {
+    setIsSearchOpen(true);
+    setSearchQuery("");
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -117,6 +147,19 @@ export default function Navbar() {
 
   // Dedicated page navigation links (replaces old scrollTo architecture)
   // Each section is now reachable as its own standalone page.
+
+  /** All searchable course items (internship + placement) */
+  const allCourseItems = [
+    ...internshipProgramCategories.flatMap((cat) => cat.items),
+    ...placementProgramCategories.flatMap((cat) => cat.items),
+  ].filter((item) => item.name !== "Coming Soon");
+
+  const searchResults =
+    searchQuery.trim().length > 0
+      ? allCourseItems.filter((item) =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        ).slice(0, 8)
+      : [];
 
   const mobileMenuVariants: Variants = {
     hidden: { opacity: 0, x: "100%", transition: { duration: 0.3, ease: "easeOut" } },
@@ -229,12 +272,99 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3 xl:gap-4">
-          <Link
-            href="/internship"
+          {/* ── Search ─────────────────────────────────────────── */}
+          <div className="relative" ref={searchContainerRef}>
+            <AnimatePresence mode="wait">
+              {isSearchOpen ? (
+                <motion.div
+                  key="search-input"
+                  initial={{ width: 32, opacity: 0 }}
+                  animate={{ width: 260, opacity: 1 }}
+                  exit={{ width: 32, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  className="flex items-center gap-2 bg-background border border-border rounded-full px-3 py-2 shadow-md"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search programs..."
+                    className="flex-1 text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none min-w-0"
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") { setIsSearchOpen(false); setSearchQuery(""); }
+                      if (e.key === "Enter" && searchResults.length > 0) {
+                        router.push(searchResults[0].href);
+                        setIsSearchOpen(false); setSearchQuery("");
+                      }
+                    }}
+                  />
+                  <button onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }} className="text-muted-foreground hover:text-foreground transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.button
+                  key="search-icon"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={openSearch}
+                  className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Search programs"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            {/* Search Dropdown Results */}
+            <AnimatePresence>
+              {isSearchOpen && searchResults.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-2 w-72 bg-card border border-border rounded-2xl shadow-xl overflow-hidden z-50"
+                >
+                  {searchResults.map((item) => (
+                    <Link
+                      key={item.key}
+                      href={item.href}
+                      onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-accent text-sm text-foreground hover:text-primary transition-colors border-b border-border/40 last:border-0"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground shrink-0"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                      {item.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Empty state */}
+            <AnimatePresence>
+              {isSearchOpen && searchQuery.trim().length > 1 && searchResults.length === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute right-0 top-full mt-2 w-72 bg-card border border-border rounded-2xl shadow-xl z-50 px-4 py-5 text-center"
+                >
+                  <p className="text-sm text-muted-foreground">No programs found for &ldquo;{searchQuery}&rdquo;</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <button
+            onClick={openLms}
             className="btn-aptisure flex items-center gap-2"
           >
             Persevex LMS <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </Link>
+          </button>
 
           <ThemeToggle />
         </div>
@@ -398,13 +528,12 @@ export default function Navbar() {
             </motion.div>
 
             <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
-              <Link
-                href="/internship"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block"
+              <button
+                onClick={() => { setIsMobileMenuOpen(false); openLms(); }}
+                className="text-lg font-semibold text-foreground block w-full text-left"
               >
                 LMS
-              </Link>
+              </button>
             </motion.div>
 
             <motion.div variants={mobileLinkVariants} className="mt-6">

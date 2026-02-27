@@ -12,7 +12,7 @@ export default function DataDeletionInstructionsPage() {
         <div className="bg-card/20 backdrop-blur-md border border-border rounded-2xl p-4 md:p-12">
           
           <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-white to-muted bg-clip-text text-transparent leading-tight">
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground leading-tight">
               Data Deletion Instructions
             </h1>
             <h2 className="text-xl md:text-2xl font-semibold text-muted-foreground mt-2">

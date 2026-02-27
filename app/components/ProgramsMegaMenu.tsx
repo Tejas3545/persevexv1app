@@ -93,7 +93,7 @@ export default function ProgramsMegaMenu({
     <motion.div
       layout
       transition={{ type: "spring", stiffness: 500, damping: 40 }}
-      className="absolute top-full left-0 mt-4 w-[900px] rounded-3xl bg-card shadow-2xl shadow-blue-900/5 dark:shadow-none border border-border z-10 text-foreground overflow-hidden"
+      className="fixed top-16 left-1/2 -translate-x-1/2 mt-2 w-[900px] max-w-[calc(100vw-2rem)] rounded-3xl bg-card shadow-2xl shadow-blue-900/5 dark:shadow-none border border-border z-50 text-foreground overflow-hidden"
       initial="hidden"
       animate="visible"
       exit="hidden"

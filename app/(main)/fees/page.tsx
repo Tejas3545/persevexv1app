@@ -28,7 +28,7 @@ type PricingPlan = {
 const pricingPlans: PricingPlan[] = [
   {
     title: "Foundation",
-    price: "5500",
+    price: "6999",
     color: "cyan",
     paymentLink: "https://payments.cashfree.com/forms/PERSEVE_REGISTRATION",
     features: [
@@ -47,7 +47,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     title: "Advanced",
-    price: "7500",
+    price: "8999",
     color: "lime",
     paymentLink: "https://payments.cashfree.com/forms/ADVANCE_REGS",
     features: [

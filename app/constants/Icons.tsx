@@ -1,270 +1,107 @@
-import React, { ComponentType } from "react";
+﻿import React, { ComponentType } from "react";
 
 export type IconType = ComponentType<{ className?: string }>;
 
-export const FinanceIcon: IconType = () => (
+export const FinanceIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-primary"
+    className={className}
   >
-    <path
-      d="M12 21V12M12 12H3.5M12 12H20.5M4 7H20M17 4H7C5.89543 4 5 4.89543 5 6V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V6C19 4.89543 18.1046 4 17 4Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8 21H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <path d="M12 17V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <path d="M7 9l2 2 4-4 2 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-export const MarketingIcon: IconType = () => (
+export const MarketingIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-secondary"
+    className={className}
   >
-    <path
-      d="M3 3V12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12V3"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
-      stroke="currentColor"
-      strokeWidth="2"
-    />
-    <path
-      d="M12 3V10"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-export const HRIcon: IconType = () => (
+export const HRIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-primary"
+    className={className}
   >
-    <path
-      d="M17 21V19C17 16.7909 15.2091 15 13 15H11C8.79086 15 7 16.7909 7 19V21"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-export const WebDevIcon: IconType = () => (
+export const WebDevIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-primary"
+    className={className}
   >
-    <path
-      d="M7 8L3 12L7 16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M17 8L21 12L17 16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M14 4L10 20"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M7 8L3 12L7 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17 8L21 12L17 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M14 4L10 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-export const AIIcon: IconType = () => (
+export const AIIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-accent"
+    className={className}
   >
-    <path
-      d="M12 8V4H8"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M4 8H8V4"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 20V16H8"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M4 16H8V20"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M20 8H16V4"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M16 8V4H20"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M20 16H16V20"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M16 16V20H20"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-export const MLIcon: IconType = () => (
+export const MLIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-accent"
+    className={className}
   >
-    <path
-      d="M12 13V21"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M5 13V21"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M19 13V21"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 3L5.5 7.5L12 12L18.5 7.5L12 3Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+    <circle cx="3" cy="6" r="2" stroke="currentColor" strokeWidth="2" />
+    <circle cx="21" cy="6" r="2" stroke="currentColor" strokeWidth="2" />
+    <circle cx="3" cy="18" r="2" stroke="currentColor" strokeWidth="2" />
+    <circle cx="21" cy="18" r="2" stroke="currentColor" strokeWidth="2" />
+    <path d="M5 6h4M15 6h4M5 18h4M15 18h4M9 10.5L5 7M15 10.5L19 7M9 13.5L5 17M15 13.5L19 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
 
-export const CloudIcon: IconType = () => (
+export const CloudIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-primary"
+    className={className}
   >
-    <path
-      d="M18 10C18 6.68629 15.3137 4 12 4C8.68629 4 6 6.68629 6 10C6 10.3347 6.02996 10.6652 6.08839 10.9882C4.35414 11.8585 3 13.7025 3 16C3 18.7614 5.23858 21 8 21H16C18.7614 21 21 18.7614 21 16C21 13.7025 19.6459 11.8585 17.9116 10.9882C17.97 10.6652 18 10.3347 18 10Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M18 10C18 6.686 15.314 4 12 4C8.686 4 6 6.686 6 10C6 10.335 6.03 10.665 6.088 10.988C4.354 11.858 3 13.703 3 16C3 18.761 5.239 21 8 21H16C18.761 21 21 18.761 21 16C21 13.703 19.646 11.858 17.912 10.988C17.97 10.665 18 10.335 18 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-export const CybersecurityIcon: IconType = () => (
+export const CybersecurityIcon: IconType = ({ className }) => (
   <svg
-    width="64"
-    height="64"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-secondary"
+    className={className}
   >
-    <path
-      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
-      stroke="currentColor"
-      strokeWidth="2"
-    />
-    <path
-      d="M12 2V22"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );

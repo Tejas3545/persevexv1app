@@ -33,7 +33,7 @@ const advantages = [
   "Expert-led live cohorts + recorded sessions",
   "Real projects - portfolio proof",
   "Strict rubrics + proper evaluation",
-  "AI Powered LMS & Mobile App",
+  "Mentor-reviewed capstone projects",
 ];
 
 const sidebarVariants = {
@@ -316,13 +316,6 @@ export default function ExploreCoursesPage() {
                 </button>
               </div>
               <p className="text-base font-extrabold tracking-tight mb-3">Outcomes you can verify</p>
-              <div className="rounded-xl bg-primary/5 border border-primary/20 p-3 mb-4">
-                <div className="flex items-center justify-between flex-wrap gap-1">
-                  <span className="text-sm font-bold text-foreground">100% Fee Return*</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">High-trust policy</span>
-                </div>
-                <p className="text-[11px] text-muted-foreground mt-1">Merit-based &bull; Depends on evaluation + outcomes</p>
-              </div>
               <div className="space-y-2.5">
                 {(showMore ? advantages : advantages.slice(0, 3)).map((item) => (
                   <div key={item} className="flex items-start gap-2 text-sm">
@@ -334,7 +327,7 @@ export default function ExploreCoursesPage() {
               {!showMore && (
                 <button onClick={() => setShowMore(true)} className="mt-3 text-xs font-semibold text-primary hover:underline">+ More benefits</button>
               )}
-              <p className="mt-4 text-[11px] text-muted-foreground border-t border-border pt-3">Powered by an AI-driven LMS &amp; Mobile App.</p>
+              <p className="mt-4 text-[11px] text-muted-foreground border-t border-border pt-3">Mentor-supported learning with structured milestones.</p>
             </div>
 
             <a
@@ -380,7 +373,7 @@ export default function ExploreCoursesPage() {
               <span className="font-semibold text-foreground">&#8594;</span> projects{" "}
               <span className="font-semibold text-foreground">&#8594;</span> evaluations{" "}
               <span className="font-semibold text-foreground">&#8594;</span>{" "}
-              <span className="text-primary font-semibold">100% Fee Return*</span>
+              <span className="text-primary font-semibold">Placement Ready</span>
             </span>
           </p>
           <a

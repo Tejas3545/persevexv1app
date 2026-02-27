@@ -7,7 +7,13 @@ import { useScroll, SectionKey } from "../contexts/scrollContext";
 import Hero from "./Hero";
 
 // Lazy-load below-fold sections for performance
-const OfferingsSection = dynamic(() => import("./OfferingsSection"), {
+const LearnFromExpertSection = dynamic(() => import("./LearnFromExpertSection"), {
+  loading: () => <SectionSkeleton />,
+});
+const LmsSection = dynamic(() => import("./LmsSection"), {
+  loading: () => <SectionSkeleton />,
+});
+const RecognizedBySection = dynamic(() => import("./RecognizedBySection"), {
   loading: () => <SectionSkeleton />,
 });
 const HowWeWorkSection = dynamic(() => import("./HowWeWorkSection"), {
@@ -19,16 +25,13 @@ const OurEdgeSection = dynamic(() => import("./OurEdgeSection"), {
 const PartnersSection = dynamic(() => import("./PartnersSection"), {
   loading: () => <SectionSkeleton />,
 });
-const LmsSection = dynamic(() => import("./LmsSection"), {
-  loading: () => <SectionSkeleton />,
-});
 const Testimonials = dynamic(() => import("./Testimonials"), {
   loading: () => <SectionSkeleton />,
 });
-const RecognizedBySection = dynamic(() => import("./RecognizedBySection"), {
+const CertificationSection = dynamic(() => import("./CertificationSection"), {
   loading: () => <SectionSkeleton />,
 });
-const JobPortalSection = dynamic(() => import("./JobPortalSection"), {
+const HomePricingSection = dynamic(() => import("./HomePricingSection"), {
   loading: () => <SectionSkeleton />,
 });
 const FaqSection = dynamic(() => import("./FaqSection"), {
@@ -61,7 +64,6 @@ export default function LandingPage() {
   const faqRef = useRef<HTMLDivElement>(null!);
   const footerRef = useRef<HTMLDivElement>(null!);
 
-  // Register section refs with scroll context
   useEffect(() => {
     setSectionRefs({
       ourEdge: ourEdgeRef,
@@ -73,7 +75,6 @@ export default function LandingPage() {
     });
   }, [setSectionRefs]);
 
-  // Handle scroll-to on navigation (from other pages)
   useEffect(() => {
     const scrollTo = searchParams.get("scrollTo") as SectionKey | null;
     if (scrollTo) {
@@ -86,17 +87,25 @@ export default function LandingPage() {
 
   return (
     <main className="overflow-x-hidden">
-      {/* Hero */}
+      {/* 1 — Hero */}
       <Hero />
 
-      {/* Offerings — Resume Builder & Project Hub */}
-      <OfferingsSection />
+      {/* 2 — Learn from Expert Mentors */}
+      <LearnFromExpertSection />
 
-      {/* How We Work — 5-step process */}
+      {/* 3 — Recognized By */}
+      <div ref={recognizedByRef}>
+        <RecognizedBySection />
+      </div>
+
+      {/* 4 — Enterprise / Powered-by (LMS infra) */}
+      <LmsSection />
+
+      {/* 5 — How We Work — 5-step process */}
       <HowWeWorkSection />
 
-      {/* Explore Programs CTA */}
-      <section className="section-padding bg-slate-50 dark:bg-slate-950">
+      {/* 6 — Explore Programs CTA */}
+      <section className="py-14 px-6 md:px-8 bg-slate-50 dark:bg-slate-950">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Programs</p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
@@ -123,41 +132,37 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Our Edge */}
+      {/* 7 — Our Edge */}
       <div ref={ourEdgeRef}>
         <OurEdgeSection />
       </div>
 
-      {/* Partners */}
+      {/* 8 — Partners / Alumni Companies */}
       <div ref={partnersRef}>
         <PartnersSection />
       </div>
 
-      {/* LMS Section */}
-      <LmsSection />
-
-      {/* Testimonials */}
+      {/* 9 — Testimonials */}
       <div ref={testimonialsRef}>
         <Testimonials />
       </div>
 
-      {/* Recognized By */}
-      <div ref={recognizedByRef}>
-        <RecognizedBySection />
-      </div>
+      {/* 10 — Certification (GET CERTIFIED. GET HIRED.) */}
+      <CertificationSection />
 
-      {/* Job Portal */}
-      <JobPortalSection />
+      {/* 11 — Pricing */}
+      <HomePricingSection />
 
-      {/* FAQ */}
+      {/* 11 — FAQ */}
       <div ref={faqRef}>
         <FaqSection />
       </div>
 
-      {/* Footer */}
+      {/* 12 — Footer */}
       <div ref={footerRef}>
         <FooterSection />
       </div>
     </main>
   );
 }
+
