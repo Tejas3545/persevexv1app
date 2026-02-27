@@ -4,10 +4,10 @@ import Image from "next/image";
 const partnersList = [
   { src: "/nsdc.png", alt: "NSDC" },
   { src: "/skill.png", alt: "Skill India" },
-  { src: "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/IIT_Guwahati_Logo.svg/1200px-IIT_Guwahati_Logo.svg.png", alt: "IIT Guwahati Alcheringa" },
+  { src: "/ALCHERINGA.png", alt: "IIT Guwahati Alcheringa 2026" },
   { src: "/nsdc.png", alt: "NSDC" },
   { src: "/skill.png", alt: "Skill India" },
-  { src: "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/IIT_Guwahati_Logo.svg/1200px-IIT_Guwahati_Logo.svg.png", alt: "IIT Guwahati Alcheringa" },
+  { src: "/ALCHERINGA.png", alt: "IIT Guwahati Alcheringa 2026" },
 ];
 
 export default function TrainingPartners() {
