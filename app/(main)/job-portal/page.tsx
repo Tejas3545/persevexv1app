@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -17,7 +17,10 @@ import {
   TrendingUp,
   Users,
   BadgeCheck,
-  ExternalLink,
+  Send,
+  Upload,
+  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -304,9 +307,225 @@ const SORT_OPTIONS: { label: string; value: SortKey }[] = [
   { label: "Highest Pay", value: "stipend" },
 ];
 
+// ─── Application Modal ───────────────────────────────────────────────────────
+function ApplicationModal({
+  job,
+  onClose,
+}: {
+  job: Job;
+  onClose: () => void;
+}) {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [resume, setResume] = useState<File | null>(null);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    // Simulate submission delay
+    await new Promise((r) => setTimeout(r, 1500));
+    setStatus("success");
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.25 }}
+        className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-5 border-b border-border bg-secondary/30">
+          <div className="flex items-center gap-3">
+            <div
+              className={`${job.accentBg} ${job.accentText} w-10 h-10 rounded-xl flex items-center justify-center text-xs font-black flex-shrink-0`}
+            >
+              {job.logo}
+            </div>
+            <div>
+              <h3 className="font-bold text-foreground text-sm leading-tight">
+                Apply for {job.role}
+              </h3>
+              <p className="text-xs text-muted-foreground">{job.company} · {job.location}</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="Close application form"
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+          >
+            <X size={16} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="p-5 max-h-[70vh] overflow-y-auto">
+          <AnimatePresence mode="wait">
+            {status === "success" ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-10"
+              >
+                <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 size={32} className="text-emerald-500" />
+                </div>
+                <h4 className="text-lg font-bold text-foreground mb-2">Application Submitted!</h4>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Your application for <span className="font-semibold text-foreground">{job.role}</span> at{" "}
+                  <span className="font-semibold text-foreground">{job.company}</span> has been received.
+                  We&apos;ll get back to you soon.
+                </p>
+                <button
+                  onClick={onClose}
+                  className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors"
+                >
+                  Done
+                </button>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onSubmit={handleSubmit}
+                className="space-y-4"
+              >
+                {/* Name */}
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="Enter your full name"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="you@example.com"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    placeholder="+91 9876543210"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+                  />
+                </div>
+
+                {/* Resume Upload */}
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Upload Resume <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    required
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => setResume(e.target.files?.[0] ?? null)}
+                    className="hidden"
+                    aria-label="Upload resume file"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileRef.current?.click()}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-dashed border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5 transition-all text-sm text-muted-foreground"
+                  >
+                    <Upload size={16} className="flex-shrink-0" />
+                    {resume ? (
+                      <span className="text-foreground font-medium truncate">{resume.name}</span>
+                    ) : (
+                      <span>PDF, DOC, or DOCX (max 5 MB)</span>
+                    )}
+                  </button>
+                </div>
+
+                {/* Cover message */}
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Cover Message <span className="text-muted-foreground font-normal">(optional)</span>
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    placeholder="Why are you a great fit for this role?"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all resize-none"
+                  />
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors shadow-md shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {status === "submitting" ? (
+                    <>
+                      <Loader2 size={15} className="animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={14} />
+                      Submit Application
+                    </>
+                  )}
+                </button>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 // ─── Job Card ────────────────────────────────────────────────────────────────
 function JobCard({ job, index }: { job: Job; index: number }) {
   const [expanded, setExpanded] = useState(false);
+  const [showApplyModal, setShowApplyModal] = useState(false);
 
 
   return (
@@ -403,19 +622,23 @@ function JobCard({ job, index }: { job: Job; index: number }) {
               {expanded ? "Less" : "Details"}
               <ChevronDown size={10} className={`transition-transform ${expanded ? "rotate-180" : ""}`} />
             </button>
-            <a
-              href={job.applyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowApplyModal(true); }}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm shadow-primary/30"
-              onClick={(e) => e.stopPropagation()}
             >
               Apply
-              <ExternalLink size={11} />
-            </a>
+              <Send size={11} />
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Application Modal */}
+      <AnimatePresence>
+        {showApplyModal && (
+          <ApplicationModal job={job} onClose={() => setShowApplyModal(false)} />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -503,8 +726,8 @@ export default function JobPortalPage() {
             className="text-muted-foreground text-base md:text-lg max-w-xl leading-relaxed mb-8"
           >
             Curated openings from verified hiring partners — each one accepting
-            applications right now. Click Apply to go directly to the company's
-            official career portal.
+            applications right now. Click Apply to submit your application
+            directly through our platform.
           </motion.p>
 
           {/* Search Bar */}

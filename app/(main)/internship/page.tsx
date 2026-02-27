@@ -189,7 +189,7 @@ export default function UserLoginPage() {
                       onClick={() => setPayment('reserve')}
                     >
                       <div className="font-semibold mb-1">Reserve seat</div>
-                      <div className={`text-sm ${payment === 'reserve' ? 'text-primary-foreground/90' : 'text-muted-foreground'}`}>₹1,500 now</div>
+                      <div className={`text-sm ${payment === 'reserve' ? 'text-primary-foreground/90' : 'text-muted-foreground'}`}>₹1,000 now</div>
                     </div>
                     <div 
                       className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${payment === 'full' ? 'border-primary bg-primary text-primary-foreground' : 'border-border hover:border-primary/50 bg-background'}`} 
@@ -236,7 +236,7 @@ export default function UserLoginPage() {
                     disabled={loading}
                     className="w-full py-3.5 bg-[#4F81FF] hover:bg-[#3b6ceb] text-white font-semibold rounded-xl transition-all shadow-md flex justify-center items-center gap-2"
                   >
-                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : `Pay ${payment === 'reserve' ? '₹1,500 • Reserve seat' : `₹${plan === 'advanced' ? '4,500' : '3,500'} • Pay in full`}`}
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : `Pay ${payment === 'reserve' ? '₹1,000 • Reserve seat' : `₹${plan === 'advanced' ? '4,500' : '3,500'} • Pay in full`}`}
                   </button>
                   <p className="text-xs text-muted-foreground font-medium">Secure checkout • Instant access</p>
                 </div>

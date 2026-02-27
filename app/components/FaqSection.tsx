@@ -153,7 +153,7 @@ export default function FaqSection() {
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
-              href="/support"
+              href="/support#support-form"
               className="btn-primary text-sm inline-flex items-center gap-2 px-6 py-3 rounded-full"
             >
               Get in touch

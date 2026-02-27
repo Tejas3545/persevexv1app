@@ -389,7 +389,7 @@ export default function SupportPage() {
       </section>
 
       {/* Submit Ticket */}
-      <section className="section-padding bg-white dark:bg-slate-900">
+      <section id="support-form" className="scroll-mt-20 section-padding bg-white dark:bg-slate-900">
         <div className="max-w-2xl mx-auto px-6 md:px-10">
           <div className="text-center mb-12">
             <motion.span

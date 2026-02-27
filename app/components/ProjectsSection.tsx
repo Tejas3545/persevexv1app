@@ -1,25 +1,53 @@
 import { ProjectsType } from '../constants/courseConstant';
 
-const ProjectCard = ({ name, description }: { name: string; description: string; image: string }) => {
+const TagList = ({ label, items }: { label: string; items?: string[] }) => {
+    if (!items || items.length === 0) return null;
     return (
-        <div className="relative shrink-0 w-72 mx-4 rounded-2xl overflow-hidden 
+        <div className="mt-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-primary/80 mb-1.5">{label}</p>
+            <div className="flex flex-wrap gap-1">
+                {items.map((item) => (
+                    <span
+                        key={item}
+                        className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-secondary text-muted-foreground border border-border"
+                    >
+                        {item}
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const ProjectCard = ({ name, description, techStack, tools, skills }: ProjectsType) => {
+    const hasMeta = (techStack && techStack.length > 0) || (tools && tools.length > 0) || (skills && skills.length > 0);
+    return (
+        <div className="relative shrink-0 w-80 mx-4 rounded-2xl overflow-hidden 
                        bg-background backdrop-blur-sm border border-border
                        transition-all duration-500 ease-out
                        hover:shadow-2xl hover:shadow-primary/10
                        hover:border-primary/30 group
                        whitespace-normal">
             
-            <div className="p-6 flex flex-col justify-between min-h-[180px]">
+            <div className="p-6 flex flex-col justify-between min-h-[220px]">
                 <div>
                     <div className="w-8 h-1 bg-primary rounded-full mb-4 group-hover:w-16 transition-all duration-300" />
-                    <h3 className="text-lg font-bold text-foreground mb-3 
+                    <h3 className="text-lg font-bold text-foreground mb-2 
                                    line-clamp-2 leading-tight">
                         {name}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed 
-                                  line-clamp-4">
+                                  line-clamp-3">
                         {description}
                     </p>
+
+                    {hasMeta && (
+                        <div className="mt-3 pt-3 border-t border-border/50">
+                            <TagList label="Tech Stack" items={techStack} />
+                            <TagList label="Tools" items={tools} />
+                            <TagList label="Skills" items={skills} />
+                        </div>
+                    )}
                 </div>
                 
                 <div className="flex items-center justify-between mt-5">

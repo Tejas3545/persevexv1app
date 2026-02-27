@@ -156,10 +156,29 @@ export default function Navbar() {
 
   const searchResults =
     searchQuery.trim().length > 0
-      ? allCourseItems.filter((item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        ).slice(0, 8)
+      ? (() => {
+          const q = searchQuery.toLowerCase();
+          // Check if query matches a domain/branch name
+          const matchedBranch = internshipProgramCategories.find(
+            (cat) => cat.branch.toLowerCase().includes(q)
+          );
+          if (matchedBranch) {
+            return matchedBranch.items.filter((i) => i.name !== "Coming Soon").slice(0, 8);
+          }
+          // Otherwise filter by individual course name
+          return allCourseItems.filter((item) =>
+            item.name.toLowerCase().includes(q)
+          ).slice(0, 8);
+        })()
       : [];
+
+  /** Domain suggestions shown when search is focused but empty */
+  const domainSuggestions = internshipProgramCategories.map((cat) => ({
+    branch: cat.branch,
+    count: cat.items.filter((i) => i.name !== "Coming Soon").length,
+    firstHref: cat.items[0]?.href ?? "#",
+    items: cat.items.filter((i) => i.name !== "Coming Soon"),
+  }));
 
   const mobileMenuVariants: Variants = {
     hidden: { opacity: 0, x: "100%", transition: { duration: 0.3, ease: "easeOut" } },
@@ -193,19 +212,11 @@ export default function Navbar() {
           onClick={handleGoHome}
         >
           <Image
-            src="/logo.png"
+            src="/persevexlogo.png"
             alt="Persevex"
             width={44}
             height={44}
-            className="h-11 w-auto object-contain block dark:hidden"
-            priority
-          />
-          <Image
-            src="/whitelogo.png"
-            alt="Persevex"
-            width={44}
-            height={44}
-            className="h-11 w-auto object-contain hidden dark:block"
+            className="h-11 w-auto object-contain"
             priority
           />
         </Link>
@@ -320,6 +331,32 @@ export default function Navbar() {
             </AnimatePresence>
 
             {/* Search Dropdown Results */}
+            <AnimatePresence>
+              {isSearchOpen && searchQuery.trim().length === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-2 w-80 bg-card border border-border rounded-2xl shadow-xl overflow-hidden z-50"
+                >
+                  <div className="px-4 py-2.5 border-b border-border/60">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Browse by Domain</p>
+                  </div>
+                  {domainSuggestions.map((domain) => (
+                    <button
+                      key={domain.branch}
+                      onClick={() => setSearchQuery(domain.branch)}
+                      className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-accent text-sm text-foreground hover:text-primary transition-colors border-b border-border/20 last:border-0"
+                    >
+                      <span className="font-medium">{domain.branch}</span>
+                      <span className="text-[10px] font-semibold text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{domain.count} courses</span>
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <AnimatePresence>
               {isSearchOpen && searchResults.length > 0 && (
                 <motion.div

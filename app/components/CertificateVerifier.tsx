@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -114,7 +114,7 @@ function Verifier() {
           <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
             <div 
               className="bg-primary h-2.5 rounded-full transition-all duration-500 ease-in-out" 
-              style={{ width: `${loadingState.percent}%` }}
+              ref={(el) => { if (el) el.style.width = `${loadingState.percent}%`; }}
             />
           </div>
         </div>
@@ -136,7 +136,7 @@ function Verifier() {
         
         <header className="flex items-center gap-4 mb-8">
           <div className="w-12 h-12 flex items-center justify-center bg-muted rounded-full">
-            <img src="/whitelogo.png" alt="Persevex Logo" className="w-12 h-12 rounded-full"/>
+            <img src="/persevexlogo.png" alt="Persevex Logo" className="w-12 h-12 rounded-full"/>
           </div>
           <div>
             <div className="text-xl font-bold text-foreground">Persevex CertiCheck</div>

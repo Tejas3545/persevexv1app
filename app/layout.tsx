@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Persevex",
     images: [
       {
-        url: "/logo.png",
+        url: "/persevexlogo.png",
         width: 1200,
         height: 630,
         alt: "Persevex Logo",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: "Persevex | Empowering Careers",
     description:
       "Experience hands-on learning with expert-curated courses, AI guidance, and career-ready outcomes.",
-    images: ["/logo.png"],
+    images: ["/persevexlogo.png"],
   },
 };
 
@@ -77,7 +77,7 @@ export default function RootLayout({
                 "@type": "Organization",
                 name: "Persevex",
                 url: "https://persevex.com",
-                logo: "https://persevex.com/logo.png",
+                logo: "https://persevex.com/persevexlogo.png",
               }),
             }}
           />

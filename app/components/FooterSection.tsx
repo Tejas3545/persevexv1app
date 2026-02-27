@@ -91,18 +91,11 @@ export default function FooterSection() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
             <Link href="/" className="mb-4 inline-flex">
               <Image
-                src="/logo.png"
+                src="/persevexlogo.png"
                 alt="Persevex"
                 width={48}
                 height={48}
-                className="h-12 w-auto object-contain block dark:hidden"
-              />
-              <Image
-                src="/whitelogo.png"
-                alt="Persevex"
-                width={48}
-                height={48}
-                className="h-12 w-auto object-contain hidden dark:block"
+                className="h-12 w-auto object-contain"
               />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">

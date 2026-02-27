@@ -23,6 +23,9 @@ export interface ProjectsType {
   name: string;
   description: string;
   image: string;
+  techStack?: string[];
+  tools?: string[];
+  skills?: string[];
 }
 
 export interface CourseType {
@@ -91,6 +94,9 @@ export const managementCourses: CourseType[] = [
           "Create and optimize email marketing campaigns to drive conversions and customer engagement.",
         image:
           "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Mailchimp", "HTML/CSS", "SendGrid"],
+        tools: ["Mailchimp", "Google Analytics", "Litmus"],
+        skills: ["Email Automation", "A/B Testing", "Conversion Optimization"],
       },
       {
         name: "Social Media Campaign",
@@ -98,6 +104,9 @@ export const managementCourses: CourseType[] = [
           "Develop and execute a comprehensive social media marketing campaign across multiple platforms.",
         image:
           "https://images.unsplash.com/photo-1611926653458-09294b3142bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Meta Business Suite", "Hootsuite", "Canva"],
+        tools: ["Buffer", "Hootsuite", "Canva"],
+        skills: ["Social Media Strategy", "Content Creation", "Audience Targeting"],
       },
       {
         name: "SEO Optimization",
@@ -105,6 +114,9 @@ export const managementCourses: CourseType[] = [
           "Implement SEO strategies to improve website ranking and organic traffic.",
         image:
           "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["SEMrush", "Ahrefs", "Google Search Console"],
+        tools: ["SEMrush", "Ahrefs", "Screaming Frog"],
+        skills: ["Keyword Research", "On-Page SEO", "Technical SEO"],
       },
       {
         name: "Content Marketing",
@@ -112,6 +124,9 @@ export const managementCourses: CourseType[] = [
           "Create and distribute valuable content to attract and engage a target audience.",
         image:
           "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["WordPress", "HubSpot", "Google Analytics"],
+        tools: ["WordPress", "Grammarly", "BuzzSumo"],
+        skills: ["Content Strategy", "Copywriting", "Editorial Planning"],
       },
       {
         name: "Google Ads Campaign",
@@ -119,6 +134,9 @@ export const managementCourses: CourseType[] = [
           "Set up and optimize Google Ads campaigns to drive targeted traffic and conversions.",
         image:
           "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Google Ads", "Google Tag Manager", "Google Analytics"],
+        tools: ["Google Ads", "Google Keyword Planner", "Optmyzr"],
+        skills: ["PPC Advertising", "Bid Management", "Campaign Optimization"],
       },
       {
         name: "Analytics Dashboard",
@@ -126,6 +144,9 @@ export const managementCourses: CourseType[] = [
           "Build a comprehensive analytics dashboard to track and report on marketing performance.",
         image:
           "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Google Analytics", "Google Data Studio", "BigQuery"],
+        tools: ["Google Data Studio", "Microsoft Excel", "Tableau"],
+        skills: ["Data Analysis", "KPI Tracking", "Marketing Reporting"],
       },
     ],
     modules: [
@@ -247,6 +268,9 @@ export const managementCourses: CourseType[] = [
           "Develop a comprehensive recruitment strategy for different organizational needs.",
         image:
           "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["LinkedIn Recruiter", "ATS Systems", "Indeed"],
+        tools: ["LinkedIn Recruiter", "Workday", "Greenhouse"],
+        skills: ["Talent Sourcing", "Employer Branding", "Interview Design"],
       },
       {
         name: "Performance Management",
@@ -254,6 +278,9 @@ export const managementCourses: CourseType[] = [
           "Design a performance management system with evaluation metrics and feedback mechanisms.",
         image:
           "https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["SAP SuccessFactors", "BambooHR", "Microsoft 365"],
+        tools: ["BambooHR", "Microsoft Excel", "15Five"],
+        skills: ["KPI Development", "360-Degree Feedback", "Performance Appraisal"],
       },
       {
         name: "Employee Engagement",
@@ -261,6 +288,9 @@ export const managementCourses: CourseType[] = [
           "Create employee engagement initiatives to improve workplace satisfaction and productivity.",
         image:
           "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["SurveyMonkey", "Slack", "Microsoft Teams"],
+        tools: ["SurveyMonkey", "Culture Amp", "Officevibe"],
+        skills: ["Employee Retention", "Workplace Culture", "Survey Design"],
       },
       {
         name: "HR Analytics",
@@ -268,6 +298,9 @@ export const managementCourses: CourseType[] = [
           "Analyze HR data to derive insights for strategic decision-making.",
         image:
           "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "Power BI", "SAP SuccessFactors"],
+        tools: ["Microsoft Excel", "Power BI", "Tableau"],
+        skills: ["Data Analysis", "Workforce Planning", "Predictive Analytics"],
       },
       {
         name: "Training Program",
@@ -275,6 +308,9 @@ export const managementCourses: CourseType[] = [
           "Design and implement a comprehensive training program for employee development.",
         image:
           "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Moodle", "Articulate 360", "Microsoft Teams"],
+        tools: ["Articulate 360", "Canva", "Zoom"],
+        skills: ["Instructional Design", "L&D Strategy", "Needs Assessment"],
       },
       {
         name: "Compensation Structure",
@@ -282,6 +318,9 @@ export const managementCourses: CourseType[] = [
           "Develop a competitive compensation and benefits structure aligned with market standards.",
         image:
           "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["PayScale", "SAP HCM", "Microsoft Excel"],
+        tools: ["PayScale", "Microsoft Excel", "Mercer WIN"],
+        skills: ["Salary Benchmarking", "Benefits Design", "Compensation Analysis"],
       },
     ],
     modules: [
@@ -382,6 +421,9 @@ export const managementCourses: CourseType[] = [
           "Build comprehensive financial models for business valuation and forecasting.",
         image:
           "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Microsoft Excel", "VBA", "Python"],
+        tools: ["Microsoft Excel", "Bloomberg Terminal", "Capital IQ"],
+        skills: ["Financial Modeling", "DCF Valuation", "Forecasting"],
       },
       {
         name: "Investment Analysis",
@@ -389,6 +431,9 @@ export const managementCourses: CourseType[] = [
           "Analyze investment opportunities using various valuation methods and risk assessment.",
         image:
           "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "Bloomberg API", "SQL"],
+        tools: ["Bloomberg Terminal", "Morningstar", "Microsoft Excel"],
+        skills: ["Equity Valuation", "Fundamental Analysis", "Risk Assessment"],
       },
       {
         name: "M&A Valuation",
@@ -396,6 +441,9 @@ export const managementCourses: CourseType[] = [
           "Perform merger and acquisition analysis including synergy valuation and deal structuring.",
         image:
           "https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Microsoft Excel", "Capital IQ", "PitchBook"],
+        tools: ["Capital IQ", "PitchBook", "Microsoft PowerPoint"],
+        skills: ["M&A Analysis", "Synergy Valuation", "Deal Structuring"],
       },
       {
         name: "Portfolio Management",
@@ -403,6 +451,9 @@ export const managementCourses: CourseType[] = [
           "Create and optimize investment portfolios based on risk-return objectives.",
         image:
           "https://images.unsplash.com/photo-1642543348745-03b1219733d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "R", "Bloomberg API"],
+        tools: ["Bloomberg Terminal", "Refinitiv Eikon", "Microsoft Excel"],
+        skills: ["Asset Allocation", "Portfolio Optimization", "Risk-Return Analysis"],
       },
       {
         name: "Financial Planning",
@@ -410,6 +461,9 @@ export const managementCourses: CourseType[] = [
           "Develop comprehensive financial plans for individuals or businesses.",
         image:
           "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Microsoft Excel", "QuickBooks", "Tally"],
+        tools: ["Microsoft Excel", "QuickBooks", "eMoney Advisor"],
+        skills: ["Budgeting", "Cash Flow Analysis", "Tax Planning"],
       },
       {
         name: "Risk Analysis",
@@ -417,6 +471,9 @@ export const managementCourses: CourseType[] = [
           "Identify, assess, and mitigate financial risks using quantitative methods.",
         image:
           "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "R", "MATLAB"],
+        tools: ["@RISK", "Microsoft Excel", "SAS"],
+        skills: ["Risk Modeling", "Monte Carlo Simulation", "Stress Testing"],
       },
     ],
     modules: [
@@ -517,6 +574,9 @@ export const managementCourses: CourseType[] = [
           "Conduct in-depth analysis of a publicly traded company and produce a professional research report.",
         image:
           "https://images.unsplash.com/photo-1559526324-c1f275fbfa32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Excel", "Python", "Bloomberg Terminal"],
+        tools: ["Yahoo Finance", "SEC EDGAR", "Finviz"],
+        skills: ["Fundamental Analysis", "Financial Modeling", "Equity Valuation"],
       },
       {
         name: "Crypto Portfolio Strategy",
@@ -524,6 +584,9 @@ export const managementCourses: CourseType[] = [
           "Develop a diversified cryptocurrency portfolio based on fundamental analysis and risk tolerance.",
         image:
           "https://images.unsplash.com/photo-1639754390580-2e7437267698?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y3J5cHRvY3VycmVuY3l8ZW58MHx8MHx8fDA%3D",
+        techStack: ["Python", "CoinGecko API", "Pandas"],
+        tools: ["CoinMarketCap", "Glassnode", "TradingView"],
+        skills: ["On-Chain Analysis", "Portfolio Diversification", "Risk Assessment"],
       },
       {
         name: "Technical Analysis Trading Plan",
@@ -531,6 +594,9 @@ export const managementCourses: CourseType[] = [
           "Create a rule-based trading plan using technical indicators like MACD, RSI, and Moving Averages.",
         image:
           "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["TradingView", "Pine Script", "Python"],
+        tools: ["MetaTrader 5", "TradingView", "Zerodha Streak"],
+        skills: ["Technical Analysis", "Chart Pattern Recognition", "Backtesting"],
       },
       {
         name: "Options Trading Strategy",
@@ -538,6 +604,9 @@ export const managementCourses: CourseType[] = [
           "Design and backtest an options trading strategy, such as a covered call or a credit spread.",
         image:
           "https://images.unsplash.com/photo-1640340434855-6084b1f4901c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "NumPy", "QuantLib"],
+        tools: ["Opstra", "Sensibull", "Thinkorswim"],
+        skills: ["Options Pricing", "Risk Management", "Greeks Analysis"],
       },
       {
         name: "DeFi Yield Farming Simulation",
@@ -545,6 +614,9 @@ export const managementCourses: CourseType[] = [
           "Analyze and simulate a yield farming strategy on a decentralized finance (DeFi) protocol.",
         image:
           "https://images.unsplash.com/photo-1694219782948-afcab5c095d3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8RGVGaXxlbnwwfHwwfHx8MA%3D%3D",
+        techStack: ["Solidity", "Web3.js", "Ethereum"],
+        tools: ["Aave", "Uniswap", "DeBank"],
+        skills: ["DeFi Protocol Analysis", "Yield Optimization", "Smart Contract Interaction"],
       },
       {
         name: "Market Sentiment Analysis",
@@ -552,6 +624,9 @@ export const managementCourses: CourseType[] = [
           "Use tools to analyze market sentiment from social media and news to predict price movements.",
         image:
           "https://images.unsplash.com/photo-1639825752750-5061ded5503b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1hcmtldCUyMHNlbnRpbWVudCUyMGFuYWx5c2lzfGVufDB8fDB8fHww",
+        techStack: ["Python", "NLP", "Twitter API"],
+        tools: ["LunarCrush", "Santiment", "Google Trends"],
+        skills: ["Sentiment Analysis", "Data Scraping", "Predictive Modeling"],
       },
     ],
     modules: [
@@ -672,6 +747,9 @@ export const managementCourses: CourseType[] = [
           "Design an optimal distribution network to minimize costs while maximizing service levels using linear programming.",
         image:
           "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "PuLP", "Excel Solver"],
+        tools: ["SAP SCM", "Llamasoft", "Google OR-Tools"],
+        skills: ["Linear Programming", "Network Design", "Cost Optimization"],
       },
       {
         name: "Inventory Forecasting System",
@@ -679,6 +757,9 @@ export const managementCourses: CourseType[] = [
           "Build a demand forecasting tool to calculate safety stock, reorder points, and economic order quantities (EOQ).",
         image:
           "https://images.unsplash.com/photo-1553413077-190dd305871c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "Pandas", "Scikit-learn"],
+        tools: ["SAP ERP", "Oracle NetSuite", "Power BI"],
+        skills: ["Demand Forecasting", "Inventory Control", "Statistical Modeling"],
       },
       {
         name: "Strategic Sourcing Plan",
@@ -686,6 +767,9 @@ export const managementCourses: CourseType[] = [
           "Develop a comprehensive procurement strategy including supplier selection matrices and risk assessment.",
         image:
           "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Excel", "Power BI", "SAP Ariba"],
+        tools: ["Coupa", "Jaggaer", "Spend Analytics"],
+        skills: ["Vendor Evaluation", "Contract Negotiation", "Risk Assessment"],
       },
       {
         name: "Warehouse Layout Design",
@@ -693,6 +777,9 @@ export const managementCourses: CourseType[] = [
           "Create a 2D/3D warehouse layout aimed at optimizing picking paths and storage efficiency.",
         image:
           "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["AutoCAD", "Python", "SimPy"],
+        tools: ["Manhattan WMS", "SketchUp", "FlexSim"],
+        skills: ["Warehouse Optimization", "Slotting Analysis", "Process Simulation"],
       },
       {
         name: "Last-Mile Delivery Route",
@@ -700,6 +787,9 @@ export const managementCourses: CourseType[] = [
           "Analyze and optimize last-mile delivery routes for a logistics fleet to reduce fuel consumption and delivery time.",
         image:
           "https://images.unsplash.com/photo-1616432043562-3671ea2e5242?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "Google Maps API", "NetworkX"],
+        tools: ["Route4Me", "OptimoRoute", "QGIS"],
+        skills: ["Route Optimization", "GIS Mapping", "Vehicle Routing Problem (VRP)"],
       },
       {
         name: "Green Supply Chain Audit",
@@ -707,6 +797,9 @@ export const managementCourses: CourseType[] = [
           "Conduct a sustainability audit and propose strategies to reduce the carbon footprint of a supply chain.",
         image:
           "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Excel", "Power BI", "Python"],
+        tools: ["GaBi", "SimaPro", "EcoVadis"],
+        skills: ["Life Cycle Assessment", "Carbon Footprint Analysis", "Sustainability Reporting"],
       },
     ],
     modules: [
@@ -881,11 +974,17 @@ export const managementCourses: CourseType[] = [
         name: "Sales Performance Dashboard",
         description: "Build an interactive Power BI dashboard analyzing sales performance across regions and products.",
         image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Power BI", "DAX", "SQL"],
+        tools: ["Power BI Desktop", "Excel", "Azure SQL"],
+        skills: ["Data Visualization", "KPI Tracking", "Dashboard Design"],
       },
       {
         name: "Customer Churn Analysis",
         description: "Analyze customer data to identify churn patterns and build a predictive model.",
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["Python", "Scikit-learn", "Pandas"],
+        tools: ["Jupyter Notebook", "Tableau", "Google Colab"],
+        skills: ["Predictive Modeling", "Customer Segmentation", "Exploratory Data Analysis"],
       },
     ],
   },
@@ -927,12 +1026,18 @@ export const technicalCourses: CourseType[] = [
           "Build a modern, responsive portfolio website using HTML, CSS, and JavaScript.",
         image:
           "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["HTML5", "CSS3", "JavaScript"],
+        tools: ["VS Code", "GitHub Pages", "Chrome DevTools"],
+        skills: ["Responsive Design", "CSS Animations", "Semantic HTML"],
       },
       {
         name: "Social Media Application",
         description:
           "Build a complete Twitter clone from scratch with ReactJS, NodeJS and ExpressJS.",
         image: "/social-media-project-image.jpg",
+        techStack: ["React.js", "Node.js", "Express.js"],
+        tools: ["VS Code", "Postman", "MongoDB Compass"],
+        skills: ["Full Stack Development", "RESTful API Design", "State Management"],
       },
       {
         name: "Admin Dashboard",
@@ -940,6 +1045,9 @@ export const technicalCourses: CourseType[] = [
           "Create an interactive admin dashboard with data visualization, user management, and analytics.",
         image:
           "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["React.js", "Chart.js", "Tailwind CSS"],
+        tools: ["VS Code", "Figma", "Git"],
+        skills: ["Data Visualization", "UI/UX Design", "Component Architecture"],
       },
       {
         name: "Content Management System",
@@ -947,6 +1055,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a custom CMS for managing website content, users, and media files.",
         image:
           "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Next.js", "PostgreSQL", "Prisma"],
+        tools: ["VS Code", "Docker", "pgAdmin"],
+        skills: ["Database Design", "Authentication & Authorization", "CRUD Operations"],
       },
       {
         name: "Restful API service",
@@ -954,6 +1065,9 @@ export const technicalCourses: CourseType[] = [
           "Create a robust API service with authentication, data validation, and comprehensive documentation.",
         image:
           "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Node.js", "Express.js", "MongoDB"],
+        tools: ["Postman", "Swagger", "Docker"],
+        skills: ["RESTful API Design", "JWT Authentication", "API Documentation"],
       },
       {
         name: "E-commerce Platform",
@@ -961,6 +1075,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a full-featured e-commerce website with product listings, cart functionality, and checkout process.",
         image:
           "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Next.js", "Stripe API", "MongoDB"],
+        tools: ["VS Code", "Stripe Dashboard", "Vercel"],
+        skills: ["Payment Integration", "Shopping Cart Logic", "Full Stack Development"],
       },
     ],
     modules: [
@@ -1062,6 +1179,9 @@ export const technicalCourses: CourseType[] = [
           "Build an AI system that can identify and classify objects in images with high accuracy.",
         image:
           "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "TensorFlow", "OpenCV"],
+        tools: ["Jupyter Notebook", "Google Colab", "TensorBoard"],
+        skills: ["Computer Vision", "Convolutional Neural Networks", "Image Processing"],
       },
       {
         name: "Intelligent Chatbot",
@@ -1069,6 +1189,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a conversational AI chatbot that can understand and respond to user queries naturally.",
         image:
           "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Transformers", "Flask"],
+        tools: ["Hugging Face", "Jupyter Notebook", "Postman"],
+        skills: ["Natural Language Processing", "Sequence-to-Sequence Models", "API Development"],
       },
       {
         name: "Predictive Analytics",
@@ -1076,6 +1199,9 @@ export const technicalCourses: CourseType[] = [
           "Create AI models that can forecast trends and make predictions based on historical data.",
         image:
           "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Scikit-learn", "Pandas"],
+        tools: ["Jupyter Notebook", "Google Colab", "Matplotlib"],
+        skills: ["Time Series Forecasting", "Regression Analysis", "Feature Engineering"],
       },
       {
         name: "Recommendation System",
@@ -1083,6 +1209,9 @@ export const technicalCourses: CourseType[] = [
           "Build an AI-powered recommendation engine similar to those used by Netflix and Amazon.",
         image:
           "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "TensorFlow", "NumPy"],
+        tools: ["Jupyter Notebook", "MLflow", "VS Code"],
+        skills: ["Collaborative Filtering", "Content-Based Filtering", "Matrix Factorization"],
       },
       {
         name: "Sentiment Analysis",
@@ -1090,6 +1219,9 @@ export const technicalCourses: CourseType[] = [
           "Develop an AI system that can analyze text to determine the emotional tone and sentiment.",
         image:
           "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "NLTK", "PyTorch"],
+        tools: ["Jupyter Notebook", "Hugging Face", "Weights & Biases"],
+        skills: ["Natural Language Processing", "Text Classification", "Deep Learning"],
       },
       {
         name: "Facial Recognition",
@@ -1097,6 +1229,9 @@ export const technicalCourses: CourseType[] = [
           "Create an AI system that can detect and recognize faces in images and video streams.",
         image:
           "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "OpenCV", "dlib"],
+        tools: ["Jupyter Notebook", "Google Colab", "LabelImg"],
+        skills: ["Face Detection", "Neural Networks", "Real-Time Video Processing"],
       },
     ],
     programCardsHeading: [
@@ -1205,6 +1340,9 @@ export const technicalCourses: CourseType[] = [
           "Build a recommendation engine that suggests products based on user behavior and preferences.",
         image:
           "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Scikit-learn", "Pandas"],
+        tools: ["Jupyter Notebook", "MLflow", "VS Code"],
+        skills: ["Collaborative Filtering", "Feature Engineering", "Model Evaluation"],
       },
       {
         name: "Image Classification",
@@ -1212,6 +1350,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a model that can accurately classify images into different categories using CNNs.",
         image:
           "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "TensorFlow", "Keras"],
+        tools: ["Google Colab", "TensorBoard", "Jupyter Notebook"],
+        skills: ["Convolutional Neural Networks", "Transfer Learning", "Image Preprocessing"],
       },
       {
         name: "Sentiment Analysis",
@@ -1219,6 +1360,9 @@ export const technicalCourses: CourseType[] = [
           "Create a model that can analyze text data to determine sentiment and emotional tone.",
         image:
           "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "NLTK", "Scikit-learn"],
+        tools: ["Jupyter Notebook", "Hugging Face", "Google Colab"],
+        skills: ["Text Classification", "Natural Language Processing", "Data Preprocessing"],
       },
       {
         name: "Customer Churn Prediction",
@@ -1226,6 +1370,9 @@ export const technicalCourses: CourseType[] = [
           "Build a model to predict which customers are likely to cancel a subscription or service.",
         image:
           "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "XGBoost", "Pandas"],
+        tools: ["Jupyter Notebook", "Matplotlib", "Seaborn"],
+        skills: ["Binary Classification", "Feature Importance Analysis", "Hyperparameter Tuning"],
       },
       {
         name: "Stock Price Prediction",
@@ -1233,6 +1380,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a time series forecasting model to predict stock prices using historical data.",
         image:
           "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "TensorFlow", "NumPy"],
+        tools: ["Jupyter Notebook", "Google Colab", "Plotly"],
+        skills: ["Time Series Forecasting", "LSTM Networks", "Data Normalization"],
       },
       {
         name: "Intelligent Chatbot",
@@ -1240,6 +1390,9 @@ export const technicalCourses: CourseType[] = [
           "Create a conversational AI chatbot using natural language processing and machine learning.",
         image:
           "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Rasa", "SpaCy"],
+        tools: ["VS Code", "Docker", "Postman"],
+        skills: ["Natural Language Understanding", "Dialog Management", "Intent Classification"],
       },
     ],
     modules: [
@@ -1345,6 +1498,9 @@ export const technicalCourses: CourseType[] = [
           "Deploy a scalable and secure 3-tier web application using virtual machines, databases, and load balancers on a major cloud platform.",
         image:
           "https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["AWS", "EC2", "RDS"],
+        tools: ["AWS Console", "AWS CLI", "CloudFormation"],
+        skills: ["Cloud Architecture", "Load Balancing", "High Availability"],
       },
       {
         name: "Build a Serverless Application",
@@ -1352,6 +1508,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a serverless application using AWS Lambda, Azure Functions, or Google Cloud Functions to process data or power a backend API.",
         image:
           "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["AWS Lambda", "API Gateway", "DynamoDB"],
+        tools: ["AWS SAM", "Serverless Framework", "Postman"],
+        skills: ["Serverless Architecture", "Event-Driven Design", "API Development"],
       },
       {
         name: "Automate Infrastructure with Terraform",
@@ -1359,6 +1518,9 @@ export const technicalCourses: CourseType[] = [
           "Use Terraform to define and provision a complete cloud infrastructure as code, enabling repeatable and consistent deployments.",
         image:
           "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Terraform", "AWS", "HCL"],
+        tools: ["Terraform CLI", "VS Code", "Git"],
+        skills: ["Infrastructure as Code", "State Management", "Cloud Provisioning"],
       },
       {
         name: "Create a CI/CD Pipeline for a Web App",
@@ -1366,6 +1528,9 @@ export const technicalCourses: CourseType[] = [
           "Implement a continuous integration and continuous delivery (CI/CD) pipeline to automate the building, testing, and deployment of a web application to the cloud.",
         image:
           "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["GitHub Actions", "Docker", "AWS ECS"],
+        tools: ["GitHub", "Docker Hub", "AWS CodePipeline"],
+        skills: ["CI/CD Pipelines", "Containerization", "Automated Testing"],
       },
       {
         name: "Static Website Hosting",
@@ -1373,6 +1538,9 @@ export const technicalCourses: CourseType[] = [
           "Host a static website on a cloud storage service like Amazon S3, Azure Blob Storage, or Google Cloud Storage.",
         image:
           "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["AWS S3", "CloudFront", "Route 53"],
+        tools: ["AWS Console", "AWS CLI", "VS Code"],
+        skills: ["Static Hosting", "CDN Configuration", "DNS Management"],
       },
       {
         name: "Cloud Monitoring and Alerting",
@@ -1380,6 +1548,9 @@ export const technicalCourses: CourseType[] = [
           "Set up monitoring and alerting for a cloud environment to track resource utilization, performance, and security events.",
         image:
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["AWS CloudWatch", "Grafana", "Prometheus"],
+        tools: ["CloudWatch Console", "Grafana Dashboard", "PagerDuty"],
+        skills: ["Cloud Monitoring", "Alert Configuration", "Performance Optimization"],
       },
     ],
     modules: [
@@ -1480,6 +1651,9 @@ export const technicalCourses: CourseType[] = [
           "Conduct comprehensive network security assessments to identify vulnerabilities and recommend solutions.",
         image:
           "https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Nmap", "Nessus", "Python"],
+        tools: ["Wireshark", "Nmap", "Nessus Scanner"],
+        skills: ["Vulnerability Assessment", "Network Scanning", "Risk Analysis"],
       },
       {
         name: "Ethical Hacking Lab",
@@ -1487,6 +1661,9 @@ export const technicalCourses: CourseType[] = [
           "Build and operate an ethical hacking lab to practice penetration testing techniques safely.",
         image:
           "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Kali Linux", "Metasploit", "Python"],
+        tools: ["Metasploit Framework", "Burp Suite", "VirtualBox"],
+        skills: ["Penetration Testing", "Exploit Development", "Vulnerability Research"],
       },
       {
         name: "Security Monitoring System",
@@ -1494,6 +1671,9 @@ export const technicalCourses: CourseType[] = [
           "Design and implement a security monitoring system using SIEM tools to detect and respond to threats.",
         image:
           "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Splunk", "Elastic Stack", "Python"],
+        tools: ["Splunk SIEM", "Kibana", "Logstash"],
+        skills: ["Threat Detection", "Log Analysis", "Incident Monitoring"],
       },
       {
         name: "Incident Response Plan",
@@ -1501,6 +1681,9 @@ export const technicalCourses: CourseType[] = [
           "Develop a comprehensive incident response plan for organizations to effectively handle security breaches.",
         image:
           "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["NIST Framework", "MITRE ATT&CK", "Python"],
+        tools: ["TheHive", "Cortex", "MISP"],
+        skills: ["Incident Response", "Digital Forensics", "Threat Intelligence"],
       },
       {
         name: "Security Automation Framework",
@@ -1508,6 +1691,9 @@ export const technicalCourses: CourseType[] = [
           "Create automated security tools and scripts to streamline security operations and incident response.",
         image:
           "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Ansible", "Bash"],
+        tools: ["Ansible Tower", "SOAR Platform", "Git"],
+        skills: ["Security Automation", "Scripting", "SOAR Orchestration"],
       },
       {
         name: "Web Application Security Testing",
@@ -1515,6 +1701,9 @@ export const technicalCourses: CourseType[] = [
           "Perform security assessments on web applications to identify and mitigate common vulnerabilities.",
         image:
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["OWASP ZAP", "Burp Suite", "JavaScript"],
+        tools: ["Burp Suite Pro", "OWASP ZAP", "SQLMap"],
+        skills: ["Web App Pentesting", "OWASP Top 10", "SQL Injection Testing"],
       },
     ],
     modules: [
@@ -1619,6 +1808,9 @@ export const technicalCourses: CourseType[] = [
           "Analyze customer data to identify distinct segments for targeted marketing strategies.",
         image:
           "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Scikit-learn", "Pandas"],
+        tools: ["Jupyter Notebook", "Matplotlib", "Seaborn"],
+        skills: ["Clustering", "K-Means", "Customer Analytics"],
       },
       {
         name: "Sales Forecasting",
@@ -1626,6 +1818,9 @@ export const technicalCourses: CourseType[] = [
           "Build predictive models to forecast future sales based on historical data and market trends.",
         image:
           "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Prophet", "Pandas"],
+        tools: ["Jupyter Notebook", "Plotly", "Excel"],
+        skills: ["Time Series Analysis", "Regression Modeling", "Demand Forecasting"],
       },
       {
         name: "Interactive Dashboard",
@@ -1633,6 +1828,9 @@ export const technicalCourses: CourseType[] = [
           "Create interactive data visualizations and dashboards to communicate insights effectively.",
         image:
           "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "Plotly Dash", "SQL"],
+        tools: ["Tableau", "Power BI", "Streamlit"],
+        skills: ["Data Visualization", "Dashboard Design", "Storytelling with Data"],
       },
       {
         name: "Social Media Analysis",
@@ -1640,6 +1838,9 @@ export const technicalCourses: CourseType[] = [
           "Analyze social media data to extract insights about brand perception and customer sentiment.",
         image:
           "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "NLTK", "Tweepy"],
+        tools: ["Jupyter Notebook", "TextBlob", "WordCloud"],
+        skills: ["Sentiment Analysis", "Text Mining", "Social Media Analytics"],
       },
       {
         name: "Fraud Detection System",
@@ -1647,6 +1848,9 @@ export const technicalCourses: CourseType[] = [
           "Develop models to identify fraudulent transactions and activities in financial data.",
         image:
           "https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "XGBoost", "Scikit-learn"],
+        tools: ["Jupyter Notebook", "MLflow", "Pandas Profiling"],
+        skills: ["Anomaly Detection", "Imbalanced Classification", "Feature Engineering"],
       },
       {
         name: "Market Basket Analysis",
@@ -1654,6 +1858,9 @@ export const technicalCourses: CourseType[] = [
           "Analyze purchase patterns to identify product associations and optimize product placement.",
         image:
           "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        techStack: ["Python", "MLxtend", "Pandas"],
+        tools: ["Jupyter Notebook", "Apriori Algorithm", "Seaborn"],
+        skills: ["Association Rule Mining", "Pattern Recognition", "Retail Analytics"],
       },
     ],
     modules: [
@@ -1763,6 +1970,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Build a system to control lights, fans, and other appliances remotely via a web dashboard.",
         image:
           "https://images.unsplash.com/photo-1727107463183-e54b0dbfc260?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c21hcnQlMjBob21lJTIwYXV0b21hdG9ufGVufDB8fDB8fHww",
+        techStack: ["ESP32", "MQTT", "Node-RED"],
+        tools: ["Arduino IDE", "Home Assistant", "MQTT Explorer"],
+        skills: ["Relay Control", "Wi-Fi Networking", "Dashboard Design"],
       },
       {
         name: "Weather Monitoring Station",
@@ -1770,6 +1980,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Create a device that collects temperature, humidity, and pressure data and sends it to the cloud.",
         image:
           "https://images.unsplash.com/photo-1548824049-12fcd2c576a3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2VhdGhlciUyMG1vbml0b3JpbmclMjBzdGF0aW9ufGVufDB8fDB8fHww",
+        techStack: ["ESP32", "BME280", "ThingSpeak"],
+        tools: ["Arduino IDE", "PlatformIO", "Grafana"],
+        skills: ["Sensor Integration", "Cloud Data Logging", "Serial Communication"],
       },
       {
         name: "Wearable Health Tracker",
@@ -1777,6 +1990,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Design a prototype for a wearable device to monitor vital signs like heart rate and steps.",
         image:
           "https://images.unsplash.com/photo-1510017803434-a899398421b3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHdlYXJhYmxlJTIwaGVhbHRoJTIwdHJhY2tlcnxlbnwwfHwwfHx8MA%3D%3D",
+        techStack: ["Arduino Nano 33 BLE", "MAX30102", "C/C++"],
+        tools: ["Arduino IDE", "Serial Plotter", "Fritzing"],
+        skills: ["BLE Communication", "Pulse Oximetry", "Low-Power Design"],
       },
       {
         name: "Smart Agriculture System",
@@ -1784,6 +2000,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Develop an automated system to monitor soil moisture and control an irrigation pump.",
         image:
           "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["ESP32", "Soil Moisture Sensor", "MQTT"],
+        tools: ["Arduino IDE", "Adafruit IO", "PlatformIO"],
+        skills: ["Analog Sensor Reading", "Relay Automation", "IoT Dashboards"],
       },
       {
         name: "Asset Tracking System",
@@ -1791,6 +2010,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Build a GPS-based tracker to monitor the real-time location of a vehicle or package.",
         image:
           "https://images.unsplash.com/photo-1584254520678-31fe4dce5306?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFzc2V0JTIwdHJhY2tpbmclMjBzeXN0ZW18ZW58MHx8MHx8fDA%3D",
+        techStack: ["ESP32", "NEO-6M GPS", "Firebase"],
+        tools: ["Arduino IDE", "Google Maps API", "MQTT Explorer"],
+        skills: ["GPS Data Parsing", "Real-Time Tracking", "Geofencing"],
       },
       {
         name: "Home Security System",
@@ -1798,6 +2020,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Create a motion-activated security camera that sends alerts and images to a user's phone.",
         image:
           "https://images.unsplash.com/photo-1558002038-1055907df827?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG9tZSUyMHNlY3VyaXR5JTIwc3lzdGVtfGVufDB8fDB8fHww",
+        techStack: ["ESP32-CAM", "PIR Sensor", "Telegram Bot API"],
+        tools: ["Arduino IDE", "Blynk", "IFTTT"],
+        skills: ["Motion Detection", "Image Capture", "Push Notifications"],
       },
     ],
     modules: [
@@ -1899,6 +2124,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Interface with a temperature sensor and display real-time readings on a character LCD.",
         image:
           "https://images.unsplash.com/photo-1685660477683-11321882c1e0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGRpZ2l0YWwlMjB0aGVybW9tZXRlciUyMHdpdGglMjBsY2R8ZW58MHx8MHx8fDA%3D",
+        techStack: ["ATmega328P", "LM35", "C"],
+        tools: ["Atmel Studio", "Proteus", "AVR-GCC"],
+        skills: ["ADC Conversion", "LCD Interfacing", "Embedded C"],
       },
       {
         name: "Motor Speed Controller (PWM)",
@@ -1906,6 +2134,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Control the speed of a DC motor with precision using Pulse Width Modulation (PWM) signals.",
         image:
           "https://images.unsplash.com/photo-1674827560853-aa388b5db770?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1vdG9yJTIwc3BlZWQlMjBjb250cm9sbGVyfGVufDB8fDB8fHww",
+        techStack: ["STM32", "L298N Motor Driver", "C"],
+        tools: ["STM32CubeIDE", "Oscilloscope", "Proteus"],
+        skills: ["PWM Generation", "Timer Configuration", "Motor Control"],
       },
       {
         name: "Bluetooth Low Energy (BLE) Beacon",
@@ -1913,6 +2144,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Build a low-power device that broadcasts data wirelessly to a smartphone or other BLE device.",
         image:
           "https://images.unsplash.com/photo-1592323360850-e317605f0526?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Ymx1ZXRvb3RoJTIwbG93JTIwZW5lcmd5fGVufDB8fDB8fHww",
+        techStack: ["nRF52840", "BLE 5.0", "C"],
+        tools: ["nRF Connect SDK", "Segger Embedded Studio", "Wireshark"],
+        skills: ["BLE Advertising", "GATT Profiles", "Low-Power Optimization"],
       },
       {
         name: "Real-Time Clock Alarm System",
@@ -1920,6 +2154,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Use an RTC module to build a persistent alarm clock that can trigger an event at a specific time.",
         image:
           "https://images.unsplash.com/photo-1754487436530-11d3140ec634?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cmVhbHRpbWUlMjBjbG9jayUyMGFsYXJtJTIwc3lzdGVtfGVufDB8fDB8fHww",
+        techStack: ["ATmega328P", "DS3231 RTC", "C"],
+        tools: ["Arduino IDE", "Proteus", "Logic Analyzer"],
+        skills: ["I2C Communication", "Interrupt Handling", "Timekeeping"],
       },
       {
         name: "Data Logger with SD Card",
@@ -1927,6 +2164,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Create a system that logs sensor data over time and saves it to a file on an SD card via SPI.",
         image:
           "https://images.unsplash.com/photo-1649959188721-5ca7aeec6450?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGRhdGElMjBsb2dnZXIlMjB3aXRoJTIwc2QlMjBjYXJkfGVufDB8fDB8fHww",
+        techStack: ["STM32", "SPI", "FatFS"],
+        tools: ["STM32CubeIDE", "PuTTY", "Saleae Logic Analyzer"],
+        skills: ["SPI Protocol", "File System Management", "Data Acquisition"],
       },
       {
         name: "Basic RTOS Task Scheduler",
@@ -1934,6 +2174,9 @@ export const ElectronicsCourses: CourseType[] = [
           "Implement a simple multi-tasking system using a Real-Time Operating System like FreeRTOS.",
         image:
           "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["STM32", "FreeRTOS", "C"],
+        tools: ["STM32CubeIDE", "SEGGER SystemView", "GDB"],
+        skills: ["Task Scheduling", "Semaphores & Mutexes", "Real-Time Systems"],
       },
     ],
     modules: [
@@ -2034,42 +2277,60 @@ export const ElectronicsCourses: CourseType[] = [
       description:
         "Design and simulate an Arithmetic Logic Unit capable of performing addition, subtraction, and logical operations using Verilog.",
       image:
-        "https://media.istockphoto.com/id/497224738/photo/hdd.webp?a=1&b=1&s=612x612&w=0&k=20&c=I_GIxuPV0tMiWWCsoXRg90lhZnS17CRO4WFPAWMsIa4="
+        "https://media.istockphoto.com/id/497224738/photo/hdd.webp?a=1&b=1&s=612x612&w=0&k=20&c=I_GIxuPV0tMiWWCsoXRg90lhZnS17CRO4WFPAWMsIa4=",
+      techStack: ["Verilog", "Digital Logic", "RTL"],
+      tools: ["Xilinx Vivado", "ModelSim", "GTKWave"],
+      skills: ["RTL Design", "Combinational Logic", "Simulation & Verification"],
     },
     {
       name: "Traffic Light Controller (FSM)",
       description:
         "Implement a Finite State Machine (FSM) to control a traffic intersection, optimizing for timing and safety logic.",
       image:
-        "https://images.unsplash.com/photo-1651340550839-3b295d930048?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2VtaWNvbmR1Y3RvcnxlbnwwfHwwfHx8MA%3D%3D"
+        "https://images.unsplash.com/photo-1651340550839-3b295d930048?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2VtaWNvbmR1Y3RvcnxlbnwwfHwwfHx8MA%3D%3D",
+      techStack: ["Verilog", "FSM", "SystemVerilog"],
+      tools: ["Xilinx Vivado", "ModelSim", "Synopsys VCS"],
+      skills: ["State Machine Design", "Sequential Logic", "Timing Analysis"],
     },
     {
       name: "RISC-V Processor Core",
       description:
         "Build a simplified single-cycle RISC-V processor, understanding the data path and control unit architecture.",
       image:
-        "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=1974&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=1974&auto=format&fit=crop",
+      techStack: ["Verilog", "RISC-V ISA", "RTL"],
+      tools: ["Xilinx Vivado", "RISC-V GNU Toolchain", "Verilator"],
+      skills: ["Processor Architecture", "Datapath Design", "Control Unit Logic"],
     },
     {
       name: "CMOS Inverter Layout",
       description:
         "Create the physical layout of a CMOS inverter, performing DRC (Design Rule Check) and LVS (Layout vs. Schematic).",
       image:
-        "https://plus.unsplash.com/premium_photo-1683121716061-3faddf4dc504?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2VtaWNvbmR1Y3RvcnxlbnwwfHwwfHx8MA%3D%3D"
+        "https://plus.unsplash.com/premium_photo-1683121716061-3faddf4dc504?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2VtaWNvbmR1Y3RvcnxlbnwwfHwwfHx8MA%3D%3D",
+      techStack: ["CMOS", "SPICE", "Layout Design"],
+      tools: ["Cadence Virtuoso", "Magic VLSI", "HSPICE"],
+      skills: ["Physical Layout", "DRC/LVS Verification", "Transistor Sizing"],
     },
     {
       name: "FIFO Memory Buffer",
       description:
         "Design a First-In-First-Out memory buffer to manage data flow between different clock domains (Clock Domain Crossing).",
       image:
-        "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop",
+      techStack: ["Verilog", "SystemVerilog", "RTL"],
+      tools: ["Synopsys Design Compiler", "ModelSim", "Xilinx Vivado"],
+      skills: ["Clock Domain Crossing", "Memory Design", "FIFO Architecture"],
     },
     {
       name: "UART Communication Module",
       description:
         "Develop a Universal Asynchronous Receiver-Transmitter (UART) protocol for serial communication between devices.",
       image:
-        "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=2069&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=2069&auto=format&fit=crop",
+      techStack: ["Verilog", "UART Protocol", "RTL"],
+      tools: ["Xilinx Vivado", "ModelSim", "Tera Term"],
+      skills: ["Serial Protocol Design", "Baud Rate Generation", "Testbench Writing"],
     }
   ],
   modules: [
@@ -2174,6 +2435,9 @@ export const MechanicalCourses: CourseType[] = [
           "Design a detailed 2D floor plan for a house, including walls, doors, windows, and dimensions.",
         image:
           "https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=2052&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "DWG Format", "CAD Standards"],
+        tools: ["AutoCAD 2024", "AutoCAD Architecture", "DWG TrueView"],
+        skills: ["2D Drafting", "Dimensioning & Annotation", "Layer Management"],
       },
       {
         name: "Mechanical Part Modeling",
@@ -2181,6 +2445,9 @@ export const MechanicalCourses: CourseType[] = [
           "Create a precise 3D model of a mechanical component, like a gear or bracket, ready for manufacturing.",
         image:
           "https://images.unsplash.com/photo-1735665096798-0249c9c0f194?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "SolidWorks", "GD&T"],
+        tools: ["AutoCAD 2024", "Fusion 360", "ANSYS SpaceClaim"],
+        skills: ["3D Solid Modeling", "Parametric Design", "Tolerance Analysis"],
       },
       {
         name: "3D Interior Design Scene",
@@ -2188,6 +2455,9 @@ export const MechanicalCourses: CourseType[] = [
           "Model and render a realistic 3D interior scene, complete with furniture, lighting, and textures.",
         image:
           "https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["AutoCAD", "3ds Max", "V-Ray"],
+        tools: ["AutoCAD 2024", "3ds Max", "V-Ray Renderer"],
+        skills: ["3D Modeling", "Material Application", "Photorealistic Rendering"],
       },
       {
         name: "Assembly Drawing with BOM",
@@ -2195,6 +2465,9 @@ export const MechanicalCourses: CourseType[] = [
           "Create an exploded view of a multi-part assembly and automatically generate a bill of materials.",
         image:
           "https://images.unsplash.com/photo-1629118938047-0f28bbe5af7a?q=80&w=3133&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "SolidWorks", "DWG Format"],
+        tools: ["AutoCAD 2024", "AutoCAD Mechanical", "SolidWorks"],
+        skills: ["Assembly Modeling", "BOM Generation", "Exploded View Creation"],
       },
       {
         name: "Site Plan Layout",
@@ -2202,6 +2475,9 @@ export const MechanicalCourses: CourseType[] = [
           "Develop a 2D site plan for a construction project, showing property lines, building footprints, and landscaping.",
         image:
           "https://images.unsplash.com/photo-1721244654392-9c912a6eb236?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNpdGUlMjBwbGFuJTIwbGF5b3V0fGVufDB8fDB8fHww",
+        techStack: ["AutoCAD", "Civil 3D", "GIS"],
+        tools: ["AutoCAD 2024", "AutoCAD Civil 3D", "Google Earth Pro"],
+        skills: ["Site Planning", "Scale Drawing", "Coordinate Geometry"],
       },
       {
         name: "Piping and Instrumentation Diagram",
@@ -2209,6 +2485,9 @@ export const MechanicalCourses: CourseType[] = [
           "Draft a professional P&ID schematic for an industrial process using standard symbols and annotations.",
         image:
           "https://images.unsplash.com/photo-1721561286225-0823b5c72e20?q=80&w=2024&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "AutoCAD P&ID", "ISA Standards"],
+        tools: ["AutoCAD 2024", "AutoCAD Plant 3D", "SmartPlant P&ID"],
+        skills: ["P&ID Drafting", "Symbol Libraries", "Process Flow Design"],
       },
     ],
     modules: [
@@ -2309,6 +2588,9 @@ export const MechanicalCourses: CourseType[] = [
           "Select materials and physically assemble a durable carbon-fiber drone frame, ensuring structural integrity.",
         image:
           "https://images.unsplash.com/photo-1726244786561-522f88e8b813?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZHJvbmUlMjBtZWNoYW5pY3N8ZW58MHx8MHx8fDA%3D",
+        techStack: ["Carbon Fiber Composites", "CNC Machining", "CAD"],
+        tools: ["SolidWorks", "Dremel Rotary Tool", "Digital Caliper"],
+        skills: ["Structural Assembly", "Material Selection", "Mechanical Fastening"],
       },
       {
         name: "Soldering & Power Distribution",
@@ -2316,6 +2598,9 @@ export const MechanicalCourses: CourseType[] = [
           "Master precision soldering to connect ESCs, motors, and battery leads to the Power Distribution Board (PDB).",
         image:
           "https://images.unsplash.com/photo-1644851070773-7a0a065a8df8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fGRyb25lJTIwbWVjaGFuaWNzfGVufDB8fDB8fHww",
+        techStack: ["PDB Architecture", "LiPo Battery Systems", "ESC Firmware"],
+        tools: ["Hakko Soldering Station", "Multimeter", "Heat Shrink Kit"],
+        skills: ["Precision Soldering", "Power Distribution Design", "Electrical Wiring"],
       },
       {
         name: "Flight Controller Configuration",
@@ -2323,6 +2608,9 @@ export const MechanicalCourses: CourseType[] = [
           "Connect your drone to a computer and configure the firmware (Betaflight/INAV) for stable flight dynamics.",
         image:
           "https://images.unsplash.com/photo-1687222951332-2fcbe6cee149?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGRyb25lJTIwbWVjaGFuaWNzfGVufDB8fDB8fHww",
+        techStack: ["Betaflight", "INAV", "STM32 MCU"],
+        tools: ["Betaflight Configurator", "USB-to-UART Bridge", "Gyro Calibration Tool"],
+        skills: ["PID Tuning", "Firmware Flashing", "Sensor Calibration"],
       },
       {
         name: "FPV System Installation",
@@ -2330,6 +2618,9 @@ export const MechanicalCourses: CourseType[] = [
           "Install and wire a camera and Video Transmitter (VTX) to enable First Person View piloting capabilities.",
         image:
           "https://media.istockphoto.com/id/636306796/photo/repair-maintenance-drone-gimbal-camera-repair-screws-screwdriv.webp?a=1&b=1&s=612x612&w=0&k=20&c=2YZGL_d7iW2YdPiD1ymTXhmxKK2f39VgjKaYNFfFVXY=",
+        techStack: ["Analog/Digital FPV", "VTX Protocols", "OSD Systems"],
+        tools: ["FPV Goggles", "IRC Tramp VTX", "Betaflight OSD"],
+        skills: ["Video Transmitter Wiring", "Antenna Selection", "OSD Configuration"],
       },
       {
         name: "Remote Control Binding & Setup",
@@ -2337,6 +2628,9 @@ export const MechanicalCourses: CourseType[] = [
           "Configure the radio transmitter and receiver, setting up channels, aux switches, and failsafe protocols.",
         image:
           "https://images.unsplash.com/photo-1619042042563-6e9103f8e717?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDd8fGRyb25lJTIwbWVjaGFuaWNzfGVufDB8fDB8fHww",
+        techStack: ["ELRS", "CRSF Protocol", "PWM/SBUS"],
+        tools: ["RadioMaster TX", "ExpressLRS Configurator", "EdgeTX Firmware"],
+        skills: ["Transmitter-Receiver Binding", "Channel Mapping", "Failsafe Configuration"],
       },
     ],
     modules: [
@@ -2507,11 +2801,17 @@ export const MechanicalCourses: CourseType[] = [
         name: "Battery Pack Design",
         description: "Design a battery pack configuration for a small electric vehicle, calculating capacity, voltage, and thermal requirements.",
         image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=900&auto=format&fit=crop&q=60",
+        techStack: ["Li-Ion Cell Chemistry", "BMS Architecture", "Thermal Simulation"],
+        tools: ["MATLAB/Simulink", "ANSYS Fluent", "Battery Design Studio"],
+        skills: ["Battery Pack Configuration", "Thermal Management Design", "SOC/SOH Estimation"],
       },
       {
         name: "EV Powertrain Simulation",
         description: "Simulate an electric vehicle powertrain using software tools to analyze performance and efficiency.",
         image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=60",
+        techStack: ["PMSM Motor Modeling", "Inverter Control", "Regenerative Braking"],
+        tools: ["MATLAB/Simulink", "ADVISOR", "PSIM"],
+        skills: ["Powertrain Modeling", "Drive Cycle Analysis", "Energy Efficiency Optimization"],
       },
     ],
   },
@@ -2535,6 +2835,9 @@ export const CivilCourses: CourseType[] = [
           "Design a detailed 2D floor plan for a house, including walls, doors, windows, and dimensions.",
         image:
           "https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=2052&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "BIM Standards", "AEC Templates"],
+        tools: ["AutoCAD 2024", "AutoCAD Architecture", "Revit LT"],
+        skills: ["Architectural Drafting", "Floor Plan Layout", "Building Code Compliance"],
       },
       {
         name: "Mechanical Part Modeling",
@@ -2542,6 +2845,9 @@ export const CivilCourses: CourseType[] = [
           "Create a precise 3D model of a mechanical component, like a gear or bracket, ready for manufacturing.",
         image:
           "https://images.unsplash.com/photo-1735665096798-0249c9c0f194?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "Inventor", "GD&T"],
+        tools: ["AutoCAD 2024", "Autodesk Inventor", "Fusion 360"],
+        skills: ["3D Solid Modeling", "Engineering Drawings", "Manufacturing Tolerances"],
       },
       {
         name: "3D Interior Design Scene",
@@ -2549,6 +2855,9 @@ export const CivilCourses: CourseType[] = [
           "Model and render a realistic 3D interior scene, complete with furniture, lighting, and textures.",
         image:
           "https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        techStack: ["AutoCAD", "3ds Max", "V-Ray"],
+        tools: ["AutoCAD 2024", "Autodesk 3ds Max", "V-Ray Renderer"],
+        skills: ["Interior 3D Modeling", "Lighting Setup", "Material & Texture Mapping"],
       },
       {
         name: "Assembly Drawing with BOM",
@@ -2556,6 +2865,9 @@ export const CivilCourses: CourseType[] = [
           "Create an exploded view of a multi-part assembly and automatically generate a bill of materials.",
         image:
           "https://images.unsplash.com/photo-1629118938047-0f28bbe5af7a?q=80&w=3133&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "Inventor", "DWG Format"],
+        tools: ["AutoCAD 2024", "Autodesk Inventor", "AutoCAD Mechanical"],
+        skills: ["Assembly Documentation", "BOM Generation", "Exploded View Creation"],
       },
       {
         name: "Site Plan Layout",
@@ -2563,6 +2875,9 @@ export const CivilCourses: CourseType[] = [
           "Develop a 2D site plan for a construction project, showing property lines, building footprints, and landscaping.",
         image:
           "https://images.unsplash.com/photo-1721244654392-9c912a6eb236?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNpdGUlMjBwbGFuJTIwbGF5b3V0fGVufDB8fDB8fHww",
+        techStack: ["AutoCAD", "Civil 3D", "Survey Data"],
+        tools: ["AutoCAD 2024", "AutoCAD Civil 3D", "Google Earth Pro"],
+        skills: ["Civil Site Planning", "Contour Mapping", "Land Survey Interpretation"],
       },
       {
         name: "Piping and Instrumentation Diagram",
@@ -2570,6 +2885,9 @@ export const CivilCourses: CourseType[] = [
           "Draft a professional P&ID schematic for an industrial process using standard symbols and annotations.",
         image:
           "https://images.unsplash.com/photo-1721561286225-0823b5c72e20?q=80&w=2024&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        techStack: ["AutoCAD", "ISA 5.1 Standard", "P&ID Symbology"],
+        tools: ["AutoCAD 2024", "AutoCAD Plant 3D", "SmartPlant P&ID"],
+        skills: ["P&ID Schematic Design", "Instrumentation Annotation", "Process Flow Drafting"],
       },
     ],
     modules: [

@@ -79,18 +79,11 @@ export default function ExploreFooterSection() {
           <div className="lg:col-span-1">
             <div className="flex items-center mb-4">
               <Image
-                src="/logo.png"
+                src="/persevexlogo.png"
                 alt="Persevex"
                 width={56}
                 height={56}
-                className="h-14 w-auto object-contain block dark:hidden"
-              />
-              <Image
-                src="/whitelogo.png"
-                alt="Persevex"
-                width={56}
-                height={56}
-                className="h-14 w-auto object-contain hidden dark:block"
+                className="h-14 w-auto object-contain"
               />
             </div>
             <p className="text-muted-foreground max-w-sm">

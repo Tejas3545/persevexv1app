@@ -32,7 +32,7 @@ const PLANS = [
 
 type PlanId = (typeof PLANS)[number]["id"];
 
-const RESERVE_SEAT_AMOUNT = 1500;
+const RESERVE_SEAT_AMOUNT = 1000;
 
 // ─── Cookie helpers ───────────────────────────────────────────────────────────
 function setCookie(days: number) {
