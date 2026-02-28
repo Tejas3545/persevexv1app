@@ -60,6 +60,7 @@ export const CursorBlob: React.FC = () => {
       {/* Main blob */}
       <div
         className="relative w-40 h-40 rounded-full blur-3xl opacity-50"
+        // eslint-disable-next-line react/forbid-dom-props
         style={{
           background: `radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.5), rgba(99, 102, 241, 0.3), transparent)`,
           filter: "blur(40px)",

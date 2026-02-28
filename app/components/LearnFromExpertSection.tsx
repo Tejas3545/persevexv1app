@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 
 const companies = [
@@ -53,7 +53,7 @@ const stats = [
 // Triple for seamless infinite loop
 const marqueeItems = [...companies, ...companies, ...companies];
 
-export default function LearnFromExpertSection() {
+function LearnFromExpertSection() {
   return (
     <section className="py-14 bg-slate-50 dark:bg-slate-950 border-t border-border/40">
       {/* Header */}
@@ -131,3 +131,5 @@ export default function LearnFromExpertSection() {
     </section>
   );
 }
+
+export default memo(LearnFromExpertSection);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiArrowRight } from "react-icons/fi";
 import Link from "next/link";
@@ -48,7 +48,7 @@ const faqs = [
   },
 ];
 
-export default function FaqSection() {
+function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -165,3 +165,5 @@ export default function FaqSection() {
     </section>
   );
 }
+
+export default memo(FaqSection);

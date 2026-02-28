@@ -57,6 +57,7 @@ export default function InteractiveBackground({
       {}
       <div
         className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent transition-[background] duration-200 ease-out"
+        // eslint-disable-next-line react/forbid-dom-props
         style={{
           background: hasMounted
             ? `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(37, 99, 235, 0.15), transparent 40%), linear-gradient(to top, rgba(30, 64, 175, 0.6), transparent)`
@@ -68,12 +69,14 @@ export default function InteractiveBackground({
       {}
       <div
         className="absolute inset-0 transition-transform duration-500 ease-out"
+        // eslint-disable-next-line react/forbid-dom-props
         style={parallax(50)}
       >
         {stars1.map((star, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-card opacity-60 animate-pulse"
+            // eslint-disable-next-line react/forbid-dom-props
             style={{
               top: star.top,
               left: star.left,
@@ -87,12 +90,14 @@ export default function InteractiveBackground({
       </div>
       <div
         className="absolute inset-0 transition-transform duration-500 ease-out"
+        // eslint-disable-next-line react/forbid-dom-props
         style={parallax(30)}
       >
         {stars2.map((star, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-card opacity-80 animate-pulse"
+            // eslint-disable-next-line react/forbid-dom-props
             style={{
               top: star.top,
               left: star.left,
@@ -106,12 +111,14 @@ export default function InteractiveBackground({
       </div>
       <div
         className="absolute inset-0 transition-transform duration-500 ease-out"
+        // eslint-disable-next-line react/forbid-dom-props
         style={parallax(15)}
       >
         {stars3.map((star, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-card animate-pulse"
+            // eslint-disable-next-line react/forbid-dom-props
             style={{
               top: star.top,
               left: star.left,

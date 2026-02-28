@@ -1,6 +1,7 @@
 "use client";
 import React, { Suspense, useState, useRef, FormEvent } from "react";
 import Link from "next/link";
+import Toast from "@/app/components/Toast";
 
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbyAYwB174Qk9X9nJYWIAiRC81NkYJOgLJOjJtu9txvHmeaVlz0HraJdPGfgEQwYRfaToQ/exec";
@@ -8,6 +9,11 @@ const SCRIPT_URL =
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<{
+    isVisible: boolean;
+    message: string;
+    type: "success" | "error";
+  }>({ isVisible: false, message: "", type: "success" });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +33,11 @@ export default function ContactPage() {
       const result = await response.json();
 
       if (result.result === "success") {
-        alert("Thank you for your message! We will get back to you soon.");
+        setToast({
+          isVisible: true,
+          message: "Thank you for your message! We will get back to you soon.",
+          type: "success",
+        });
         formRef.current?.reset();
       } else {
         throw new Error(result.message || "An unknown error occurred.");
@@ -38,7 +48,11 @@ export default function ContactPage() {
         error instanceof Error
           ? error.message
           : "Failed to send message. Please try again later.";
-      alert(`Error: ${errorMessage}`);
+      setToast({
+        isVisible: true,
+        message: errorMessage,
+        type: "error",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -46,8 +60,12 @@ export default function ContactPage() {
 
   return (
     <main className="relative min-h-screen w-full text-foreground bg-background overflow-x-hidden">
-      {}
-      
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
+      />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-2 md:px-6 py-24 sm:py-32">
         <div className="bg-card/20 backdrop-blur-md border border-border rounded-2xl p-6 md:p-12 overflow-hidden">

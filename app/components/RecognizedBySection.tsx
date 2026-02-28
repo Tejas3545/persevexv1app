@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiExternalLink, FiCheckCircle, FiX, FiFileText } from "react-icons/fi";
@@ -28,7 +28,7 @@ const partnerBadges = [
   { name: "AICTE", image: "/aicte.png" },
 ];
 
-export default function RecognizedBySection() {
+function RecognizedBySection() {
   const [modalPdf, setModalPdf] = useState<string | null>(null);
 
   return (
@@ -101,6 +101,7 @@ export default function RecognizedBySection() {
                       src={rec.previewImage}
                       alt={rec.name}
                       fill
+                      loading="lazy"
                       sizes="128px"
                       className="object-contain"
                     />
@@ -149,6 +150,7 @@ export default function RecognizedBySection() {
                   src={badge.image}
                   alt={badge.name}
                   fill
+                  loading="lazy"
                   sizes="112px"
                   className="object-contain"
                 />
@@ -202,3 +204,5 @@ export default function RecognizedBySection() {
     </section>
   );
 }
+
+export default memo(RecognizedBySection);

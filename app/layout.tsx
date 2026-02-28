@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import ClientOnlyComponents from "./components/ClientOnlyComponents";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -56,8 +57,6 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "./components/ThemeProvider";
-import ChatWidget from "./components/ChatWidget";
-import CursorBlob from "./components/CursorBlob";
 
 export default function RootLayout({
   children,
@@ -87,8 +86,8 @@ export default function RootLayout({
             }}
           />
 
-          {/* Facebook Pixel */}
-          <Script id="fb-pixel" strategy="afterInteractive">
+          {/* Facebook Pixel - Deferred for performance */}
+          <Script id="fb-pixel" strategy="lazyOnload">
             {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -130,8 +129,7 @@ export default function RootLayout({
           </noscript>
 
           {children}
-          <CursorBlob />
-          <ChatWidget />
+          <ClientOnlyComponents />
         </ThemeProvider>
       </body>
     </html>

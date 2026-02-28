@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import { FiStar, FiPhone } from "react-icons/fi";
 
@@ -197,7 +197,7 @@ function MarqueeRow({ items, reverse = false }: { items: Review[]; reverse?: boo
   );
 }
 
-export default function Testimonials() {
+function Testimonials() {
   return (
     <section className="section-padding bg-white dark:bg-background" id="testimonials">
       <div className="max-w-7xl mx-auto">
@@ -281,3 +281,5 @@ export default function Testimonials() {
     </section>
   );
 }
+
+export default memo(Testimonials);

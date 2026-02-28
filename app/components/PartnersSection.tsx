@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -41,6 +41,7 @@ function LogoCarousel({ partners }: { partners: typeof hiringPartners }) {
                 src={partner.logo}
                 alt={partner.name}
                 fill
+                loading="lazy"
                 className="object-contain"
                 sizes="(max-width: 640px) 144px, 176px"
                 onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -56,7 +57,7 @@ function LogoCarousel({ partners }: { partners: typeof hiringPartners }) {
   );
 }
 
-export default function PartnersSection() {
+function PartnersSection() {
   return (
     <section className="section-padding bg-slate-50 dark:bg-card" id="partners">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
@@ -148,3 +149,5 @@ export default function PartnersSection() {
     </section>
   );
 }
+
+export default memo(PartnersSection);

@@ -169,6 +169,7 @@ const CometTrail = ({
   return (
     <div
       className="absolute top-1/2 left-1/2 w-[800px] h-[200px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      // eslint-disable-next-line react/forbid-dom-props
       style={{
         transform: `rotate(${rotation}deg) translate(-400px, 0)`,
       }}
@@ -256,6 +257,7 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
   return (
     <>
       <div
+        // eslint-disable-next-line react/forbid-dom-props
         style={{
           opacity: logoAndTrailOpacity,
           transform: `translate(${currentX}px, ${currentY}px)`,
@@ -265,6 +267,7 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
         className="absolute inset-0 flex items-center justify-center"
       >
         <div
+          // eslint-disable-next-line react/forbid-dom-props
           style={{
             transform: `rotate(${currentRotation}deg)`,
             visibility: isMovementComplete ? "hidden" : "visible",
@@ -287,6 +290,7 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
         />
       </div>
       <div
+        // eslint-disable-next-line react/forbid-dom-props
         style={{
           opacity: isMovementComplete ? 1 : 0,
           transition: "opacity 0.3s ease-in",

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import {
   FiAward,
@@ -98,7 +98,7 @@ const cardVariants = {
   },
 };
 
-export default function OurEdgeSection() {
+function OurEdgeSection() {
   return (
     <section className="section-padding bg-slate-50 dark:bg-card" id="our-edge">
       <div className="max-w-7xl mx-auto">
@@ -195,3 +195,5 @@ export default function OurEdgeSection() {
     </section>
   );
 }
+
+export default memo(OurEdgeSection);

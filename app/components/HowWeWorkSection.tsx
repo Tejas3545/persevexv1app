@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import { FiUserPlus, FiTarget, FiBookOpen, FiCreditCard, FiPlay } from "react-icons/fi";
 
@@ -37,7 +37,7 @@ const steps = [
     },
 ];
 
-export default function HowWeWorkSection() {
+function HowWeWorkSection() {
     return (
         <section className="section-padding bg-card" id="how-we-work">
             <div className="max-w-7xl mx-auto">
@@ -109,3 +109,5 @@ export default function HowWeWorkSection() {
         </section>
     );
 }
+
+export default memo(HowWeWorkSection);

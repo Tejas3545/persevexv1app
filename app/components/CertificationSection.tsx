@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Image from "next/image";
 
 const certificateData = [
@@ -23,7 +23,7 @@ const certificateData = [
   },
 ];
 
-export default function CertificationSection() {
+function CertificationSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleCardClick = (index: number) => {
@@ -54,7 +54,7 @@ export default function CertificationSection() {
                 onClick={() => handleCardClick(index)}
               >
                 <div className="relative w-full h-full">
-                  <Image src={cert.imageSrc} alt={cert.title} fill className="object-contain" />
+                  <Image src={cert.imageSrc} alt={cert.title} fill loading="lazy" className="object-contain" />
                 </div>
                 <div
                   className={`absolute inset-0 flex flex-col backdrop-blur-sm bg-card/80 items-center justify-center text-center p-6 transition-opacity duration-300 ${
@@ -78,3 +78,5 @@ export default function CertificationSection() {
     </div>
   );
 }
+
+export default memo(CertificationSection);
