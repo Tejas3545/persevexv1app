@@ -122,6 +122,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ name: "", phone: "", email: "", college: "" });
   const [errors, setErrors] = useState<Partial<typeof form>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
   const selectedPlanObj = PLANS.find((p) => p.id === selectedPlan)!;
   const payableAmount = payFull ? selectedPlanObj.price : RESERVE_SEAT_AMOUNT;
@@ -161,19 +162,20 @@ function LmsModal({ onClose }: { onClose: () => void }) {
       amount: finalAmount.toString(),
     };
 
-    // 1. Submit to Google Sheet
+    // 1. Submit to Google Sheet and show realtime feedback
     try {
       const response = await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         body: JSON.stringify(formData),
+        // using no-cors avoids preflight failures with Google Scripts
+        mode: "no-cors",
       });
-      // Log success but don't block execution
-      if (response.ok) {
-        console.log("Form submitted to Google Sheet successfully");
-      }
+      // response.ok is unreliable in no-cors mode, so just assume success if no exception
+      console.log("Form submitted to Google Sheet (or attempted) successfully");
+      setSubmitMessage("Data sent! Redirecting...");
     } catch (error) {
       console.error("Error submitting to Google Sheet:", error);
-      // Non-blocking — proceed to payment regardless
+      setSubmitMessage("Failed to send to sheet, continuing...");
     }
 
     // 2. Set persistent cookie so future clicks bypass the form
@@ -188,7 +190,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
     // 4. Redirect to LMS (after a brief delay to let payment window open)
     setTimeout(() => {
       window.location.href = LMS_REDIRECT_URL;
-    }, 500);
+    }, 800);
   }
 
   // ── Render ─────────────────────────────────────────────────────────────────
@@ -376,7 +378,12 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                   Pay ₹{payableAmount.toLocaleString("en-IN")} &bull; {paymentLabel}
                 </>
               )}
-            </button>
+        </button>
+
+            {/* feedback message */}
+            {submitMessage && (
+              <p className="text-center text-sm mt-2 text-primary">{submitMessage}</p>
+            )}
 
             {/* Trust badge */}
             <p className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground mt-2.5">
