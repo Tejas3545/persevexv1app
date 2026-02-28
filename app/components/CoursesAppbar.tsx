@@ -114,7 +114,7 @@ export default function CoursePageNavbar() {
         <div className='flex items-center justify-center gap-4'>
           <Link href="/" className="cursor-pointer flex items-center">
             <Image
-              src="/persevexlogo.png"
+              src="/persevex.png"
               alt="Persevex"
               width={44}
               height={44}

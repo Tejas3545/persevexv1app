@@ -31,7 +31,7 @@ function useCounter(end: number, duration: number = 2000) {
 }
 
 const stats = [
-  { number: 5000, suffix: "+", label: "Students Enrolled" },
+  { number: 10000, suffix: "+", label: "Students Enrolled" },
   { number: 20, suffix: "+", label: "Industry Courses" },
   { number: 95, suffix: "%", label: "Satisfaction Rate" },
   { number: 50, suffix: "+", label: "Hiring Partners" },

@@ -126,7 +126,7 @@ export default function PartnersSection() {
           {[
             { number: "50+", label: "Hiring Partners" },
             { number: "6+", label: "Certifications" },
-            { number: "5000+", label: "Students Placed" },
+            { number: "10000+", label: "Students Placed" },
             { number: "95%", label: "Placement Rate" },
           ].map((stat, index) => (
             <motion.div

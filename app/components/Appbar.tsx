@@ -212,7 +212,7 @@ export default function Navbar() {
           onClick={handleGoHome}
         >
           <Image
-            src="/persevexlogo.png"
+            src="/persevex.png"
             alt="Persevex"
             width={44}
             height={44}

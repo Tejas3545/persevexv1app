@@ -20,19 +20,34 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ArrowUpRight, Shield, CheckCircle2 } from "lucide-react";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const LMS_REDIRECT_URL = "https://persevex.com/login/index.php";
+const LMS_REDIRECT_URL = "https://lms.persevex.com/login/index.php";
 const COOKIE_KEY = "pvx_lms_access";
 const COOKIE_DAYS = 365;
 
 // ─── Plan / Payment data ──────────────────────────────────────────────────────
 const PLANS = [
-  { id: "advanced", label: "Advanced", price: 4500 },
   { id: "foundation", label: "Foundation", price: 3500 },
+  { id: "advanced", label: "Advanced", price: 4500 },
+  { id: "premium", label: "Premium", price: 6999 },
+  { id: "elite", label: "Elite", price: 8999 },
 ] as const;
 
 type PlanId = (typeof PLANS)[number]["id"];
 
 const RESERVE_SEAT_AMOUNT = 1000;
+
+// Payment link mapping
+const PAYMENT_LINKS: Record<number, string> = {
+  1000: "https://payments.cashfree.com/forms/REGS1450",
+  1500: "https://payments.cashfree.com/forms/PERSEVEX500",
+  3500: "https://payments.cashfree.com/forms/PERSEVEXREGISS",
+  4500: "https://payments.cashfree.com/forms/advanc",
+  6999: "https://payments.cashfree.com/forms/found",
+  8999: "https://payments.cashfree.com/forms/ADDV",
+};
+
+// Google Sheet submission URL
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwd0FKuHde2dPvjv9gXamF2TPraJWvAm3f4aQX3rko0SOe-_m3Bjj2L-qKj8GTm_5Vc/exec";
 
 // ─── Cookie helpers ───────────────────────────────────────────────────────────
 function setCookie(days: number) {
@@ -131,40 +146,49 @@ function LmsModal({ onClose }: { onClose: () => void }) {
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setSubmitting(true);
 
-    /**
-     * TODO: Replace the URL below with your Google Sheets Webhook / embed URL.
-     * The fetch is wrapped in try/catch so a network error won't block access.
-     *
-     * Example body keys expected by a Google Apps Script endpoint:
-     *   name, phone, email, college, plan, paymentType, amount
-     */
-    const GOOGLE_SHEETS_WEBHOOK_URL = ""; // ← paste your webhook URL here
+    // Get the selected plan object
+    const selectedPlanObj = PLANS.find((p) => p.id === selectedPlan)!;
+    const finalAmount = payFull ? selectedPlanObj.price : RESERVE_SEAT_AMOUNT;
 
-    if (GOOGLE_SHEETS_WEBHOOK_URL) {
-      try {
-        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: form.name,
-            phone: form.phone,
-            email: form.email,
-            college: form.college,
-            plan: selectedPlan,
-            paymentType: payFull ? "full" : "reserve",
-            amount: payableAmount,
-          }),
-        });
-      } catch {
-        // Non-blocking — proceed regardless
+    // Prepare form data for Google Sheet
+    const formData = {
+      fullName: form.name,
+      email: form.email,
+      phone: "+91 " + form.phone,
+      collegeName: form.college,
+      plan: selectedPlanObj.label,
+      paymentOption: payFull ? "Pay in full" : "Reserve seat",
+      amount: finalAmount.toString(),
+    };
+
+    // 1. Submit to Google Sheet
+    try {
+      const response = await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+      // Log success but don't block execution
+      if (response.ok) {
+        console.log("Form submitted to Google Sheet successfully");
       }
+    } catch (error) {
+      console.error("Error submitting to Google Sheet:", error);
+      // Non-blocking — proceed to payment regardless
     }
 
-    // Set persistent cookie so future clicks bypass the form
+    // 2. Set persistent cookie so future clicks bypass the form
     setCookie(COOKIE_DAYS);
 
-    // Redirect to LMS
-    window.location.href = LMS_REDIRECT_URL;
+    // 3. Open Cashfree payment link (if amount exists in mapping)
+    const paymentLink = PAYMENT_LINKS[finalAmount];
+    if (paymentLink) {
+      window.open(paymentLink, "_blank");
+    }
+
+    // 4. Redirect to LMS (after a brief delay to let payment window open)
+    setTimeout(() => {
+      window.location.href = LMS_REDIRECT_URL;
+    }, 500);
   }
 
   // ── Render ─────────────────────────────────────────────────────────────────
@@ -222,17 +246,17 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                   key={plan.id}
                   type="button"
                   onClick={() => setSelectedPlan(plan.id)}
-                  className={`relative flex flex-col items-start p-3.5 rounded-xl border-2 transition-all duration-200 text-left ${
+                  className={`relative flex flex-col items-start p-2.5 rounded-xl border-2 transition-all duration-200 text-left text-xs ${
                     selectedPlan === plan.id
                       ? "border-primary bg-primary/5"
                       : "border-border hover:border-primary/40 bg-secondary/50"
                   }`}
                 >
                   {selectedPlan === plan.id && (
-                    <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />
+                    <CheckCircle2 size={12} className="absolute top-1.5 right-1.5 text-primary" />
                   )}
-                  <span className="text-sm font-bold text-foreground">{plan.label}</span>
-                  <span className="text-lg font-black text-primary mt-0.5">₹{plan.price.toLocaleString("en-IN")}</span>
+                  <span className="text-xs font-bold text-foreground">{plan.label}</span>
+                  <span className="text-base font-black text-primary mt-0.5">₹{plan.price.toLocaleString("en-IN")}</span>
                 </button>
               ))}
             </div>

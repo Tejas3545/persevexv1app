@@ -9,7 +9,7 @@ interface Stat {
 }
 
 const statsData: Stat[] = [
-  { number: 15000, suffix: '+', label: 'Students Enrolled' },
+  { number: 10000, suffix: '+', label: 'Students Trained' },
   { number: 10, suffix: '+', label: 'Expert-Led Courses' },
   { number: 99, suffix: '%', label: 'Satisfaction Rate' },
   { number: 10, suffix: '+', label: 'Global Presence' },

@@ -136,7 +136,7 @@ function Verifier() {
         
         <header className="flex items-center gap-4 mb-8">
           <div className="w-12 h-12 flex items-center justify-center bg-muted rounded-full">
-            <img src="/persevexlogo.png" alt="Persevex Logo" className="w-12 h-12 rounded-full"/>
+            <img src="/persevex.png" alt="Persevex Logo" className="w-12 h-12 rounded-full"/>
           </div>
           <div>
             <div className="text-xl font-bold text-foreground">Persevex CertiCheck</div>

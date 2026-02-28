@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Persevex",
     images: [
       {
-        url: "/persevexlogo.png",
+        url: "/persevex.png",
         width: 1200,
         height: 630,
         alt: "Persevex Logo",
@@ -47,12 +47,13 @@ export const metadata: Metadata = {
     title: "Persevex | Empowering Careers",
     description:
       "Experience hands-on learning with expert-curated courses, AI guidance, and career-ready outcomes.",
-    images: ["/persevexlogo.png"],
+    images: ["/persevex.png"],
   },
 };
 
 import { ThemeProvider } from "./components/ThemeProvider";
 import ChatWidget from "./components/ChatWidget";
+import CursorBlob from "./components/CursorBlob";
 
 export default function RootLayout({
   children,
@@ -77,7 +78,7 @@ export default function RootLayout({
                 "@type": "Organization",
                 name: "Persevex",
                 url: "https://persevex.com",
-                logo: "https://persevex.com/persevexlogo.png",
+                logo: "https://persevex.com/persevex.png",
               }),
             }}
           />
@@ -120,6 +121,7 @@ export default function RootLayout({
           </noscript>
 
           {children}
+          <CursorBlob />
           <ChatWidget />
         </ThemeProvider>
       </body>

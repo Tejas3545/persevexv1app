@@ -96,34 +96,25 @@ export default function CampusAmbassadorPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // ─── GOOGLE SHEETS INTEGRATION (future) ──────────────────────────────────
-    // To send form data directly to a Google Sheet:
-    // 1. Create a Google Sheet and open Extensions → Apps Script
-    // 2. Write a doPost(e) function that appends rows from the request body
-    // 3. Deploy as a Web App (access: Anyone, even anonymous)
-    // 4. Copy the deployment URL and paste it below as GOOGLE_SHEETS_WEBHOOK_URL
-    // ─────────────────────────────────────────────────────────────────────────
-    const GOOGLE_SHEETS_WEBHOOK_URL = ""; // <── paste your Apps Script URL here
+    // Campus Ambassador Form - Google Sheet URL (Form 01)
+    const GOOGLE_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxYx4traqn4kt5A2LhNSn-7XsYyaWcZ1dAy8rzXj4OP7iYVoQ6juSCLIpnNy48PxIWC/exec";
 
     try {
-      if (GOOGLE_SHEETS_WEBHOOK_URL) {
-        // When the URL is configured, POST form data to Google Sheets
-        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
-          method: "POST",
-          // Note: Google Apps Script requires 'no-cors' mode
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...formData,
-            submittedAt: new Date().toISOString(),
-          }),
-        });
-      } else {
-        // Fallback: simulate a short delay until webhook is configured
-        await new Promise((resolve) => setTimeout(resolve, 1200));
-      }
+      // POST form data to Google Sheets
+      await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          fullName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          collegeName: formData.college,
+          graduationYear: formData.year,
+        }),
+      });
 
       setSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", college: "", year: "", branch: "", linkedin: "", instagram: "", motivation: "" });
     } catch (err) {
       console.error("Form submission error:", err);
       // Still mark as submitted to avoid blocking the user

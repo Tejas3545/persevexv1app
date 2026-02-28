@@ -44,12 +44,16 @@ const socialLinks = [
 ];
 
 export default function ContactUs() {
+  // Google Sheet submission URL for contact form
+  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwaYEHUMVOWJHt9af8D9xdRBydMjCVEcqJmY3x7NGGDFfKkuffO0xWZTiMT44r86nPu/exec";
+
   const [formData, setFormData] = useState({
-    name: "",
+    studentName: "",
     email: "",
     phone: "",
-    course: "",
-    message: "",
+    collegeName: "",
+    passoutYear: "",
+    interestedDomain: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -59,17 +63,17 @@ export default function ContactUs() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/contact", {
+      // Submit to Google Sheet
+      const response = await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        mode: "no-cors",
       });
 
-      if (response.ok) {
-        setSubmitted(true);
-        setFormData({ name: "", email: "", phone: "", course: "", message: "" });
-        setTimeout(() => setSubmitted(false), 5000);
-      }
+      // Mark as submitted (Google Apps Script doesn't return readable response in no-cors mode)
+      setSubmitted(true);
+      setFormData({ studentName: "", email: "", phone: "", collegeName: "", passoutYear: "", interestedDomain: "" });
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
       console.error("Contact form error:", error);
       // Still show success for UX
@@ -237,9 +241,9 @@ export default function ContactUs() {
                     </label>
                     <input
                       type="text"
-                      value={formData.name}
+                      value={formData.studentName}
                       onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
+                        setFormData({ ...formData, studentName: e.target.value })
                       }
                       required
                       className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
@@ -280,17 +284,54 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">
-                      Course Interested In
+                      College Name
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.collegeName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, collegeName: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="Your college name"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">
+                      Year of Passout
                     </label>
                     <select
-                      title="Course selection"
-                      value={formData.course}
+                      title="Year selection"
+                      value={formData.passoutYear}
                       onChange={(e) =>
-                        setFormData({ ...formData, course: e.target.value })
+                        setFormData({ ...formData, passoutYear: e.target.value })
                       }
                       className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     >
-                      <option value="">Select a course</option>
+                      <option value="">Select year</option>
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      <option value="2027">2027</option>
+                      <option value="2028">2028</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">
+                      Interested Domain
+                    </label>
+                    <select
+                      title="Domain selection"
+                      value={formData.interestedDomain}
+                      onChange={(e) =>
+                        setFormData({ ...formData, interestedDomain: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    >
+                      <option value="">Select a domain</option>
                       <option value="web-development">Full Stack Web Development</option>
                       <option value="machine-learning">Machine Learning</option>
                       <option value="data-science">Data Science</option>
@@ -308,22 +349,6 @@ export default function ContactUs() {
                       <option value="other">Other</option>
                     </select>
                   </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">
-                    Message *
-                  </label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    required
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-                    placeholder="How can we help you? Tell us about your goals..."
-                  />
                 </div>
 
                 <motion.button

@@ -139,6 +139,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Enable hardware acceleration for smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -146,6 +149,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
+  /* Optimize for smooth scrolling */
+  overscroll-behavior: none;
 }
 
 /* ===== APTISURE-MATCHING TYPOGRAPHY ===== */
@@ -210,18 +215,22 @@ h4, h5, h6 {
   margin-top: -23px; margin-left: -23px;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 .orbit-item-cw  { animation-name: orbitCW;  animation-duration: 42s; }
 .orbit-item-ccw { animation-name: orbitCCW; animation-duration: 28s; }
 
-.orbit-arm-outer { transform: translateX(178px); }
-.orbit-arm-inner { transform: translateX(110px); }
+.orbit-arm-outer { transform: translateX(178px) translateZ(0); }
+.orbit-arm-inner { transform: translateX(110px) translateZ(0); }
 
 .orbit-icon {
   width: 46px; height: 46px;
   /* background, color, font-size, animation-delay set per slug */
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 .orbit-icon-cw  { animation-name: counterOrbitCW;  animation-duration: 42s; }
 .orbit-icon-ccw { animation-name: counterOrbitCCW; animation-duration: 28s; }
@@ -230,6 +239,7 @@ h4, h5, h6 {
   width: 90px; height: 90px;
   /* background, box-shadow, font-size set per slug */
   letter-spacing: -0.03em;
+  will-change: auto;
 }
 
 @keyframes fade-in-up {

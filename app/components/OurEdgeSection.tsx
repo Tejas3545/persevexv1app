@@ -183,7 +183,7 @@ export default function OurEdgeSection() {
             </div>
             <div className="text-left">
               <div className="text-sm font-bold text-foreground">
-                Join 5000+ Students
+                Join 10000+ Students
               </div>
               <div className="text-xs text-muted-foreground">
                 Already building their careers with Persevex

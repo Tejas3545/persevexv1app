@@ -91,7 +91,7 @@ export default function FooterSection() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
             <Link href="/" className="mb-4 inline-flex">
               <Image
-                src="/persevexlogo.png"
+                src="/persevex.png"
                 alt="Persevex"
                 width={48}
                 height={48}
@@ -100,7 +100,7 @@ export default function FooterSection() {
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">
               Empowering the next generation with real-world skills, expert
-              mentorship, and career-ready outcomes. Join 5000+ students
+              mentorship, and career-ready outcomes. Join 10000+ students
               building their future.
             </p>
 

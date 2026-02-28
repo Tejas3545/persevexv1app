@@ -1,0 +1,178 @@
+#lms form #1
+
+web url: https://script.google.com/macros/s/AKfycbwd0FKuHde2dPvjv9gXamF2TPraJWvAm3f4aQX3rko0SOe-_m3Bjj2L-qKj8GTm_5Vc/exec
+
+eg payload code:
+
+// Example JavaScript for the frontend
+const scriptURL = 'YOUR_GOOGLE_WEB_APP_URL_HERE'; // Paste URL from Step 3 here
+
+// Gather data from the form state
+const formData = {
+  fullName: "Rahul Kumar",
+  email: "rahul@example.com",
+  phone: "+91 9876543210", // Combine country code and input
+  collegeName: "Delhi University",
+  plan: "Advanced",        // Based on UI selection
+  paymentOption: "Reserve seat", // Based on UI selection
+  amount: "1000"           // Based on UI selection
+};
+
+// Send the data
+fetch(scriptURL, {
+  method: 'POST',
+  body: JSON.stringify(formData),
+  // No need to set 'Content-Type': 'application/json', standard text/plain bypasses CORS preflight issues with GAS
+})
+.then(response => response.json())
+.then(data => {
+  if(data.status === "success") {
+    console.log("Success!", data);
+    // Proceed to Payment Gateway (Razorpay/Stripe) here
+  }
+})
+.catch(error => console.error('Error!', error.message));
+
+
+
+
+#contact form #2
+
+web url: https://script.google.com/macros/s/AKfycbwaYEHUMVOWJHt9af8D9xdRBydMjCVEcqJmY3x7NGGDFfKkuffO0xWZTiMT44r86nPu/exec
+
+
+eg payload code:
+
+// The URL you got from Step 3
+const googleScriptURL = "YOUR_WEB_APP_URL_HERE";
+
+// Function to handle form submit
+function submitRegistrationForm() {
+  
+  // 1. Gather data from your input fields
+  const formData = {
+    studentName: document.getElementById("nameInput").value,      // e.g. "John Doe"
+    phone: document.getElementById("phoneInput").value,           // e.g. "9876543210"
+    email: document.getElementById("emailInput").value,           // e.g. "john@gmail.com"
+    collegeName: document.getElementById("collegeInput").value,   // e.g. "IIT Delhi"
+    passoutYear: document.getElementById("yearSelect").value,     // e.g. "2025"
+    interestedDomain: document.getElementById("domainSelect").value // e.g. "Web Development"
+  };
+
+  // 2. Send data to Google Script
+  fetch(googleScriptURL, {
+    method: "POST",
+    body: JSON.stringify(formData),
+    mode: "no-cors" // keeps the request simple, though response reading is limited
+    // If you need to read the JSON response specifically, remove 'no-cors' 
+    // and use the standard redirect method often required by GAS.
+  })
+  .then(response => response.text()) // GAS usually returns text/json
+  .then(data => {
+    console.log("Data sent");
+    alert("Registration Successful!");
+    // Reset form or redirect user here
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Something went wrong.");
+  });
+}
+
+
+#campus ambassador form 01
+
+web url: https://script.google.com/macros/s/AKfycbxYx4traqn4kt5A2LhNSn-7XsYyaWcZ1dAy8rzXj4OP7iYVoQ6juSCLIpnNy48PxIWC/exec
+
+eg payload code:
+
+const scriptURL = "YOUR_WEB_APP_URL_HERE";
+
+// Function called when 'Submit application' button is clicked
+function submitApplication() {
+  
+  // 1. Get the selected graduation year
+  // Assuming your buttons have a class 'selected' when clicked
+  // OR you are storing the value in a variable
+  let selectedYear = document.querySelector('.year-btn.selected')?.innerText || "Not Selected";
+
+  const formData = {
+    fullName: document.getElementById("nameInput").value,
+    email: document.getElementById("emailInput").value,
+    phone: document.getElementById("phoneInput").value,
+    collegeName: document.getElementById("collegeInput").value,
+    referredBy: document.getElementById("referredInput").value, // Optional field
+    graduationYear: selectedYear 
+  };
+
+  // 2. Validate required fields
+  if(!formData.fullName || !formData.email || !formData.phone || !formData.graduationYear) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  // 3. Send to Google Sheet
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(formData),
+    mode: "no-cors" // keeps request simple
+  })
+  .then(() => {
+    alert("Application Submitted Successfully!");
+    // Redirect or clear form here
+  })
+  .catch(error => console.error("Error!", error));
+}
+
+
+#campus ambassador form 02
+
+web url: https://script.google.com/macros/s/AKfycbyEm-Jy4IumOHejrjYxX3VJE80YDlt0Dw_u9LDDx_YmHb0f2tq2b2_lexFOpSb51qc02Q/exec
+
+eg payload code:
+
+// The Web App URL you generated in Step 3
+const scriptURL = "YOUR_WEB_APP_URL_HERE";
+
+function submitAmbassadorForm() {
+  
+  // 1. Gather all data from the form inputs
+  const formData = {
+    fullName: document.getElementById("nameInput").value,
+    email: document.getElementById("emailInput").value,
+    phone: document.getElementById("phoneInput").value,
+    college: document.getElementById("collegeInput").value,
+    yearOfStudy: document.getElementById("yearSelect").value, // Dropdown value
+    branch: document.getElementById("branchInput").value,
+    linkedin: document.getElementById("linkedinInput").value,
+    instagram: document.getElementById("instaInput").value,
+    motivation: document.getElementById("motivationTextarea").value
+  };
+
+  // 2. Simple Validation (ensure required fields are filled)
+  if(!formData.fullName || !formData.email || !formData.motivation) {
+    alert("Please fill in the required fields.");
+    return;
+  }
+
+  // 3. Send data via POST request
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(formData),
+    // mode: 'no-cors' is often used to avoid CORS errors with Google Scripts, 
+    // but it prevents reading the response JSON. 
+    // If you need to read the success message, remove 'mode: no-cors' 
+    // and rely on the script returning text/plain implicitly.
+    mode: "no-cors" 
+  })
+  .then(() => {
+    // Since we used no-cors, we assume success if no network error occurred
+    alert("Application Submitted Successfully!");
+    // Optional: Reset form here
+    // document.getElementById("myForm").reset();
+  })
+  .catch(error => {
+    console.error("Error!", error);
+    alert("There was a problem submitting your application.");
+  });
+}

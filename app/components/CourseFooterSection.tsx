@@ -58,7 +58,7 @@ export default function CourseFooterSection({ links }: { links: FooterLinkColumn
           <div className="flex items-start gap-6 w-full">
             <div className="flex items-center">
               <Image
-                src="/persevexlogo.png"
+                src="/persevex.png"
                 alt="Persevex"
                 width={56}
                 height={56}

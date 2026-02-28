@@ -79,7 +79,7 @@ export default function ExploreFooterSection() {
           <div className="lg:col-span-1">
             <div className="flex items-center mb-4">
               <Image
-                src="/persevexlogo.png"
+                src="/persevex.png"
                 alt="Persevex"
                 width={56}
                 height={56}
