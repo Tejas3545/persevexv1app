@@ -149,8 +149,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
-  /* Optimize for smooth scrolling */
-  overscroll-behavior: none;
+  /* Optimize for smooth scrolling; allow vertical scroll but contain overscroll */
+  overscroll-behavior-y: contain;
 }
 
 /* ===== APTISURE-MATCHING TYPOGRAPHY ===== */
@@ -560,6 +560,8 @@ h4, h5, h6 {
 html, body {
   width: 100%;
   overflow-x: hidden;
+  /* allow vertical scrolling while preventing horizontal bounce */
+  overscroll-behavior-y: contain;
 }
 
 .cert-preview-container {
