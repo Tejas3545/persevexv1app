@@ -26,15 +26,13 @@ const COOKIE_DAYS = 365;
 
 // ─── Plan / Payment data ──────────────────────────────────────────────────────
 const PLANS = [
-  { id: "foundation", label: "Foundation", price: 3500 },
-  { id: "advanced", label: "Advanced", price: 4500 },
-  { id: "premium", label: "Premium", price: 6999 },
-  { id: "elite", label: "Elite", price: 8999 },
+  { id: "foundation", label: "Foundation", price: 3500, reserveSeat: 1000 },
+  { id: "advanced", label: "Advanced", price: 4500, reserveSeat: 1500 },
+  { id: "premium", label: "Premium", price: 6999, reserveSeat: 1500 },
+  { id: "elite", label: "Elite", price: 8999, reserveSeat: 1500 },
 ] as const;
 
 type PlanId = (typeof PLANS)[number]["id"];
-
-const RESERVE_SEAT_AMOUNT = 1000;
 
 // Payment link mapping
 const PAYMENT_LINKS: Record<number, string> = {
@@ -125,7 +123,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
   const selectedPlanObj = PLANS.find((p) => p.id === selectedPlan)!;
-  const payableAmount = payFull ? selectedPlanObj.price : RESERVE_SEAT_AMOUNT;
+  const payableAmount = payFull ? selectedPlanObj.price : selectedPlanObj.reserveSeat;
   const paymentLabel = payFull ? "Pay in full" : "Reserve seat";
 
   // ── Validation ─────────────────────────────────────────────────────────────
@@ -149,7 +147,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
 
     // Get the selected plan object
     const selectedPlanObj = PLANS.find((p) => p.id === selectedPlan)!;
-    const finalAmount = payFull ? selectedPlanObj.price : RESERVE_SEAT_AMOUNT;
+    const finalAmount = payFull ? selectedPlanObj.price : selectedPlanObj.reserveSeat;
 
     // Prepare form data for Google Sheet
     const formData = {
@@ -278,7 +276,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
               >
                 {!payFull && <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />}
                 <span className="text-sm font-bold text-foreground">Reserve seat</span>
-                <span className="text-lg font-black text-primary mt-0.5">₹{RESERVE_SEAT_AMOUNT.toLocaleString("en-IN")}</span>
+                <span className="text-lg font-black text-primary mt-0.5">₹{selectedPlanObj.reserveSeat.toLocaleString("en-IN")}</span>
                 <span className="text-xs text-muted-foreground mt-0.5">Pay now</span>
               </button>
               {/* Pay in Full */}

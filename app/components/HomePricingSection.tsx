@@ -21,7 +21,7 @@ const plans: Plan[] = [
     price: "6,999",
     tagline: "Launch your portfolio with real projects.",
     popular: false,
-    paymentLink: "https://payments.cashfree.com/forms/PERSEVE_REGISTRATION",
+    paymentLink: "https://payments.cashfree.com/forms/found",
     features: [
       { text: "24 Hours Recorded Sessions", included: true },
       { text: "Real-Time Projects", included: true },
@@ -39,7 +39,7 @@ const plans: Plan[] = [
     price: "8,999",
     tagline: "Full placement stack — from learning to offer letter.",
     popular: true,
-    paymentLink: "https://payments.cashfree.com/forms/ADVANCE_REGS",
+    paymentLink: "https://payments.cashfree.com/forms/ADDV",
     features: [
       { text: "24 Hours Recorded Sessions", included: true },
       { text: "Real-Time Projects", included: true },

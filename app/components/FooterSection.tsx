@@ -51,6 +51,7 @@ const legalLinks = [
   { name: "Privacy Policy", href: "/privacy-policy" },
   { name: "Terms & Conditions", href: "/terms-&-conditions" },
   { name: "Return Policy", href: "/return-policy" },
+  { name: "Refund Policy", href: "/refund-policy" },
   { name: "Data Deletion", href: "/data-deletion" },
 ];
 
@@ -114,11 +115,11 @@ export default function FooterSection() {
                 support@persevex.com
               </a>
               <a
-                href="tel:+917400484725"
+                href="tel:+918660128339"
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <FiPhone size={14} />
-                +91 74004 84725
+                +91 86601 28339
               </a>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <FiMapPin size={14} />

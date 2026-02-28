@@ -28,7 +28,7 @@ const supportFaqs = [
       {
         question: "Can I switch courses after enrollment?",
         answer:
-          "Yes, you can switch courses within the first 7 days of enrollment. Please contact our support team at support@persevex.com or call us at +91 74004 84725 to initiate the switch.",
+          "Yes, you can switch courses within the first 7 days of enrollment. Please contact our support team at support@persevex.com or call us at +91 86601 28339 to initiate the switch.",
       },
       {
         question: "Are the courses available online or offline?",
@@ -73,7 +73,7 @@ const supportFaqs = [
       {
         question: "What is the refund policy?",
         answer:
-          "We offer a 7-day money-back guarantee. If you are not satisfied with the course within the first 7 days, you can request a full refund. Please refer to our Return Policy page for complete details.",
+          "All payments for courses and services are final and non-refundable once processed. For complete details on cancellations, course changes, and rescheduling, please refer to our Refund Policy and Return Policy pages.",
       },
       {
         question: "Are there any scholarships available?",
@@ -112,8 +112,8 @@ const contactOptions = [
     icon: <FiPhone size={24} />,
     title: "Phone Support",
     description: "Mon-Sat, 9 AM - 6 PM IST",
-    contact: "+91 74004 84725",
-    href: "tel:+917400484725",
+    contact: "+91 86601 28339",
+    href: "tel:+918660128339",
     color: "bg-green-500/10 text-green-500",
   },
   {

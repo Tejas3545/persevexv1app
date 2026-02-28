@@ -3,19 +3,21 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { FiExternalLink, FiCheckCircle, FiX } from "react-icons/fi";
+import { FiExternalLink, FiCheckCircle, FiX, FiFileText } from "react-icons/fi";
 
 const recognitions = [
   {
     name: "DPIIT Recognized Startup",
     badge: "Startup India",
     pdfSrc: "/DPIIT Recognized Startup.pdf",
+    previewImage: "/startup.png",
     description: "Department for Promotion of Industry & Internal Trade",
   },
   {
     name: "ISO 9001:2015 Certified",
     badge: "ISO Certified",
     pdfSrc: "/ISO 9001 2015 Certified.pdf",
+    previewImage: "/iso.png",
     description: "Quality Management System — UKAFC Accredited",
   },
 ];
@@ -87,31 +89,42 @@ export default function RecognizedBySection() {
                 <div className="flex-1 h-[3px] bg-gradient-to-r from-primary via-amber-400 to-transparent" />
               </div>
 
-              {/* PDF embedded as certificate preview */}
+              {/* Certificate preview - using image for cross-browser/mobile compatibility */}
               <div className="pt-12 px-5 pb-0">
-                <div className="relative w-full rounded-xl overflow-hidden border border-gray-200 dark:border-border bg-white cert-preview-container">
-                  <iframe
-                    src={`${rec.pdfSrc}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-                    className="cert-preview-iframe"
-                    title={rec.name}
-                  />
-                  {/* Invisible overlay to block iframe interaction, click opens modal */}
-                  <div
-                    className="absolute inset-0 cursor-pointer"
-                    onClick={() => setModalPdf(rec.pdfSrc)}
-                  />
+                <div
+                  className="relative w-full h-[320px] rounded-xl overflow-hidden border border-gray-200 dark:border-border bg-white flex flex-col items-center justify-center cursor-pointer"
+                  onClick={() => setModalPdf(rec.pdfSrc)}
+                >
+                  {/* Badge/logo image preview */}
+                  <div className="relative w-32 h-32 mb-4">
+                    <Image
+                      src={rec.previewImage}
+                      alt={rec.name}
+                      fill
+                      sizes="128px"
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* PDF file indicator */}
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <FiFileText className="w-5 h-5" />
+                    <span className="text-sm font-medium">{rec.name}</span>
+                  </div>
+                  <span className="mt-2 text-xs text-primary font-semibold">Click to view certificate</span>
                 </div>
               </div>
 
               {/* Card footer */}
               <div className="px-5 py-5">
-                <button
-                  onClick={() => setModalPdf(rec.pdfSrc)}
+                <a
+                  href={rec.pdfSrc}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors mb-2"
                 >
                   <FiExternalLink className="w-3.5 h-3.5" />
                   Click to view
-                </button>
+                </a>
                 <h3 className="text-xl font-bold text-foreground mb-1">{rec.name}</h3>
                 <p className="text-sm text-muted-foreground">{rec.description}</p>
               </div>
@@ -145,7 +158,7 @@ export default function RecognizedBySection() {
         </motion.div>
       </div>
 
-      {/* Full-screen PDF Modal */}
+      {/* Full-screen PDF Modal - using Google Docs viewer for universal compatibility */}
       {modalPdf && (
         <div
           className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
@@ -167,7 +180,7 @@ export default function RecognizedBySection() {
                   className="text-xs font-medium text-primary hover:underline flex items-center gap-1"
                 >
                   <FiExternalLink className="w-3.5 h-3.5" />
-                  Open in new tab
+                  Open PDF
                 </a>
                 <button
                   onClick={() => setModalPdf(null)}
@@ -179,7 +192,7 @@ export default function RecognizedBySection() {
               </div>
             </div>
             <iframe
-              src={`${modalPdf}#toolbar=1&navpanes=0`}
+              src={`https://docs.google.com/gview?url=${typeof window !== "undefined" ? window.location.origin : ""}${modalPdf}&embedded=true`}
               className="w-full cert-modal-iframe"
               title="Certificate viewer"
             />

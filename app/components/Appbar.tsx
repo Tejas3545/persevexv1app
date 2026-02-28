@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useScroll, SectionKey } from "../contexts/scrollContext";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import ProgramsMegaMenu from "./ProgramsMegaMenu";
-import Image from "next/image";
 import { ThemeToggle } from "./ThemeToggle";
 import { useLmsAccess } from "./LmsRegistrationModal";
 
@@ -148,18 +148,20 @@ export default function Navbar() {
   // Dedicated page navigation links (replaces old scrollTo architecture)
   // Each section is now reachable as its own standalone page.
 
+  /** All program categories combined */
+  const allProgramCategories = [...internshipProgramCategories, ...placementProgramCategories];
+
   /** All searchable course items (internship + placement) */
-  const allCourseItems = [
-    ...internshipProgramCategories.flatMap((cat) => cat.items),
-    ...placementProgramCategories.flatMap((cat) => cat.items),
-  ].filter((item) => item.name !== "Coming Soon");
+  const allCourseItems = allProgramCategories
+    .flatMap((cat) => cat.items)
+    .filter((item) => item.name !== "Coming Soon");
 
   const searchResults =
     searchQuery.trim().length > 0
       ? (() => {
           const q = searchQuery.toLowerCase();
           // Check if query matches a domain/branch name
-          const matchedBranch = internshipProgramCategories.find(
+          const matchedBranch = allProgramCategories.find(
             (cat) => cat.branch.toLowerCase().includes(q)
           );
           if (matchedBranch) {
@@ -173,12 +175,14 @@ export default function Navbar() {
       : [];
 
   /** Domain suggestions shown when search is focused but empty */
-  const domainSuggestions = internshipProgramCategories.map((cat) => ({
-    branch: cat.branch,
-    count: cat.items.filter((i) => i.name !== "Coming Soon").length,
-    firstHref: cat.items[0]?.href ?? "#",
-    items: cat.items.filter((i) => i.name !== "Coming Soon"),
-  }));
+  const domainSuggestions = allProgramCategories
+    .map((cat) => ({
+      branch: cat.branch,
+      count: cat.items.filter((i) => i.name !== "Coming Soon").length,
+      firstHref: cat.items[0]?.href ?? "#",
+      items: cat.items.filter((i) => i.name !== "Coming Soon"),
+    }))
+    .filter((d) => d.count > 0);
 
   const mobileMenuVariants: Variants = {
     hidden: { opacity: 0, x: "100%", transition: { duration: 0.3, ease: "easeOut" } },
@@ -214,10 +218,10 @@ export default function Navbar() {
           <Image
             src="/persevex.png"
             alt="Persevex"
-            width={44}
+            width={140}
             height={44}
-            className="h-11 w-auto object-contain"
             priority
+            className="h-9 w-auto dark:brightness-[1.8] dark:contrast-[1.1] transition-[filter] duration-300"
           />
         </Link>
 

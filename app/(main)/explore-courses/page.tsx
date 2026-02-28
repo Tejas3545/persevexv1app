@@ -343,7 +343,7 @@ export default function ExploreCoursesPage() {
             <div className="grid grid-cols-2 gap-3">
               {[
                 { label: "Programs", value: `${totalPrograms}+` },
-                { label: "Students", value: "2000+" },
+                { label: "Students", value: "10000+" },
                 { label: "Projects", value: "50+" },
                 { label: "Domains",  value: `${allDomains.filter((d) => d.enabled).length}` },
               ].map((stat) => (

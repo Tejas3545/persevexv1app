@@ -30,7 +30,7 @@ const pricingPlans: PricingPlan[] = [
     title: "Foundation",
     price: "6999",
     color: "cyan",
-    paymentLink: "https://payments.cashfree.com/forms/PERSEVE_REGISTRATION",
+    paymentLink: "https://payments.cashfree.com/forms/found",
     features: [
       { text: "Recorded Lectures", included: true },
       { text: "Real Time Projects", included: true },
@@ -49,7 +49,7 @@ const pricingPlans: PricingPlan[] = [
     title: "Advanced",
     price: "8999",
     color: "lime",
-    paymentLink: "https://payments.cashfree.com/forms/ADVANCE_REGS",
+    paymentLink: "https://payments.cashfree.com/forms/ADDV",
     features: [
       { text: "Recorded Lectures", included: true },
       { text: "Real Time Projects", included: true },

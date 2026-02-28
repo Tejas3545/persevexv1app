@@ -16,8 +16,8 @@ const contactInfo = [
   {
     icon: <FiPhone size={20} />,
     label: "Phone",
-    value: "+91 74004 84725",
-    href: "tel:+917400484725",
+    value: "+91 86601 28339",
+    href: "tel:+918660128339",
     color: "bg-green-500/10 text-green-500",
   },
   {
