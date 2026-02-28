@@ -26,9 +26,9 @@ export default function FrequentlyAskedQuestionsSection({ faqs }: { faqs: FAQTyp
         <p className="text-sm md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
           Everything you need to know about our internship program. 
           Can't find the answer you're looking for? 
-          <a href="#contact-form" className="text-primary hover:text-blue-600 cursor-pointer transition-colors font-medium">
+          <Link href="/support#support-form" className="text-primary hover:text-blue-600 cursor-pointer transition-colors font-medium">
             {" "}Reach out to our team.
-          </a>
+          </Link>
         </p>
       </div>
 

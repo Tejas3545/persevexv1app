@@ -1,0 +1,42 @@
+export const DUMMY_BLOGS = [
+  {
+    id: "dummy-1",
+    slug: "future-of-ai-in-2025",
+    title: "The Future of Artificial Intelligence in 2025",
+    author: "Persevex AI Team",
+    description: "Explore the most anticipated AI breakthroughs expected to revolutionize industries this year.",
+    content: "Artificial Intelligence is no longer just a buzzword; it's a fundamental shift in how we approach problem-solving.\n\nFrom advanced generative models to hyper-personalized learning platforms, AI will become even more ingrained in our daily workflows. Students and professionals alike must adapt to *using* AI effectively.\n\n## Key Trends:\n1. **Agential AI**: Systems that learn and execute complete tasks rather than just generating text.\n2. **AI in Education**: Tailored curriculums that adapt to individual learning speeds.\n3. **Ethics and Safety**: More robust frameworks to ensure responsible AI deployments.\n\nThe real question is: are you ready to harness these tools?",
+    createdAt: new Date("2025-01-10T10:00:00Z"),
+    updatedAt: new Date("2025-01-10T10:00:00Z"),
+  },
+  {
+    id: "dummy-2",
+    slug: "mastering-react-19",
+    title: "Mastering React 19: What You Need to Know",
+    author: "Frontend Guild",
+    description: "React 19 brings exciting new features like the React Compiler and Actions. Here's a quick overview.",
+    content: "React 19 has officially launched, and it promises to drastically reduce the boilerplate we write.\n\n### The React Compiler\nForget about `useMemo` and `useCallback`. The new compiler optimizes your UI automatically.\n\n### Actions\nHandling data mutations used to be tedious. With Actions, managing pending states and form submissions is built deeply into React.\n\nStart upgrading your codebases today and take advantage of these massive performance boosts!",
+    createdAt: new Date("2025-02-15T09:30:00Z"),
+    updatedAt: new Date("2025-02-15T09:30:00Z"),
+  },
+  {
+    id: "dummy-3",
+    slug: "why-cybersecurity-is-crucial",
+    title: "Why Cybersecurity is the Most Crucial Skill Right Now",
+    author: "Security Expertes",
+    description: "As businesses move completely to the cloud, the demand for skilled cybersecurity professionals is at an all-time high.",
+    content: "Every week, a new data breach makes the headlines. It has never been more obvious: we need more security experts.\n\nIf you're considering a career pivot, **Cybersecurity** offers unprecedented job security and lucrative compensation.\n\nLearning the basics of network security, ethical hacking, and risk management can give you a massive edge in the current job market.",
+    createdAt: new Date("2025-02-20T14:45:00Z"),
+    updatedAt: new Date("2025-02-20T14:45:00Z"),
+  },
+  {
+    id: "dummy-4",
+    slug: "getting-started-with-data-science",
+    title: "Getting Started with Data Science",
+    author: "Data Wizards",
+    description: "A simple guide to taking your first steps in the intimidating world of Data Science and Analytics.",
+    content: "Data Science might sound complex, but at its core, it's just about finding patterns in information.\n\n**Where to grab those skills?**\n- Learn Python or R.\n- Understand statistical basics.\n- Practice with real-world datasets from Kaggle.\n\nDon't let the complex math scare you away. Start small, build intuitions, and your skills will naturally compound!",
+    createdAt: new Date("2025-02-25T11:15:00Z"),
+    updatedAt: new Date("2025-02-25T11:15:00Z"),
+  }
+];

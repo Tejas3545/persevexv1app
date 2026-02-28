@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FiInstagram, FiLinkedin, FiYoutube, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
@@ -8,12 +8,12 @@ import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 import { useScroll, SectionKey } from "../contexts/scrollContext";
 import { motion } from "framer-motion";
 
-const quickLinks: { name: string; key: SectionKey }[] = [
-  { name: "Courses", key: "courses" },
-  { name: "Why Choose Us", key: "ourEdge" },
-  { name: "About Us", key: "aboutUs" },
-  { name: "FAQ", key: "faq" },
-  { name: "Contact Us", key: "contactUs" },
+const quickLinks = [
+  { name: "Home", href: "/" },
+  { name: "Courses", href: "/explore-courses" },
+  { name: "About Us", href: "/#aboutUs" },
+  { name: "FAQ", href: "/#faq" },
+  { name: "Contact Us", href: "/support" },
 ];
 
 const programLinks = [
@@ -57,6 +57,14 @@ const legalLinks = [
 
 export default function FooterSection() {
   const { scrollToSection } = useScroll();
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    alert("Thank you for subscribing to Persevex!");
+    setEmail("");
+  };
 
   return (
     <footer className="bg-card text-foreground border-t border-border" id="footer">
@@ -72,22 +80,25 @@ export default function FooterSection() {
                 Get the latest course updates, career tips, and industry insights.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
+                required
                 className="flex-1 md:w-72 px-5 py-3 rounded-full bg-secondary border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
-              <button className="px-8 py-3 bg-primary text-white rounded-full text-sm font-bold shadow-md hover:shadow-primary/20 hover:-translate-y-0.5 transition-all whitespace-nowrap">
+              <button type="submit" className="px-8 py-3 bg-primary text-white rounded-full text-sm font-bold shadow-md hover:shadow-primary/20 hover:-translate-y-0.5 transition-all whitespace-nowrap">
                 Subscribe
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
             <Link href="/" className="mb-4 inline-flex">
@@ -123,7 +134,7 @@ export default function FooterSection() {
               </a>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <FiMapPin size={14} />
-                Greater Noida, UP, India
+                Bangalore, India
               </div>
             </div>
 
@@ -152,24 +163,24 @@ export default function FooterSection() {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <button
-                    onClick={() => scrollToSection(link.key)}
+                  <Link
+                    href={link.href}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer text-left"
                   >
                     {link.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Programs */}
+          {/* Company & Legal */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
-              Programs
+              Company
             </h4>
-            <ul className="space-y-3">
-              {programLinks.map((link) => (
+            <ul className="space-y-3 mb-8">
+              {companyLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -180,15 +191,12 @@ export default function FooterSection() {
                 </li>
               ))}
             </ul>
-          </div>
 
-          {/* Company */}
-          <div>
             <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
-              Company
+              Legal
             </h4>
             <ul className="space-y-3">
-              {companyLinks.map((link) => (
+              {legalLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -241,21 +249,10 @@ export default function FooterSection() {
         </div>
 
         {/* Divider + Copyright */}
-        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border mt-12 pt-8 flex items-center justify-center text-center">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Persevex. All rights reserved. Empowering careers since 2025.
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

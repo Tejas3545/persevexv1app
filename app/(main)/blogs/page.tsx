@@ -2,6 +2,7 @@ import React from "react";
 import BlogBackground from "@/app/components/Blogs/BlogBackground";
 import BlogList from "@/app/components/Blogs/BlogList";
 import prisma from "@/lib/prisma";
+import { DUMMY_BLOGS } from "./dummyBlogs";
 
 const getBlogs = async () => {
   try {
@@ -10,10 +11,10 @@ const getBlogs = async () => {
         createdAt: 'desc',
       },
     });
-    return blogs;
+    return blogs.length > 0 ? blogs : DUMMY_BLOGS;
   } catch (error) {
-    console.warn("Failed to fetch blogs from database. Returning empty array.", error);
-    return [];
+    console.warn("Failed to fetch blogs from database. Returning dummy blogs.", error);
+    return DUMMY_BLOGS;
   }
 };
 

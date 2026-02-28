@@ -18,36 +18,6 @@ import TrustCards from '@/app/components/TrustCards';
 import SkillsAndFeatures from '@/app/components/SkillAndFatures';
 import PricingCard from '@/app/components/PricingCard';
 
-const managementFooterLinks = [
-  {
-    title: "Quick Links",
-    links: ["Home", "Digital Marketing", "Finance", "Human Resource", ],
-  },
-  {
-    title: "Our Programs",
-    links: ["Digital Marketing", "Finance", "Human Resource"],
-  },
- {
-    title: "Get in touch",
-    links: ["support@persevex.com", "Bengaluru, India"],
-  },
-];
-
-const technicalFooterLinks = [
-  {
-    title: "Quick Links",
-    links: ["Home", "Web Development", "Artificial Intelligence", "Machine Learning", ],
-  },
-  {
-    title: "Our Programs",
-    links: ["Web Development", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Cybersecurity"],
-  },
-  {
-    title: "Get in touch",
-    links: ["support@persevex.com", "Bengaluru, India"],
-  },
-];
-
 export default function IndividualJGPCoursePage({ params }: { params: Promise<{ course: string }> }) {
   const resolvedParams = use(params);
 
@@ -67,8 +37,24 @@ export default function IndividualJGPCoursePage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  const isManagementCourse = managementCourses.some(mc => mc.id === course.id);
-  const footerLinksToShow = isManagementCourse ? managementFooterLinks : technicalFooterLinks;
+  const domain = allDomains.find(d => d.courses.some(c => c.id === course?.id));
+  const domainCourses = domain?.courses.slice(0, 4).map(c => c.title) || [];
+
+  const footerLinksToShow = [
+    {
+      title: "Quick Links",
+      links: ["Home", ...domainCourses],
+    },
+    {
+      title: "Our Programs",
+      links: domainCourses,
+    },
+    {
+      title: "Get in touch",
+      links: ["support@persevex.com", "Bengaluru, India"],
+    },
+  ];
+
   const courseFaqs = faqsData[course.slug] || [];
 
    const handleEnrollClick = () => {
