@@ -5,18 +5,18 @@ import Image from "next/image";
 
 const certificateData = [
   {
-    imageSrc: "/coursecompletion.png",
+    imageSrc: "/certificatesvg.svg",
     title: "Course Completion Certificate",
     description: "Awarded upon successful completion of the course curriculum.",
   },
   {
-    imageSrc: "/internshipcomp.png",
+    imageSrc: "/internshipsvg..svg",
     title: "Internship Certificate",
     description:
       "Awarded after gaining practical work experience by successful completion of the capstone projects.",
   },
   {
-    imageSrc: "/performancecertificate.png",
+    imageSrc: "/outstanding.svg",
     title: "Outstanding Performance Certificate",
     description:
       "Awarded to recognize exceptional performance and contributions during the program.",
