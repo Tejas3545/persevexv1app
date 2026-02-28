@@ -557,8 +557,15 @@ h4, h5, h6 {
 }
 
 /* ===== CERTIFICATE SECTION ===== */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .cert-preview-container {
   height: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .cert-preview-iframe {

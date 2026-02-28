@@ -49,6 +49,10 @@ export const metadata: Metadata = {
       "Experience hands-on learning with expert-curated courses, AI guidance, and career-ready outcomes.",
     images: ["/persevex.png"],
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+  },
 };
 
 import { ThemeProvider } from "./components/ThemeProvider";
