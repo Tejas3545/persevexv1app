@@ -2,205 +2,152 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FiInstagram, FiLinkedin, FiYoutube, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 import { useScroll, SectionKey } from "../contexts/scrollContext";
 import { motion } from "framer-motion";
-
-const quickLinks = [
-  { name: "Home", href: "/" },
-  { name: "Courses", href: "/explore-courses" },
-  { name: "About Us", href: "/#aboutUs" },
-  { name: "FAQ", href: "/#faq" },
-  { name: "Contact Us", href: "/support" },
-];
-
-const programLinks = [
-  { name: "Full Stack Web Dev", href: "/courses/web-development" },
-  { name: "Machine Learning", href: "/courses/machine-learning" },
-  { name: "Data Science", href: "/courses/data-science" },
-  { name: "Digital Marketing", href: "/courses/digital-marketing" },
-  { name: "Cyber Security", href: "/courses/cybersecurity" },
-  { name: "Cloud Computing", href: "/courses/cloud-computing" },
-];
+import { allDomains } from "../constants/courseConstant";
+import { useLmsAccess } from "./LmsRegistrationModal";
+import NewsletterSubscription from "./NewsletterSubscription";
 
 const companyLinks = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Courses", href: "/explore-courses" },
+  { name: "Reviews", href: "/reviews" },
+  { name: "Contact Us", href: "/contact" },
   { name: "Campus Ambassador", href: "/campus-ambassador" },
-  { name: "Support", href: "/support" },
-  { name: "Internship", href: "/internship" },
-  { name: "Blogs", href: "/blogs" },
-  { name: "Fees", href: "/fees" },
 ];
 
-const toolLinks = [
-  { name: "Resume Builder", href: "https://resumate-create.vercel.app/", external: true },
-  { name: "Project Hub", href: "https://projects-hub-platform.vercel.app/", external: true },
-  { name: "LMS Portal", href: "/internship", external: false },
-];
-
-const socialLinks = [
-  { name: "Instagram", icon: <FiInstagram size={18} />, href: "https://www.instagram.com/persevex/" },
-  { name: "LinkedIn", icon: <FiLinkedin size={18} />, href: "https://www.linkedin.com/company/persevex/" },
-  { name: "YouTube", icon: <FiYoutube size={18} />, href: "https://www.youtube.com/@persevex" },
-  { name: "X", icon: <FaXTwitter size={18} />, href: "https://twitter.com/persevex" },
-  { name: "WhatsApp", icon: <FaWhatsapp size={18} />, href: "https://wa.me/918660128339" },
+const supportLinks = [
+  { name: "Open Support Ticket", href: "/support" },
+  { name: "Persevex LMS", href: "#", isLms: true }, 
 ];
 
 const legalLinks = [
   { name: "Privacy Policy", href: "/privacy-policy" },
   { name: "Terms & Conditions", href: "/terms-&-conditions" },
+  { name: "Refund Policy", href: "/refund-policy" }, 
   { name: "Return Policy", href: "/return-policy" },
-  { name: "Refund Policy", href: "/refund-policy" },
-  { name: "Data Deletion", href: "/data-deletion" },
+];
+
+const socialLinks = [
+  { name: "Instagram", icon: <FiInstagram size={20} />, href: "https://www.instagram.com/persevex/" },
+  { name: "LinkedIn", icon: <FiLinkedin size={20} />, href: "https://www.linkedin.com/company/persevex/" },
+  { name: "WhatsApp", icon: <FaWhatsapp size={20} />, href: "https://wa.me/918660128339" },
+  { name: "YouTube", icon: <FiYoutube size={20} />, href: "https://www.youtube.com/@persevex" },
+  { name: "X", icon: <FaXTwitter size={20} />, href: "https://twitter.com/persevex" },
 ];
 
 export default function FooterSection() {
   const { scrollToSection } = useScroll();
-  const [email, setEmail] = useState("");
+  const router = useRouter();
+  const { openLms } = useLmsAccess();
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    alert("Thank you for subscribing to Persevex!");
-    setEmail("");
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isLms?: boolean) => {
+    if (isLms) {
+      e.preventDefault();
+      openLms();
+      return;
+    }
+    
+    if (href.startsWith("/#")) {
+      e.preventDefault();
+      const sectionId = href.replace("/#", "");
+      if (typeof window !== "undefined") {
+        if (window.location.pathname !== "/") {
+          router.push("/");
+          setTimeout(() => {
+            scrollToSection(sectionId as SectionKey);
+          }, 500);
+        } else {
+          scrollToSection(sectionId as SectionKey);
+        }
+      }
+    }
   };
 
   return (
-    <footer className="bg-card text-foreground border-t border-border" id="footer">
-      {/* Newsletter Banner */}
-      <div className="border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                Stay Updated with Persevex
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Get the latest course updates, career tips, and industry insights.
-              </p>
-            </div>
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                className="flex-1 md:w-72 px-5 py-3 rounded-full bg-secondary border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-              />
-              <button type="submit" className="px-8 py-3 bg-primary text-white rounded-full text-sm font-bold shadow-md hover:shadow-primary/20 hover:-translate-y-0.5 transition-all whitespace-nowrap">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
-            <Link href="/" className="mb-4 inline-flex">
-              <Image
-                src="/persevex.png"
-                alt="Persevex"
-                width={48}
-                height={48}
-                className="h-12 w-auto object-contain"
-              />
-            </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">
-              Empowering the next generation with real-world skills, expert
-              mentorship, and career-ready outcomes. Join 10000+ students
-              building their future.
-            </p>
-
-            {/* Contact Info */}
-            <div className="space-y-2 mb-6">
-              <a
-                href="mailto:support@persevex.com"
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <FiMail size={14} />
-                support@persevex.com
-              </a>
-              <a
-                href="tel:+918660128339"
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <FiPhone size={14} />
-                +91 86601 28339
-              </a>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <FiMapPin size={14} />
-                Bangalore, India
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex gap-3 flex-wrap">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary transition-colors text-muted-foreground hover:text-white"
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Links */}
+    <footer className="bg-card text-foreground border-t border-border pt-16 pb-8" id="footer">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        
+        {/* Top 5 Columns - Aptisure Style with Newsletter */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+          {/* COMPANY */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
-              Quick Links
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-6 text-foreground">
+              COMPANY
             </h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer text-left"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company & Legal */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
-              Company
-            </h4>
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-4">
               {companyLinks.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.name}
-                  </Link>
+                  {link.href.startsWith("/#") ? (
+                    <Link
+                      href={link.href}
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
+          </div>
 
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
-              Legal
+          {/* NEWSLETTER */}
+          <div>
+            <NewsletterSubscription />
+          </div>
+
+          {/* SUPPORT */}
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-6 text-foreground">
+              SUPPORT
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
+              {supportLinks.map((link) => (
+                <li key={link.name}>
+                  {(link as any).isLms ? (
+                    <button
+                      onClick={() => openLms()}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-left"
+                    >
+                      {link.name}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* LEGAL */}
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-6 text-foreground">
+              LEGAL
+            </h4>
+            <ul className="space-y-4">
               {legalLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -209,50 +156,107 @@ export default function FooterSection() {
             </ul>
           </div>
 
-          {/* Tools */}
+          {/* CONTACT */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5 text-foreground">
-              Tools
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-6 text-foreground">
+              CONTACT
             </h4>
-            <ul className="space-y-3">
-              {toolLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            {/* Recognition badges */}
-            <div className="mt-8">
-              <h4 className="text-sm font-bold uppercase tracking-wider mb-4 text-foreground">
-                Recognized By
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {["NSDC", "AICTE", "ISO", "MSME"].map((badge) => (
-                  <span
-                    key={badge}
-                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-secondary text-muted-foreground border border-border hover:bg-accent hover:text-foreground transition-colors cursor-default"
-                  >
-                    {badge}
-                  </span>
-                ))}
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Call</p>
+                <a
+                  href="tel:+918660128339"
+                  className="text-sm block text-muted-foreground hover:text-primary transition-colors font-medium"
+                >
+                  +91 8660 128339
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Email</p>
+                <a
+                  href="mailto:support@persevex.com"
+                  className="text-sm block text-muted-foreground hover:text-primary transition-colors font-medium"
+                >
+                  support@persevex.com
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Address</p>
+                <p className="text-sm text-muted-foreground font-medium">
+                  D-176 Premium HSR Sector 6,<br/>
+                  1-14th 9th Main Rd, near Rajesh<br/>
+                  Jewellers, Sector 6, HSR Layout,<br/>
+                  Bengaluru, Karnataka 560102
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Divider + Copyright */}
-        <div className="border-t border-border mt-12 pt-8 flex items-center justify-center text-center">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Persevex. All rights reserved. Empowering careers since 2025.
+        {/* Divider */}
+        <div className="border-t border-border mb-12"></div>
+
+        {/* PROGRAMS SECTION - Aptisure Style */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-bold text-foreground mb-2">
+            PROGRAMS
+          </h3>
+          <p className="text-sm text-muted-foreground mb-10">
+            Explore every track, grouped by domain.
           </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            {allDomains.map((domain) => (
+              <div key={domain.view}>
+                <h4 className="text-sm font-bold mb-6 text-foreground flex items-center gap-2">
+                  {domain.name} <span className="text-muted-foreground font-normal">({domain.courses.length})</span>
+                </h4>
+                <ul className="space-y-4">
+                  {domain.courses.map((course) => (
+                    <li key={course.slug}>
+                      <Link
+                        href={`/courses/${course.slug}`}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
+                      >
+                        {course.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider + Bottom Area with Social Links */}
+        <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-sm text-muted-foreground font-medium">
+            Copyright © {new Date().getFullYear()} Persevex. All Rights Reserved.
+          </p>
+          
+          {/* Social Links */}
+          <div className="flex gap-4 flex-wrap items-center">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label={social.name}
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground font-medium">
+            <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy</Link>
+            <span className="hidden md:inline text-border">/</span>
+            <Link href="/terms-&-conditions" className="hover:text-primary transition-colors">Terms</Link>
+            <span className="hidden md:inline text-border">/</span>
+            <Link href="/support" className="hover:text-primary transition-colors">Support</Link>
+          </div>
         </div>
       </div>
     </footer>

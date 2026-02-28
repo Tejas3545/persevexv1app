@@ -93,7 +93,7 @@ export default function LandingPage() {
       {/* 2 — Learn from Expert Mentors */}
       <LearnFromExpertSection />
 
-      {/* 3 — Recognized By */}
+      {/* 4 — Recognized By */}
       <div ref={recognizedByRef}>
         <RecognizedBySection />
       </div>

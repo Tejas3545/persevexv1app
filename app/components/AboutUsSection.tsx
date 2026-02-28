@@ -12,7 +12,7 @@ const cardData = [
     imageSrc: "/whoweare.png",
     icon: <FiHeart size={20} />,
     content:
-      "At Persevex, we are a collective of educators, innovators and visionaries who believe that learning should be an open journey filled with curiosity and growth. With perseverance and passion as our foundation, we are building a platform where knowledge is absorbed deeply, where learners grow into creators, leaders and changemakers.",
+      "At Persevex, we are a collective of educators, innovators and visionaries who believe that learning should be an open journey filled with curiosity and growth. Education for us is not a rigid system but a living experience that adapts to the pace and potential of every learner. With perseverance and passion as our foundation, we are building a platform where knowledge is absorbed deeply, where learners grow into creators, leaders and changemakers who can shape the future.",
     color: "from-blue-500/20 to-purple-500/20",
   },
   {
@@ -20,7 +20,7 @@ const cardData = [
     imageSrc: "/ourstory.png",
     icon: <FiStar size={20} />,
     content:
-      "Founded in 2025, Persevex was born from a simple belief: that perseverance, when guided by the right tools, can unlock limitless possibilities. Through innovation, meaningful experiences and a focus on real-world application, we are committed to making education accessible to everyone, everywhere.",
+      "The mission of Persevex is to redefine the way education empowers people. We believe that perseverance, when guided by the right tools, can unlock limitless possibilities. Through innovation, meaningful experiences and a focus on real-world application, we are committed to making education accessible to everyone everywhere. Our purpose is not only to teach but to inspire resilience, nurture potential and create a generation of learners who are ready to succeed and ready to lead with knowledge and confidence.",
     color: "from-green-500/20 to-teal-500/20",
   },
   {
@@ -28,7 +28,7 @@ const cardData = [
     imageSrc: "/ourmission.png",
     icon: <FiTarget size={20} />,
     content:
-      "Our purpose is not only to teach but to inspire resilience, nurture potential and create a generation of learners who are ready to succeed and lead with knowledge and confidence. Every course, every project, every mentor is here for your growth.",
+      "The mission of Persevex is to redefine the way education empowers people. We believe that perseverance, when guided by the right tools, can unlock limitless possibilities. Through innovation, meaningful experiences and a focus on real-world application, we are committed to making education accessible to everyone everywhere. Our purpose is not only to teach but to inspire resilience, nurture potential and create a generation of learners who are ready to succeed and ready to lead with knowledge and confidence.",
     color: "from-orange-500/20 to-red-500/20",
   },
 ];
@@ -36,10 +36,10 @@ const cardData = [
 import { GraduationCap, Briefcase, Trophy, Star } from "lucide-react";
 
 const stats = [
-  { number: "10000+", label: "Students Enrolled", icon: <GraduationCap className="w-6 h-6" /> },
-  { number: "100+", label: "Industry Projects", icon: <Briefcase className="w-6 h-6" /> },
-  { number: "20+", label: "Expert Mentors", icon: <Trophy className="w-6 h-6" /> },
-  { number: "95%", label: "Success Rate", icon: <Star className="w-6 h-6" /> },
+  { number: "10000+", label: "Students Trained", icon: <GraduationCap className="w-6 h-6" /> },
+  { number: "100+", label: "Projects Completed", icon: <Briefcase className="w-6 h-6" /> },
+  { number: "30+", label: "Programs Offered", icon: <Trophy className="w-6 h-6" /> },
+  { number: "10+", label: "Domains Covered", icon: <Star className="w-6 h-6" /> },
 ];
 
 const milestones = [
@@ -52,7 +52,7 @@ const milestones = [
 
 export default function AboutUsSection() {
   return (
-    <section className="section-padding bg-slate-50 dark:bg-card" id="about-us">
+    <section className="section-padding bg-slate-50 dark:bg-card" id="aboutUs">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">

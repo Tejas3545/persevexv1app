@@ -5,18 +5,18 @@ import Image from "next/image";
 
 const certificateData = [
   {
-    imageSrc: "/certificatesvg.svg",
+    imageSrc: "https://www.persevex.com/certificatesvg.svg",
     title: "Course Completion Certificate",
     description: "Awarded upon successful completion of the course curriculum.",
   },
   {
-    imageSrc: "/internshipsvg..svg",
+    imageSrc: "https://www.persevex.com/internshipsvg..svg",
     title: "Internship Certificate",
     description:
       "Awarded after gaining practical work experience by successful completion of the capstone projects.",
   },
   {
-    imageSrc: "/outstanding.svg",
+    imageSrc: "https://www.persevex.com/outstanding.svg",
     title: "Outstanding Performance Certificate",
     description:
       "Awarded to recognize exceptional performance and contributions during the program.",

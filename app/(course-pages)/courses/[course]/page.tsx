@@ -48,17 +48,17 @@ export default function CoursePage({ params }: { params: Promise<{ course: strin
     notFound();
   }
 
-  const domain = allDomains.find(d => d.courses.some(c => c.id === course?.id));
-  const domainCourses = domain?.courses.slice(0, 4).map(c => c.title) || [];
+  const domain = allDomains.find(d => d.courses.some(c => c.slug === course?.slug));
+  const domainCourses = domain?.courses.slice(0, 4) || [];
 
   const footerLinksToShow = [
     {
       title: "Quick Links",
-      links: ["Home", ...domainCourses],
+      links: ["Home", ...domainCourses.map(c => ({ title: c.title, slug: c.slug }))],
     },
     {
       title: "Our Programs",
-      links: domainCourses,
+      links: domainCourses.map(c => ({ title: c.title, slug: c.slug })),
     },
     {
       title: "Get in touch",

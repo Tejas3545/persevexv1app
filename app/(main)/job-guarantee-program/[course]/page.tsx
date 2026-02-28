@@ -37,7 +37,7 @@ export default function IndividualJGPCoursePage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  const domain = allDomains.find(d => d.courses.some(c => c.id === course?.id));
+  const domain = allDomains.find(d => d.courses.some(c => c.slug === course?.slug));
   const domainCourses = domain?.courses.slice(0, 4).map(c => c.title) || [];
 
   const footerLinksToShow = [

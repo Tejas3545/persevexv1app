@@ -21,8 +21,8 @@ import { X, ArrowUpRight, Shield, CheckCircle2 } from "lucide-react";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const LMS_REDIRECT_URL = "https://lms.persevex.com/login/index.php";
-const COOKIE_KEY = "pvx_lms_access";
-const COOKIE_DAYS = 365;
+const STORAGE_KEY = "pvx_lms_access";
+const STORAGE_DAYS = 365;
 
 // ─── Plan / Payment data ──────────────────────────────────────────────────────
 const PLANS = [
@@ -47,15 +47,38 @@ const PAYMENT_LINKS: Record<number, string> = {
 // Google Sheet submission URL
 const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwd0FKuHde2dPvjv9gXamF2TPraJWvAm3f4aQX3rko0SOe-_m3Bjj2L-qKj8GTm_5Vc/exec";
 
-// ─── Cookie helpers ───────────────────────────────────────────────────────────
-function setCookie(days: number) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${COOKIE_KEY}=1; expires=${expires}; path=/; SameSite=Lax`;
+// ─── localStorage helpers ────────────────────────────────────────────────────
+function setLmsAccess() {
+  if (typeof localStorage === "undefined") return;
+  const data = {
+    submitted: true,
+    submittedAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + STORAGE_DAYS * 864e5).toISOString()
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-function hasCookie(): boolean {
-  if (typeof document === "undefined") return false;
-  return document.cookie.split(";").some((c) => c.trim().startsWith(`${COOKIE_KEY}=`));
+function hasLmsAccess(): boolean {
+  if (typeof localStorage === "undefined") return false;
+  
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return false;
+    
+    const data = JSON.parse(stored);
+    const expiresAt = new Date(data.expiresAt);
+    
+    // Check if expired
+    if (new Date() > expiresAt) {
+      localStorage.removeItem(STORAGE_KEY);
+      return false;
+    }
+    
+    return data.submitted === true;
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return false;
+  }
 }
 
 // ─── Context ──────────────────────────────────────────────────────────────────
@@ -90,10 +113,10 @@ export function LmsAccessProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * openLms — called whenever the "Persevex LMS" button is clicked.
-   * Checks the cookie; if exists, bypass the form entirely.
+   * Checks localStorage; if user has already submitted form, bypass the form entirely.
    */
   const openLms = useCallback(() => {
-    if (hasCookie()) {
+    if (hasLmsAccess()) {
       window.location.href = LMS_REDIRECT_URL;
     } else {
       setIsOpen(true);
@@ -176,16 +199,18 @@ function LmsModal({ onClose }: { onClose: () => void }) {
       setSubmitMessage("Failed to send to sheet, continuing...");
     }
 
-    // 2. Set persistent cookie so future clicks bypass the form
-    setCookie(COOKIE_DAYS);
+    // 2. Set localStorage flag so future clicks bypass the form
+    setLmsAccess();
 
-    // 3. Open Cashfree payment link (if amount exists in mapping)
+    // 3. Open Cashfree payment link in new tab (if amount exists in mapping)
+    // This is expected behavior - payment opens in new tab for security
     const paymentLink = PAYMENT_LINKS[finalAmount];
     if (paymentLink) {
       window.open(paymentLink, "_blank");
     }
 
-    // 4. Redirect to LMS (after a brief delay to let payment window open)
+    // 4. Redirect current tab to LMS (after a brief delay to let payment window open)
+    // This is intentional - user can complete payment in the new tab while this tab goes to LMS
     setTimeout(() => {
       window.location.href = LMS_REDIRECT_URL;
     }, 800);

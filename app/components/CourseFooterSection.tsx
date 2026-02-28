@@ -4,11 +4,15 @@ import React from "react";
 
 interface FooterLinkColumn {
   title: string;
-  links: string[];
+  links: (string | { title: string; slug: string })[];
 }
 
-const getLinkPath = (linkText: string): string => {
-  const slug = linkText.toLowerCase().replace(/\s+/g, '-');
+const getLinkPath = (link: string | { title: string; slug: string }): string => {
+  if (typeof link === 'object') {
+    return `/courses/${link.slug}`;
+  }
+  
+  const slug = link.toLowerCase().replace(/\s+/g, '-');
   switch (slug) {
     case 'home':
       return '/';
@@ -23,29 +27,30 @@ const getLinkPath = (linkText: string): string => {
   }
 };
 
-const renderFooterLink = (link: string) => {
+const renderFooterLink = (link: string | { title: string; slug: string }) => {
   const commonClasses = "text-muted-foreground hover:text-foreground transition-all duration-300 ease-out text-sm inline-block";
+  const linkText = typeof link === 'object' ? link.title : link;
 
-  if (link.includes('@')) {
+  if (linkText.includes('@')) {
     return (
-      <a href={`mailto:${link}`} className={`${commonClasses} hover:translate-x-1`}>
-        {link}
+      <a href={`mailto:${linkText}`} className={`${commonClasses} hover:translate-x-1`}>
+        {linkText}
       </a>
     );
   }
 
-  const isStaticText = link.toLowerCase().includes('india');
+  const isStaticText = linkText.toLowerCase().includes('india');
   if (isStaticText) {
     return (
       <span className="text-muted-foreground text-sm">
-        {link}
+        {linkText}
       </span>
     );
   }
 
   return (
     <Link href={getLinkPath(link)} className={`${commonClasses} hover:translate-x-1`}>
-      {link}
+      {linkText}
     </Link>
   );
 };
@@ -80,8 +85,8 @@ export default function CourseFooterSection({ links }: { links: FooterLinkColumn
                   {column.title}
                 </h3>
                 <ul className="space-y-3">
-                  {column.links.map((link) => (
-                    <li key={link}>
+                  {column.links.map((link, index) => (
+                    <li key={typeof link === 'object' ? link.slug : link}>
                       {renderFooterLink(link)}
                     </li>
                   ))}

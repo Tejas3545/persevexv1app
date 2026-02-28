@@ -2819,7 +2819,7 @@ export const MechanicalCourses: CourseType[] = [
 
 export const CivilCourses: CourseType[] = [
   {
-    id: "a1",
+    id: "civil1",
     title: "AutoCAD: 2D & 3D Design (Civil)",
     shortTitle: "AutoCAD (Civil)",
     description:

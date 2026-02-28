@@ -26,7 +26,7 @@ export default function FrequentlyAskedQuestionsSection({ faqs }: { faqs: FAQTyp
         <p className="text-sm md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
           Everything you need to know about our internship program. 
           Can't find the answer you're looking for? 
-          <Link href="/support#support-form" className="text-primary hover:text-blue-600 cursor-pointer transition-colors font-medium">
+          <Link href="/support" className="text-primary hover:text-blue-600 cursor-pointer transition-colors font-medium">
             {" "}Reach out to our team.
           </Link>
         </p>
@@ -48,7 +48,7 @@ export default function FrequentlyAskedQuestionsSection({ faqs }: { faqs: FAQTyp
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
-              href="/support#support-form"
+              href="/support"
               className="btn-primary text-sm inline-flex items-center gap-2 px-6 py-3 rounded-full"
             >
               Get in touch
