@@ -62,7 +62,7 @@ export default function CoursePage({ params }: { params: Promise<{ course: strin
     },
     {
       title: "Get in touch",
-      links: ["support@persevex.com", "Bengaluru, India"],
+      links: ["support@persevex.com", "5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068"],
     },
   ];
 

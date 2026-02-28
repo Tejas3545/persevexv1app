@@ -48,7 +48,7 @@ const exploreFooterLinkColumns: FooterColumn[] = [
         href: "mailto:support@persevex.com",
         icon: <FiMail />,
       },
-      { text: "Bengaluru, India", href: "#", icon: <FiMapPin /> },
+      { text: "5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068", href: "#", icon: <FiMapPin /> },
     ],
   },
 ];
@@ -87,8 +87,7 @@ export default function ExploreFooterSection() {
               />
             </div>
             <p className="text-muted-foreground max-w-sm">
-              Elevate your career with our cutting-edge courses in financial
-              modeling, digital marketing, data science, and more.
+              Elevate your career with our cutting-edge courses.
             </p>
           </div>
 

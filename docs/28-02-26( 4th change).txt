@@ -1,0 +1,9 @@
+
+
+1. lms section do not use cache memory even if i fill those times also the form should open up,and you have provided an small login section in lms form if user clicks on that it should redirect to php,
+
+2,in the footer if i click on lms it should redirect to form and similar to first point.
+
+3- change address which you find in the google.
+
+4- remove the 2 lines i mentioned.

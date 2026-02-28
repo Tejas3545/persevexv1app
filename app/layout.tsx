@@ -95,13 +95,18 @@ export default function RootLayout({
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
             if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
             n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
+            t.src=v;t.onerror=function(){console.log('Facebook Pixel blocked')};
+            s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             
-            fbq('init', '784980750633373');
-            fbq('init', '202416294177654');
-            fbq('track', 'PageView');
+            try {
+              fbq('init', '784980750633373');
+              fbq('init', '202416294177654');
+              fbq('track', 'PageView');
+            } catch(err) {
+              console.log('Facebook Pixel tracking unavailable');
+            }
           `}
           </Script>
 

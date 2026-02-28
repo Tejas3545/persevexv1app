@@ -183,10 +183,10 @@ export default function FooterSection() {
               <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Address</p>
                 <p className="text-sm text-muted-foreground font-medium">
-                  D-176 Premium HSR Sector 6,<br/>
-                  1-14th 9th Main Rd, near Rajesh<br/>
-                  Jewellers, Sector 6, HSR Layout,<br/>
-                  Bengaluru, Karnataka 560102
+                  5a, 1A Cross Rd,<br/>
+                  Dollar Scheme Colony,<br/>
+                  1st Stage, BTM 1st Stage,<br/>
+                  Bengaluru, Karnataka 560068
                 </p>
               </div>
             </div>

@@ -51,7 +51,7 @@ export default function IndividualJGPCoursePage({ params }: { params: Promise<{ 
     },
     {
       title: "Get in touch",
-      links: ["support@persevex.com", "Bengaluru, India"],
+      links: ["support@persevex.com", "5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068"],
     },
   ];
 

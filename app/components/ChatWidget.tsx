@@ -22,7 +22,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([
     { 
       id: '1', 
-      text: 'Hi there! 👋 How can we help you today?', 
+      text: 'Hi there! 👋 How can we help you today? Ask me anything about our courses, enrollment, or programs!', 
       sender: 'bot', 
       time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) 
     }
@@ -55,13 +55,14 @@ export default function ChatWidget() {
     };
   }, [isOpen]);
 
-  const handleSendMessage = (e?: React.FormEvent) => {
+  const handleSendMessage = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isTyping) return;
 
+    const userMessage = inputValue.trim();
     const newUserMsg: Message = {
       id: Date.now().toString(),
-      text: inputValue,
+      text: userMessage,
       sender: 'user',
       time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     };
@@ -70,30 +71,45 @@ export default function ChatWidget() {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponses = [
-        "Thanks for reaching out! Could you please provide your email address so our team can get back to you?",
-        "We've received your message. An expert will review it and contact you shortly.",
-        "That sounds interesting! Can you provide a bit more detail?",
-        "Our team is currently offline, but your message has been safely recorded."
-      ];
-      
-      // If it's the first user message, give a specific response
-      const responseText = messages.length === 1 
-        ? "Thanks for reaching out! Our team is currently offline. Please leave your email address and we'll get back to you as soon as possible."
-        : botResponses[Math.floor(Math.random() * botResponses.length)];
+    try {
+      // Call the real AI API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          conversationHistory: messages.slice(-6) // Send last 6 messages for context
+        }),
+      });
+
+      const data = await response.json();
       
       const newBotMsg: Message = {
         id: (Date.now() + 1).toString(),
-        text: responseText,
+        text: data.response || "I'm here to help! Could you please rephrase that?",
         sender: 'bot',
         time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
       };
       
       setMessages(prev => [...prev, newBotMsg]);
+      
+    } catch (error) {
+      console.error("Error sending message:", error);
+      
+      // Fallback response on error
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "I'm having trouble connecting right now. Please email us at support@persevex.com for immediate assistance!",
+        sender: 'bot',
+        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+      };
+      
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1500 + Math.random() * 1000); // Random delay between 1.5s and 2.5s
+    }
   };
 
   return (
@@ -123,7 +139,7 @@ export default function ChatWidget() {
               
               <h3 className="text-xl font-semibold mb-2">Persevex Learning Private Limited</h3>
               <p className="text-sm text-blue-100 leading-relaxed">
-                We are not available right now. Please leave us a voice mail or a message. We'll get back as soon as possible.
+                Welcome! We're here to help you. Ask about our courses, enrollment process, or anything else!
               </p>
             </div>
 
@@ -273,8 +289,8 @@ export default function ChatWidget() {
               exit={{ opacity: 0, x: 10 }}
               className="bg-white dark:bg-[#1a1a1a] border border-border shadow-lg rounded-xl py-3 px-4 relative"
             >
-              <div className="font-semibold text-foreground mb-0.5">We're offline</div>
-              <div className="text-sm text-muted-foreground">Leave a message</div>
+              <div className="font-semibold text-foreground mb-0.5">Need help?</div>
+              <div className="text-sm text-muted-foreground">Chat with Persevex AI</div>
               {/* Tooltip Arrow */}
               <div className="absolute top-1/2 -right-2 -translate-y-1/2 w-4 h-4 bg-white dark:bg-[#1a1a1a] border-r border-t border-border rotate-45" />
             </motion.div>

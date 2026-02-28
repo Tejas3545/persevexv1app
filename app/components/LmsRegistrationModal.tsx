@@ -113,14 +113,10 @@ export function LmsAccessProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * openLms — called whenever the "Persevex LMS" button is clicked.
-   * Checks localStorage; if user has already submitted form, bypass the form entirely.
+   * Always show the form (no cache check).
    */
   const openLms = useCallback(() => {
-    if (hasLmsAccess()) {
-      window.location.href = LMS_REDIRECT_URL;
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(true);
   }, []);
 
   return (
@@ -199,21 +195,17 @@ function LmsModal({ onClose }: { onClose: () => void }) {
       setSubmitMessage("Failed to send to sheet, continuing...");
     }
 
-    // 2. Set localStorage flag so future clicks bypass the form
-    setLmsAccess();
-
-    // 3. Open Cashfree payment link in new tab (if amount exists in mapping)
-    // This is expected behavior - payment opens in new tab for security
+    // 2. Open Cashfree payment link in new tab
     const paymentLink = PAYMENT_LINKS[finalAmount];
     if (paymentLink) {
       window.open(paymentLink, "_blank");
     }
 
-    // 4. Redirect current tab to LMS (after a brief delay to let payment window open)
-    // This is intentional - user can complete payment in the new tab while this tab goes to LMS
+    // 3. Close the modal after successful submission
     setTimeout(() => {
-      window.location.href = LMS_REDIRECT_URL;
-    }, 800);
+      setSubmitting(false);
+      onClose();
+    }, 1000);
   }
 
   // ── Render ─────────────────────────────────────────────────────────────────

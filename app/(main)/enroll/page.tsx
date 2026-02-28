@@ -1,6 +1,7 @@
 "use client";
 import React, { Suspense, useState, useRef, FormEvent } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxm6EgvULajFkzgPLX0KBKtMWxPseoQCuKEQQ4XArlwE4vPQXWleIRnmj9zMskF46pc/exec";
@@ -8,6 +9,8 @@ const SCRIPT_URL =
 export default function EnrollPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,17 +30,16 @@ export default function EnrollPage() {
       const result = await response.json();
 
       if (result.status === "success") {
-        alert("Registration successful! Welcome aboard.");
+        setShowSuccess(true);
         formRef.current?.reset();
+        setTimeout(() => setShowSuccess(false), 5000);
       } else {
         throw new Error("Submission failed via server response.");
       }
     } catch (error) {
       console.error("Form submission error:", error);
-
-      alert(
-        "Note: If the page didn't redirect, please check your connection. (Error: Submission failed)",
-      );
+      setShowError(true);
+      setTimeout(() => setShowError(false), 5000);
     } finally {
       setIsSubmitting(false);
     }
@@ -422,6 +424,65 @@ export default function EnrollPage() {
           </div>
         </div>
       </div>
+
+      {/* Success/Error Toast Notifications */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -50, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-[9999] bg-green-500 text-white px-8 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[320px]"
+          >
+            <svg
+              className="w-6 h-6 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <div>
+              <p className="font-bold text-lg">Registration Successful!</p>
+              <p className="text-sm opacity-90">Welcome aboard.</p>
+            </div>
+          </motion.div>
+        )}
+
+        {showError && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -50, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-[9999] bg-red-500 text-white px-8 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[320px]"
+          >
+            <svg
+              className="w-6 h-6 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <div>
+              <p className="font-bold text-lg">Submission Failed</p>
+              <p className="text-sm opacity-90">Please check your connection and try again.</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
