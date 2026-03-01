@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useLmsAccess } from "@/app/components/LmsRegistrationModal";
 import {
   Briefcase,
   MapPin,
@@ -315,6 +316,7 @@ function ApplicationModal({
   job: Job;
   onClose: () => void;
 }) {
+  const { openLms } = useLmsAccess();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -322,15 +324,17 @@ function ApplicationModal({
     message: "",
   });
   const [resume, setResume] = useState<File | null>(null);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting">("idle");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
     // Simulate submission delay
-    await new Promise((r) => setTimeout(r, 1500));
-    setStatus("success");
+    await new Promise((r) => setTimeout(r, 500));
+    // Close modal and open LMS form
+    onClose();
+    openLms();
   };
 
   return (
@@ -375,39 +379,13 @@ function ApplicationModal({
 
         {/* Body */}
         <div className="p-5 max-h-[70vh] overflow-y-auto">
-          <AnimatePresence mode="wait">
-            {status === "success" ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center py-10"
-              >
-                <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 size={32} className="text-emerald-500" />
-                </div>
-                <h4 className="text-lg font-bold text-foreground mb-2">Application Submitted!</h4>
-                <p className="text-sm text-muted-foreground mb-6">
-                  Your application for <span className="font-semibold text-foreground">{job.role}</span> at{" "}
-                  <span className="font-semibold text-foreground">{job.company}</span> has been received.
-                  We&apos;ll get back to you soon.
-                </p>
-                <button
-                  onClick={onClose}
-                  className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors"
-                >
-                  Done
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-4"
-              >
+          <motion.form
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onSubmit={handleSubmit}
+            className="space-y-4"
+          >
                 {/* Name */}
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1.5">
@@ -504,18 +482,16 @@ function ApplicationModal({
                   {status === "submitting" ? (
                     <>
                       <Loader2 size={15} className="animate-spin" />
-                      Submitting...
+                      Redirecting to registration...
                     </>
                   ) : (
                     <>
                       <Send size={14} />
-                      Submit Application
+                      Apply Now
                     </>
                   )}
                 </button>
               </motion.form>
-            )}
-          </AnimatePresence>
         </div>
       </motion.div>
     </motion.div>

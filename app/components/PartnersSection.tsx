@@ -126,9 +126,9 @@ function PartnersSection() {
         >
           {[
             { number: "50+", label: "Hiring Partners" },
-            { number: "6+", label: "Certifications" },
+            { number: "4+", label: "Certifications" },
             { number: "10000+", label: "Students Placed" },
-            { number: "95%", label: "Placement Rate" },
+            { number: "92%", label: "Satisfied Rate" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}

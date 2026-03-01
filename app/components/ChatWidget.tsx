@@ -137,7 +137,7 @@ export default function ChatWidget() {
                 <span className="text-blue-600 font-bold text-xl">P</span>
               </div>
               
-              <h3 className="text-xl font-semibold mb-2">Persevex Learning Private Limited</h3>
+              <h3 className="text-xl font-semibold mb-2">Persevex LLP</h3>
               <p className="text-sm text-blue-100 leading-relaxed">
                 Welcome! We're here to help you. Ask about our courses, enrollment process, or anything else!
               </p>

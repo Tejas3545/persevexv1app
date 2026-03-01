@@ -10,10 +10,10 @@ const GEMINI_MODEL = "gemini-2.5-flash";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 // System prompt to configure the AI behavior
-const SYSTEM_CONTEXT = `You are Persevex AI, a helpful customer support assistant for Persevex Learning Private Limited - an innovative EdTech company in India.
+const SYSTEM_CONTEXT = `You are Persevex AI, a helpful customer support assistant for Persevex LLP - an innovative EdTech company in India.
 
 Company Information:
-- Name: Persevex Learning Private Limited
+- Name: Persevex LLP
 - Location: 5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068
 - Email: support@persevex.com
 - Services: We offer cutting-edge courses in various domains including:

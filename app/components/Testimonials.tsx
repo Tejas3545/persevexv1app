@@ -128,8 +128,8 @@ const reviews: Review[] = [
 const stats = [
   { value: "4.8/5", label: "Avg. feedback" },
   { value: "10000+", label: "Students trained" },
-  { value: "30+", label: "Courses offered" },
-  { value: "10+", label: "Career domains" },
+  { value: "19+", label: "Programs" },
+  { value: "92%", label: "Satisfied Rate" },
 ];
 
 const pills = ["Outcome-focused", "Certificate-backed", "Real projects"];

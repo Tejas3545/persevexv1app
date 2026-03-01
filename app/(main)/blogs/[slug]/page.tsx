@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
             </p>
           )}
 
-          <article className="prose prose-invert bg-transparent  backdrop-blur-xl lg:prose-xl lg:mb-8 max-w-none">
+          <article className="prose dark:prose-invert prose-slate bg-transparent backdrop-blur-xl lg:prose-xl lg:mb-8 max-w-none">
             <MDXRemote source={blog.content} />
           </article>
         </div>

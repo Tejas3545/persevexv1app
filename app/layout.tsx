@@ -22,7 +22,11 @@ export const metadata: Metadata = {
     "Empowering the next generation with real-world skills. Experience hands-on learning with expert-curated courses, AI guidance, and career-ready outcomes.",
 
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/persevex.png" },
+      { url: "/logo.png", sizes: "any" },
+    ],
+    apple: "/persevex.png",
   },
 
   openGraph: {
@@ -50,10 +54,11 @@ export const metadata: Metadata = {
       "Experience hands-on learning with expert-curated courses, AI guidance, and career-ready outcomes.",
     images: ["/persevex.png"],
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 import { ThemeProvider } from "./components/ThemeProvider";
