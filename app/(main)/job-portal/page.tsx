@@ -501,7 +501,7 @@ function ApplicationModal({
 // ─── Job Card ────────────────────────────────────────────────────────────────
 function JobCard({ job, index }: { job: Job; index: number }) {
   const [expanded, setExpanded] = useState(false);
-  const [showApplyModal, setShowApplyModal] = useState(false);
+  const { openLms } = useLmsAccess();
 
 
   return (
@@ -599,7 +599,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
               <ChevronDown size={10} className={`transition-transform ${expanded ? "rotate-180" : ""}`} />
             </button>
             <button
-              onClick={(e) => { e.stopPropagation(); setShowApplyModal(true); }}
+              onClick={(e) => { e.stopPropagation(); openLms(); }}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm shadow-primary/30"
             >
               Apply
@@ -608,13 +608,6 @@ function JobCard({ job, index }: { job: Job; index: number }) {
           </div>
         </div>
       </div>
-
-      {/* Application Modal */}
-      <AnimatePresence>
-        {showApplyModal && (
-          <ApplicationModal job={job} onClose={() => setShowApplyModal(false)} />
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }

@@ -447,10 +447,10 @@ export default function ReviewsPage() {
       <section className="py-16 bg-white dark:bg-slate-900 border-y border-border">
         <div className="max-w-5xl mx-auto px-6 md:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-            <StatItem target={1200} suffix="+" label="Students Trained" icon={Users} />
+            <StatItem target={10000} suffix="+" label="Students Trained" icon={Users} />
             <StatItem target={50} suffix="+" label="Hiring Partners" icon={Building2} />
-            <StatItem target={92} suffix="%" label="Placement Rate" icon={TrendingUp} />
-            <StatItem target={30} suffix="+" label="Domains Covered" icon={Award} />
+            <StatItem target={92} suffix="%" label="Satisfied Rate" icon={TrendingUp} />
+            <StatItem target={19} suffix="+" label="Programs" icon={Award} />
           </div>
         </div>
       </section>
