@@ -1,13 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { 
   Code2, Database, Cpu, Globe, Layout, Smartphone, 
   Server, Shield, Terminal, Wifi, Cloud, Blocks,
   CheckCircle2
 } from "lucide-react";
+
+// Program suggestions data
+const programSuggestions = [
+  { name: "Artificial Intelligence", category: "Program • Computer Science", href: "/courses/artificial-intelligence" },
+  { name: "Full Stack Web Development", category: "Program • Computer Science", href: "/courses/web-development" },
+  { name: "Cyber Security", category: "Program • Computer Science", href: "/courses/cybersecurity" },
+  { name: "Data Science", category: "Program • Computer Science", href: "/courses/data-science" },
+  { name: "Data Analytics", category: "Program • Computer Science", href: "/courses/data-analytics" },
+  { name: "Digital Marketing", category: "Program • Management", href: "/courses/digital-marketing" },
+  { name: "Machine Learning", category: "Program • Computer Science", href: "/courses/machine-learning" },
+  { name: "Cloud Computing", category: "Program • Computer Science", href: "/courses/cloud-computing" },
+  { name: "Human Resources", category: "Program • Management", href: "/courses/human-resource" },
+  { name: "Finance", category: "Program • Management", href: "/courses/finance" },
+];
 
 // Animated counter hook
 function useCounter(end: number, duration: number = 2000) {
@@ -240,6 +254,10 @@ export default function Hero() {
   });
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -252,6 +270,55 @@ export default function Hero() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      window.location.href = `/explore-courses?search=${encodeURIComponent(searchQuery.trim())}`;
+    } else {
+      window.location.href = '/explore-courses';
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+    if (e.key === 'Escape') {
+      setShowSuggestions(false);
+      setIsFocused(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setShowSuggestions(true);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setShowSuggestions(true);
+  };
+
+  // Filter programs based on search query
+  const filteredPrograms = searchQuery.trim() 
+    ? programSuggestions.filter(program => 
+        program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        program.category.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : programSuggestions;
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
@@ -267,7 +334,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[95vh] flex items-center bg-white dark:bg-[#000000] overflow-hidden"
+      className="relative min-h-[95vh] flex items-center bg-white dark:bg-[#000000] overflow-visible"
     >
       {/* Interactive Premium Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -381,30 +448,92 @@ export default function Hero() {
               building their future with Persevex.
             </motion.p>
 
-            {/* Aptisure-Style Search Bar */}
+            {/* Aptisure-Style Search Bar with Suggestions */}
             <motion.div
               custom={3}
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className="max-w-xl mb-8 border border-border bg-white dark:bg-[#0a0a0a] rounded-full p-2 flex items-center shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="max-w-xl mb-8 relative z-[9999]"
+              ref={searchContainerRef}
             >
-              <div className="pl-4 text-muted-foreground mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <div className="relative border border-border bg-white dark:bg-[#0a0a0a] rounded-full p-2 flex items-center shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="pl-4 text-muted-foreground mr-2 group-focus-within:text-primary transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleInputChange}
+                  onFocus={handleFocus}
+                  placeholder="Search any program (AI, DSA, DevOps, Finance...)"
+                  className="flex-1 bg-transparent py-2 px-2 text-foreground outline-none text-base placeholder:text-muted-foreground w-full border-none focus:ring-0"
+                  style={{ boxShadow: 'none' }}
+                  onKeyDown={handleKeyPress}
+                />
+                <button 
+                  onClick={handleSearch}
+                  className="btn-aptisure py-3 px-6 mx-1 whitespace-nowrap hidden sm:flex items-center gap-2"
+                >
+                  {searchQuery.trim() ? 'Search' : 'Explore'} <span className="hidden sm:inline">Programs</span> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
               </div>
-              <input
-                type="text"
-                placeholder="Search any program (AI, DSA, DevOps...)"
-                className="flex-1 bg-transparent py-2 px-2 text-foreground outline-none text-base placeholder:text-muted-foreground w-full"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    window.location.href = '/explore-courses';
-                  }
-                }}
-              />
-              <Link href="/explore-courses" className="btn-aptisure py-3! px-6! mx-1 whitespace-nowrap hidden sm:flex items-center gap-2">
-                Explore <span className="hidden sm:inline">Programs</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-              </Link>
+
+              {/* Suggestions Dropdown */}
+              <AnimatePresence>
+                {showSuggestions && isFocused && filteredPrograms.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full mt-3 w-full bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-border z-[9999]"
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div className="max-h-[400px] overflow-y-auto rounded-3xl" style={{ 
+                      scrollbarWidth: 'thin',
+                      scrollbarColor: 'rgba(0,0,0,0.2) transparent'
+                    }}>
+                      {filteredPrograms.slice(0, 8).map((program, index) => (
+                        <Link
+                          key={index}
+                          href={program.href}
+                          onClick={() => {
+                            setShowSuggestions(false);
+                            setIsFocused(false);
+                          }}
+                          className="flex items-center justify-between px-6 py-4 hover:bg-accent transition-colors group border-b border-border/30 last:border-b-0"
+                        >
+                          <div className="flex-1">
+                            <div className="font-semibold text-foreground text-base group-hover:text-primary transition-colors">
+                              {program.name}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1">
+                              {program.category}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1 text-primary text-sm font-medium">
+                            Open
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="m9 18 6-6-6-6" />
+                            </svg>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Mobile Search Button */}
+              <button 
+                onClick={handleSearch}
+                className="btn-aptisure w-full mt-3 sm:hidden flex items-center justify-center gap-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Search Programs
+              </button>
             </motion.div>
 
             {/* CTA Buttons */}

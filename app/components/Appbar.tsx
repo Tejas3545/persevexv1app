@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -25,36 +25,8 @@ export default function Navbar() {
   const [isMobileProgramsOpen, setIsMobileProgramsOpen] = useState(false);
   const [isMobileOfferingsOpen, setIsMobileOfferingsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === "/";
-
-  // Close search on outside click
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
-        setIsSearchOpen(false);
-        setSearchQuery("");
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Focus input when search opens
-  useEffect(() => {
-    if (isSearchOpen) {
-      setTimeout(() => searchInputRef.current?.focus(), 50);
-    }
-  }, [isSearchOpen]);
-
-  const openSearch = useCallback(() => {
-    setIsSearchOpen(true);
-    setSearchQuery("");
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -149,42 +121,6 @@ export default function Navbar() {
 
   // Dedicated page navigation links (replaces old scrollTo architecture)
   // Each section is now reachable as its own standalone page.
-
-  /** All program categories combined */
-  const allProgramCategories = [...internshipProgramCategories, ...placementProgramCategories];
-
-  /** All searchable course items (internship + placement) */
-  const allCourseItems = allProgramCategories
-    .flatMap((cat) => cat.items)
-    .filter((item) => item.name !== "Coming Soon");
-
-  const searchResults =
-    searchQuery.trim().length > 0
-      ? (() => {
-          const q = searchQuery.toLowerCase();
-          // Check if query matches a domain/branch name
-          const matchedBranch = allProgramCategories.find(
-            (cat) => cat.branch.toLowerCase().includes(q)
-          );
-          if (matchedBranch) {
-            return matchedBranch.items.filter((i) => i.name !== "Coming Soon").slice(0, 8);
-          }
-          // Otherwise filter by individual course name
-          return allCourseItems.filter((item) =>
-            item.name.toLowerCase().includes(q)
-          ).slice(0, 8);
-        })()
-      : [];
-
-  /** Domain suggestions shown when search is focused but empty */
-  const domainSuggestions = allProgramCategories
-    .map((cat) => ({
-      branch: cat.branch,
-      count: cat.items.filter((i) => i.name !== "Coming Soon").length,
-      firstHref: cat.items[0]?.href ?? "#",
-      items: cat.items.filter((i) => i.name !== "Coming Soon"),
-    }))
-    .filter((d) => d.count > 0);
 
   const mobileMenuVariants: Variants = {
     hidden: { opacity: 0, x: "100%", transition: { duration: 0.3, ease: "easeOut" } },
@@ -337,119 +273,6 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3 xl:gap-4">
-          {/* ── Search ─────────────────────────────────────────── */}
-          <div className="relative" ref={searchContainerRef}>
-            <AnimatePresence mode="wait">
-              {isSearchOpen ? (
-                <motion.div
-                  key="search-input"
-                  initial={{ width: 32, opacity: 0 }}
-                  animate={{ width: 260, opacity: 1 }}
-                  exit={{ width: 32, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className="flex items-center gap-2 bg-background border border-border rounded-full px-3 py-2 shadow-md"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                  <input
-                    ref={searchInputRef}
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search programs..."
-                    className="flex-1 text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none min-w-0"
-                    onKeyDown={(e) => {
-                      if (e.key === "Escape") { setIsSearchOpen(false); setSearchQuery(""); }
-                      if (e.key === "Enter" && searchResults.length > 0) {
-                        router.push(searchResults[0].href);
-                        setIsSearchOpen(false); setSearchQuery("");
-                      }
-                    }}
-                  />
-                  <button aria-label="Clear search" onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }} className="text-muted-foreground hover:text-foreground transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.button
-                  key="search-icon"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={openSearch}
-                  className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Search programs"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                </motion.button>
-              )}
-            </AnimatePresence>
-
-            {/* Search Dropdown Results */}
-            <AnimatePresence>
-              {isSearchOpen && searchQuery.trim().length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-2 w-80 bg-card border border-border rounded-2xl shadow-xl overflow-hidden z-50"
-                >
-                  <div className="px-4 py-2.5 border-b border-border/60">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Browse by Domain</p>
-                  </div>
-                  {domainSuggestions.map((domain) => (
-                    <button
-                      key={domain.branch}
-                      onClick={() => setSearchQuery(domain.branch)}
-                      className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-accent text-sm text-foreground hover:text-primary transition-colors border-b border-border/20 last:border-0"
-                    >
-                      <span className="font-medium">{domain.branch}</span>
-                      <span className="text-[10px] font-semibold text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{domain.count} courses</span>
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <AnimatePresence>
-              {isSearchOpen && searchResults.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-2 w-72 bg-card border border-border rounded-2xl shadow-xl overflow-hidden z-50"
-                >
-                  {searchResults.map((item) => (
-                    <Link
-                      key={item.key}
-                      href={item.href}
-                      onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-accent text-sm text-foreground hover:text-primary transition-colors border-b border-border/40 last:border-0"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground shrink-0"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                      {item.name}
-                    </Link>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Empty state */}
-            <AnimatePresence>
-              {isSearchOpen && searchQuery.trim().length > 1 && searchResults.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute right-0 top-full mt-2 w-72 bg-card border border-border rounded-2xl shadow-xl z-50 px-4 py-5 text-center"
-                >
-                  <p className="text-sm text-muted-foreground">No programs found for &ldquo;{searchQuery}&rdquo;</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
           <button
             onClick={openLms}
             className="btn-aptisure flex items-center gap-2"
