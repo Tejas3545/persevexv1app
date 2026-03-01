@@ -16,12 +16,14 @@ const programSuggestions = [
   { name: "Full Stack Web Development", category: "Program • Computer Science", href: "/courses/web-development" },
   { name: "Cyber Security", category: "Program • Computer Science", href: "/courses/cybersecurity" },
   { name: "Data Science", category: "Program • Computer Science", href: "/courses/data-science" },
-  { name: "Data Analytics", category: "Program • Computer Science", href: "/courses/data-analytics" },
   { name: "Digital Marketing", category: "Program • Management", href: "/courses/digital-marketing" },
   { name: "Machine Learning", category: "Program • Computer Science", href: "/courses/machine-learning" },
   { name: "Cloud Computing", category: "Program • Computer Science", href: "/courses/cloud-computing" },
   { name: "Human Resources", category: "Program • Management", href: "/courses/human-resource" },
   { name: "Finance", category: "Program • Management", href: "/courses/finance" },
+  { name: "Business Analytics", category: "Program • Management", href: "/courses/business-analytics" },
+  { name: "IoT (Internet of Things)", category: "Program • Electronics", href: "/courses/iot" },
+  { name: "Embedded Systems", category: "Program • Electronics", href: "/courses/embedded-systems" },
 ];
 
 // Animated counter hook
@@ -358,8 +360,6 @@ export default function Hero() {
       })()
     : programSuggestions;
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-
   const textVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({
@@ -372,7 +372,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[95vh] flex items-center bg-white dark:bg-[#000000] overflow-visible"
+      className="relative min-h-screen flex items-center bg-white dark:bg-[#000000] overflow-visible"
     >
       {/* Interactive Premium Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -424,10 +424,7 @@ export default function Hero() {
         ))}
       </div>
 
-      <motion.div
-        style={{ y }}
-        className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full py-20"
-      >
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-2xl">
             {/* Badge */}
@@ -492,7 +489,7 @@ export default function Hero() {
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className="max-w-xl mb-8 relative z-[9999]"
+              className="max-w-xl mb-8 relative z-[99999]"
               ref={searchContainerRef}
             >
               <div className="relative border border-border bg-white dark:bg-[#0a0a0a] rounded-full p-2 flex items-center shadow-lg hover:shadow-xl transition-all duration-300 group">
@@ -526,7 +523,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full mt-3 w-full bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-border z-[9999]"
+                    className="absolute top-full mt-3 w-full bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-border z-[99999]"
                     style={{ overflow: 'hidden' }}
                   >
                     <div className="max-h-[400px] overflow-y-auto rounded-3xl" style={{ 
@@ -621,7 +618,7 @@ export default function Hero() {
             <OrbitingAnimation />
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

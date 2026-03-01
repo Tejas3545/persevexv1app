@@ -9,6 +9,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import ProgramsMegaMenu from "./ProgramsMegaMenu";
 import { ThemeToggle } from "./ThemeToggle";
 import { useLmsAccess } from "./LmsRegistrationModal";
+import { searchPages, SearchItem } from "@/app/constants/searchIndex";
 
 type ProgramItem = { key: string; name: string; href: string };
 type ProgramCategory = { branch: string; items: ProgramItem[] };
@@ -25,6 +26,9 @@ export default function Navbar() {
   const [isMobileProgramsOpen, setIsMobileProgramsOpen] = useState(false);
   const [isMobileOfferingsOpen, setIsMobileOfferingsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === "/";
 
@@ -34,6 +38,19 @@ export default function Navbar() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close search dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    };
+    if (isSearchOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isSearchOpen]);
 
   const handleNavigationAndScroll = (key: SectionKey) => {
     setIsMobileMenuOpen(false);
@@ -156,10 +173,10 @@ export default function Navbar() {
           <Image
             src="/persevex.png"
             alt="Persevex"
-            width={140}
-            height={44}
+            width={180}
+            height={56}
             priority
-            className="h-9 w-auto dark:brightness-[1.8] dark:contrast-[1.1] transition-[filter] duration-300"
+            className="h-11 w-auto dark:brightness-[1.8] dark:contrast-[1.1] transition-[filter] duration-300"
           />
         </Link>
 
@@ -280,6 +297,89 @@ export default function Navbar() {
             Persevex LMS <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
           </button>
 
+          {/* Global Search Button */}
+          <div className="relative" ref={searchRef}>
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2.5 rounded-lg hover:bg-muted transition-colors border border-border/50"
+              aria-label="Search site"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+            </button>
+
+            <AnimatePresence>
+              {isSearchOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-[400px] bg-background border border-border rounded-lg shadow-xl overflow-hidden"
+                  style={{ zIndex: 99999 }}
+                >
+                  <div className="p-3 border-b border-border">
+                    <input
+                      type="text"
+                      placeholder="Search courses, domains, pages..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full px-3 py-2 bg-muted rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                      autoFocus
+                    />
+                  </div>
+                  <div className="max-h-[400px] overflow-y-auto">
+                    {searchQuery.trim() === "" ? (
+                      <div className="p-4 text-center text-sm text-muted-foreground">
+                        Start typing to search...
+                      </div>
+                    ) : (
+                      (() => {
+                        const results = searchPages(searchQuery);
+                        if (results.length === 0) {
+                          return (
+                            <div className="p-4 text-center text-sm text-muted-foreground">
+                              No results found for "{searchQuery}"
+                            </div>
+                          );
+                        }
+                        return (
+                          <div className="py-2">
+                            {results.map((result: SearchItem, index: number) => (
+                              <Link
+                                key={index}
+                                href={result.path}
+                                onClick={() => {
+                                  setIsSearchOpen(false);
+                                  setSearchQuery("");
+                                }}
+                                className="block px-4 py-2.5 hover:bg-muted transition-colors border-b border-border/30 last:border-b-0"
+                              >
+                                <div className="flex items-start gap-3">
+                                  <div className="flex-1">
+                                    <div className="font-medium text-sm">{result.title}</div>
+                                    {result.description && (
+                                      <div className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                                        {result.description}
+                                      </div>
+                                    )}
+                                    <div className="text-xs text-primary/70 mt-1">{result.category}</div>
+                                  </div>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        );
+                      })()
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <ThemeToggle />
         </div>
 
@@ -294,6 +394,16 @@ export default function Navbar() {
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </button>
+          <button
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="p-2 rounded-lg hover:bg-muted transition-colors border border-border/50"
+            aria-label="Search site"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
             </svg>
           </button>
           <ThemeToggle />
@@ -509,6 +619,79 @@ export default function Navbar() {
               >
                 Contact Us
               </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Search Modal */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[99999] bg-background/95 backdrop-blur-sm lg:hidden flex items-start justify-center pt-20 px-4"
+            onClick={() => setIsSearchOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="w-full max-w-md bg-card border border-border rounded-lg shadow-xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-4 border-b border-border">
+                <input
+                  type="text"
+                  placeholder="Search courses, domains, pages..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-3 bg-muted rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  autoFocus
+                />
+              </div>
+              <div className="max-h-[400px] overflow-y-auto">
+                {searchQuery.trim() === "" ? (
+                  <div className="p-6 text-center text-sm text-muted-foreground">
+                    Start typing to search...
+                  </div>
+                ) : (
+                  (() => {
+                    const results = searchPages(searchQuery);
+                    if (results.length === 0) {
+                      return (
+                        <div className="p-6 text-center text-sm text-muted-foreground">
+                          No results found for "{searchQuery}"
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="py-2">
+                        {results.map((result: SearchItem, index: number) => (
+                          <Link
+                            key={index}
+                            href={result.path}
+                            onClick={() => {
+                              setIsSearchOpen(false);
+                              setSearchQuery("");
+                            }}
+                            className="block px-4 py-3 hover:bg-muted transition-colors border-b border-border/30 last:border-b-0"
+                          >
+                            <div className="font-medium text-sm">{result.title}</div>
+                            {result.description && (
+                              <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                                {result.description}
+                              </div>
+                            )}
+                            <div className="text-xs text-primary/70 mt-1.5">{result.category}</div>
+                          </Link>
+                        ))}
+                      </div>
+                    );
+                  })()
+                )}
+              </div>
             </motion.div>
           </motion.div>
         )}

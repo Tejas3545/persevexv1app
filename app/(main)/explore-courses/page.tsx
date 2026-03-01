@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import { allDomains, DomainView, CourseType } from "../../constants/courseConstant";
 import ExploreFooterSection from "@/app/components/ExploreFooterSection";
-import { searchPages } from "@/app/constants/searchIndex";
 
 const domainMeta: Record<string, { icon: React.ReactNode; subtitle: string; label: string }> = {
   management: { icon: <Briefcase size={18} />, subtitle: "Business tracks - Real projects", label: "Management" },
@@ -64,13 +63,26 @@ export default function ExploreCoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showMore, setShowMore] = useState(false);
 
-  // Handle URL hash navigation
+  // Handle URL hash navigation on mount and on hash change
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    const validDomains = ['management', 'technical', 'electronics', 'mechanical', 'civil'];
-    if (hash && validDomains.includes(hash)) {
-      setActiveView(hash as DomainView);
-    }
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      const validDomains = ['management', 'technical', 'electronics', 'mechanical', 'civil'];
+      if (hash && validDomains.includes(hash)) {
+        setActiveView(hash as DomainView);
+        setSearchQuery(""); // Clear search when navigating via hash
+      }
+    };
+
+    // Check hash on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   const activeDomain = allDomains.find((d) => d.view === activeView)!;
@@ -80,7 +92,8 @@ export default function ExploreCoursesPage() {
 
   const allSearchResults: (CourseType & { domainLabel: string })[] = showingSearch
     ? (() => {
-        // Get matching courses from allDomains
+        // Get matching courses from allDomains only
+        // This search is DOMAIN-FOCUSED - shows courses from local database only
         const courseMatches = allDomains.flatMap((d) =>
           d.courses
             .filter(
@@ -90,21 +103,6 @@ export default function ExploreCoursesPage() {
             )
             .map((c) => ({ ...c, domainLabel: domainMeta[d.view]?.label ?? d.name }))
         );
-
-        // Get results from searchIndex (for additional course matches)
-        const indexResults = searchPages(searchQuery);
-        
-        // Only use course-specific matches from searchIndex, not domain-level entries
-        const additionalMatches = indexResults
-          .filter(item => 
-            // Exclude domain-level aggregation pages
-            !item.id.startsWith('domain-') &&
-            // Only include actual course pages
-            (item.path.includes('/courses/') || item.path.includes('/job-guarantee-program/'))
-          );
-
-        // Add any unique courses from searchIndex that aren't already in courseMatches
-        const courseMatchPaths = new Set(courseMatches.map(c => c.route || c.slug));
         
         return courseMatches;
       })()
@@ -174,7 +172,11 @@ export default function ExploreCoursesPage() {
                 <motion.button
                   key={domain.view}
                   variants={sidebarItemVariants}
-                  onClick={() => { setActiveView(domain.view as DomainView); setSearchQuery(""); }}
+                  onClick={() => { 
+                    setActiveView(domain.view as DomainView); 
+                    setSearchQuery(""); 
+                    window.location.hash = domain.view;
+                  }}
                   className={`relative w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-all duration-200 group ${
                     isActive ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
                   }`}
@@ -213,7 +215,11 @@ export default function ExploreCoursesPage() {
                 return (
                   <button
                     key={domain.view}
-                    onClick={() => { setActiveView(domain.view as DomainView); setSearchQuery(""); }}
+                    onClick={() => { 
+                      setActiveView(domain.view as DomainView); 
+                      setSearchQuery(""); 
+                      window.location.hash = domain.view;
+                    }}
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap border transition-all flex-shrink-0 ${
                       domain.view === activeView ? "bg-primary text-white border-primary" : "bg-secondary text-foreground border-border hover:border-primary/40"
                     }`}

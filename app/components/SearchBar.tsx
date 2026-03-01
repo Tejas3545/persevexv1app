@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { searchPages, SearchItem } from "../constants/searchIndex";
+import { searchPages, SearchItem } from "@/app/constants/searchIndex";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");

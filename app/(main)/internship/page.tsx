@@ -22,17 +22,7 @@ export default function UserLoginPage() {
   const [phone, setPhone] = useState("");
   const [college, setCollege] = useState("");
 
-  // ─── COOKIE / TOKEN BYPASS LOGIC ─────────────────────────────────────────
-  // Every time the LMS page loads, check for an existing auth token.
-  // If a token is present, the user has already registered/logged in before.
-  // Skip the form entirely and redirect them straight to the LMS.
-  // ─────────────────────────────────────────────────────────────────────────
-  useEffect(() => {
-    const lmsToken = localStorage.getItem("persevex_lms_token");
-    if (lmsToken) {
-      window.location.href = "https://persevex.com/login/index.php";
-    }
-  }, []);
+  // Removed external redirect - users should stay on internship page
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,12 +53,10 @@ export default function UserLoginPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
     try {
-      // ─── STORE AUTH TOKEN ──────────────────────────────────────────────────
-      // Set a persistent token in localStorage so returning users bypass this
-      // registration form and are sent directly to the LMS on their next visit.
-      // ──────────────────────────────────────────────────────────────────────
+      // Store registration data locally
       const tokenData = {
         email,
         name: fullName,
@@ -78,12 +66,14 @@ export default function UserLoginPage() {
       };
       localStorage.setItem("persevex_lms_token", JSON.stringify(tokenData));
 
-      // ─── REDIRECT TO LMS ───────────────────────────────────────────────────
-      // Immediately redirect to the Persevex LMS login page after registration.
-      // ──────────────────────────────────────────────────────────────────────
-      window.location.href = "https://persevex.com/login/index.php";
+      // TODO: Add your payment API call here
+      // After successful payment, you can show a success message or redirect to dashboard
+      
+      alert("Registration successful! Please proceed with payment.");
+      setLoading(false);
     } catch (err) {
       console.error("Registration error:", err);
+      setError("Registration failed. Please try again.");
       setLoading(false);
     }
   };
