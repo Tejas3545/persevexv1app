@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { allDomains, DomainView, CourseType } from "../../constants/courseConstant";
 import ExploreFooterSection from "@/app/components/ExploreFooterSection";
+import { searchPages } from "@/app/constants/searchIndex";
 
 const domainMeta: Record<string, { icon: React.ReactNode; subtitle: string; label: string }> = {
   management: { icon: <Briefcase size={18} />, subtitle: "Business tracks - Real projects", label: "Management" },
@@ -78,15 +79,44 @@ export default function ExploreCoursesPage() {
   const showingSearch = searchQuery.length > 1;
 
   const allSearchResults: (CourseType & { domainLabel: string })[] = showingSearch
-    ? allDomains.flatMap((d) =>
-        d.courses
-          .filter(
-            (c) =>
-              c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              (c.description ?? "").toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((c) => ({ ...c, domainLabel: domainMeta[d.view]?.label ?? d.name }))
-      )
+    ? (() => {
+        // Get matching courses from allDomains
+        const courseMatches = allDomains.flatMap((d) =>
+          d.courses
+            .filter(
+              (c) =>
+                c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (c.description ?? "").toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .map((c) => ({ ...c, domainLabel: domainMeta[d.view]?.label ?? d.name }))
+        );
+
+        // Get results from searchIndex
+        const indexResults = searchPages(searchQuery);
+        
+        // Convert searchIndex results to CourseType format (for domain-level matches)
+        const domainMatches = indexResults
+          .filter(item => item.category === 'Management' || item.category === 'Technical' || 
+                         item.category === 'Electronics' || item.category === 'Mechanical' || 
+                         item.category === 'Civil')
+          .map(item => ({
+            title: item.title,
+            description: item.description,
+            href: item.path,
+            domainLabel: item.category,
+            tags: [],
+          } as CourseType & { domainLabel: string }));
+
+        // Merge and deduplicate
+        const merged = [...courseMatches, ...domainMatches];
+        const seen = new Set();
+        return merged.filter(item => {
+          const key = item.href || item.title;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+      })()
     : [];
 
   const filteredCourses = activeDomain.courses.filter(

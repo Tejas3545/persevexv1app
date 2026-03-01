@@ -330,7 +330,7 @@ export default function Navbar() {
             animate="visible"
             exit="hidden"
           >
-            <motion.div variants={mobileLinkVariants} className="w-full border-b border-border pb-3">
+            <motion.div variants={mobileLinkVariants}>
               <button
                 onClick={() => setIsMobileProgramsOpen(!isMobileProgramsOpen)}
                 className="text-lg font-semibold text-foreground py-3 flex items-center justify-between w-full"

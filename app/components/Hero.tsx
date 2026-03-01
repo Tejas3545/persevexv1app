@@ -6,8 +6,9 @@ import { useRef, useEffect, useState } from "react";
 import { 
   Code2, Database, Cpu, Globe, Layout, Smartphone, 
   Server, Shield, Terminal, Wifi, Cloud, Blocks,
-  CheckCircle2
+  CheckCircle2, Briefcase, Wrench, Building2
 } from "lucide-react";
+import { searchPages } from "@/app/constants/searchIndex";
 
 // Program suggestions data
 const programSuggestions = [
@@ -312,12 +313,49 @@ export default function Hero() {
     setShowSuggestions(true);
   };
 
-  // Filter programs based on search query
+  // Get category icon based on category name
+  const getCategoryIcon = (category: string) => {
+    switch(category.toLowerCase()) {
+      case 'management': return <Briefcase size={14} className="text-purple-500" />;
+      case 'technical': return <Code2 size={14} className="text-blue-500" />;
+      case 'computer science': return <Code2 size={14} className="text-blue-500" />;
+      case 'electronics': return <Cpu size={14} className="text-amber-500" />;
+      case 'mechanical': return <Wrench size={14} className="text-orange-500" />;
+      case 'civil': return <Building2 size={14} className="text-green-500" />;
+      default: return null;
+    }
+  };
+
+  // Filter programs and domain pages based on search query
   const filteredPrograms = searchQuery.trim() 
-    ? programSuggestions.filter(program => 
-        program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        program.category.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? (() => {
+        // Get results from searchIndex (domains + all pages)
+        const indexResults = searchPages(searchQuery);
+        
+        // Get matching programs from programSuggestions
+        const programMatches = programSuggestions.filter(program => 
+          program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          program.category.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        // Merge and deduplicate results
+        const merged = [
+          ...indexResults.map(item => ({
+            name: item.title,
+            category: item.category,
+            href: item.path,
+          })),
+          ...programMatches
+        ];
+
+        // Remove duplicates based on href
+        const seen = new Set();
+        return merged.filter(item => {
+          if (seen.has(item.href)) return false;
+          seen.add(item.href);
+          return true;
+        });
+      })()
     : programSuggestions;
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
@@ -495,7 +533,7 @@ export default function Hero() {
                       scrollbarWidth: 'thin',
                       scrollbarColor: 'rgba(0,0,0,0.2) transparent'
                     }}>
-                      {filteredPrograms.slice(0, 8).map((program, index) => (
+                      {filteredPrograms.slice(0, 12).map((program, index) => (
                         <Link
                           key={index}
                           href={program.href}
@@ -505,12 +543,15 @@ export default function Hero() {
                           }}
                           className="flex items-center justify-between px-6 py-4 hover:bg-accent transition-colors group border-b border-border/30 last:border-b-0"
                         >
-                          <div className="flex-1">
-                            <div className="font-semibold text-foreground text-base group-hover:text-primary transition-colors">
-                              {program.name}
-                            </div>
-                            <div className="text-xs text-muted-foreground mt-1">
-                              {program.category}
+                          <div className="flex-1 flex items-start gap-3">
+                            {getCategoryIcon(program.category)}
+                            <div>
+                              <div className="font-semibold text-foreground text-base group-hover:text-primary transition-colors">
+                                {program.name}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
+                                {program.category}
+                              </div>
                             </div>
                           </div>
                           <div className="flex items-center gap-1 text-primary text-sm font-medium">
