@@ -52,6 +52,18 @@ export default function Navbar() {
     }
   }, [isSearchOpen]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const handleNavigationAndScroll = (key: SectionKey) => {
     setIsMobileMenuOpen(false);
     if (isHomePage) {
@@ -434,7 +446,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-card flex flex-col pt-20 px-6 overflow-y-auto"
+            className="fixed inset-0 z-[100] bg-card flex flex-col pt-20 px-6 overflow-y-auto"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"

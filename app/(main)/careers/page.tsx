@@ -265,7 +265,7 @@ function PositionCard({ position, index }: { position: Position; index: number }
               </div>
               <a
                 href={`mailto:careers@persevex.com?subject=Application: ${position.title}`}
-                className="inline-flex items-center gap-2 btn-aptisure text-sm mt-2"
+                className="inline-flex items-center gap-2 btn-aptisure text-sm mt-2 relative z-10 cursor-pointer"
               >
                 Apply for this role <ArrowUpRight size={14} />
               </a>
@@ -337,38 +337,6 @@ export default function CareersPage() {
     <main className="overflow-x-hidden bg-background">
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] flex items-center bg-slate-50 dark:bg-card overflow-hidden py-24">
-      {/* Firm modal popup */}
-      <AnimatePresence>
-        {firmOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="bg-background rounded-2xl p-8 max-w-lg mx-4"
-            >
-              <h2 className="text-2xl font-bold mb-4">About Persevex</h2>
-              <p className="mb-4 text-muted-foreground">
-                Persevex is a fast-growing edtech firm focused on delivering
-                outcome-oriented programs and internship experiences for
-                students and early-career professionals. We value clarity,
-                ownership, and rapid execution.
-              </p>
-              <button
-                onClick={() => setFirmOpen(false)}
-                className="mt-2 px-4 py-2 bg-primary text-white rounded-full"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
         {/* Background elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/4" />
@@ -416,23 +384,23 @@ export default function CareersPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-4 relative z-10"
           >
             <a
               href="#open-roles"
-              className="btn-aptisure inline-flex items-center gap-2"
+              className="btn-aptisure inline-flex items-center gap-2 cursor-pointer"
             >
               See open roles <ChevronDown size={16} />
             </a>
             <a
               href="mailto:careers@persevex.com"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <Mail size={15} /> Email us
             </a>
             <button
               onClick={() => setFirmOpen(true)}
-              className="btn-aptisure inline-flex items-center gap-2"
+              className="btn-aptisure inline-flex items-center gap-2 cursor-pointer"
             >
               About Firm
             </button>
@@ -712,7 +680,7 @@ export default function CareersPage() {
             </p>
             <a
               href="mailto:careers@persevex.com?subject=Open Application"
-              className="btn-aptisure inline-flex items-center gap-2"
+              className="btn-aptisure inline-flex items-center gap-2 cursor-pointer"
             >
               <Mail size={15} /> careers@persevex.com
             </a>
@@ -785,6 +753,41 @@ export default function CareersPage() {
           </div>
         </div>
       </section>
+
+      {/* Firm modal popup - moved to end to avoid z-index conflicts */}
+      <AnimatePresence>
+        {firmOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[999]"
+            onClick={() => setFirmOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-background rounded-2xl p-8 max-w-lg mx-4 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-2xl font-bold mb-4">About Persevex</h2>
+              <p className="mb-4 text-muted-foreground">
+                Persevex is a fast-growing edtech firm focused on delivering
+                outcome-oriented programs and internship experiences for
+                students and early-career professionals. We value clarity,
+                ownership, and rapid execution.
+              </p>
+              <button
+                onClick={() => setFirmOpen(false)}
+                className="mt-2 px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors"
+              >
+                Close
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
