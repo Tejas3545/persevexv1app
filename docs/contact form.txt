@@ -1,0 +1,49 @@
+contact form:
+
+https://script.google.com/macros/s/AKfycbwGMx4BLDeLX5HYx8vtASKAHkb4NsGFjhkjUYGRJJ2brO1aCJmFF9gfVI9IpOpIwv_6Sg/exec
+
+
+eg payload code:
+
+// The Web App URL you generated in Step 3
+const scriptURL = "YOUR_WEB_APP_URL_HERE";
+
+function sendMessage() {
+  
+  // 1. Gather data from form inputs
+  const formData = {
+    fullName: document.getElementById("nameInput").value,
+    email: document.getElementById("emailInput").value,
+    phone: document.getElementById("phoneInput").value, // Optional
+    message: document.getElementById("messageInput").value
+  };
+
+  // 2. Validation (Name, Email, and Message are usually required)
+  if(!formData.fullName || !formData.email || !formData.message) {
+    alert("Please fill in the required fields (Name, Email, Message).");
+    return;
+  }
+
+  // 3. UI Feedback (Change button text)
+  const btn = document.getElementById("submitBtn");
+  const originalText = btn.innerText;
+  btn.innerText = "Sending...";
+
+  // 4. Send data via POST
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(formData),
+    mode: "no-cors" // Simplifies the request for Google Scripts
+  })
+  .then(() => {
+    alert("Message Sent Successfully!");
+    btn.innerText = originalText;
+    // Optional: Reset form fields
+    // document.getElementById("contactForm").reset();
+  })
+  .catch(error => {
+    console.error("Error!", error);
+    alert("Error sending message.");
+    btn.innerText = originalText;
+  });
+}

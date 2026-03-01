@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, RefObject } from 'react';
 
-export type SectionKey = 'courses' | 'ourEdge' | 'partners' | 'testimonials' | 'recognizedBy' | 'aboutUs' | 'faq' | "contactUs" | 'policy' | 'footer';
+export type SectionKey = 'courses' | 'ourEdge' | 'partners' | 'testimonials' | 'recognizedBy' | 'aboutUs' | 'faq' | 'policy' | 'footer';
 
 interface ScrollContextType {
   sectionRefs: Partial<Record<SectionKey, RefObject<HTMLDivElement>>>;

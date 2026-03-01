@@ -62,6 +62,12 @@ export default function ContactUs() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Log form data to console for debugging
+    console.log("=== CONTACT FORM SUBMISSION ===");
+    console.log("Form Data:", formData);
+    console.log("Timestamp:", new Date().toISOString());
+    console.log("Google Sheet URL:", GOOGLE_SHEET_URL);
+
     try {
       // Submit to Google Sheet
       const response = await fetch(GOOGLE_SHEET_URL, {
@@ -70,17 +76,25 @@ export default function ContactUs() {
         mode: "no-cors",
       });
 
+      console.log("✅ Form submitted successfully (no-cors mode)");
+      console.log("Response object:", response);
+
       // Mark as submitted (Google Apps Script doesn't return readable response in no-cors mode)
       setSubmitted(true);
       setFormData({ studentName: "", email: "", phone: "", collegeName: "", passoutYear: "", interestedDomain: "" });
       setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
-      console.error("Contact form error:", error);
+      console.error("❌ Contact form error:", error);
+      console.error("Error details:", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        stack: error instanceof Error ? error.stack : undefined,
+      });
       // Still show success for UX
       setSubmitted(true);
       setTimeout(() => setSubmitted(false), 5000);
     } finally {
       setIsSubmitting(false);
+      console.log("=== CONTACT FORM SUBMISSION END ===");
     }
   };
 

@@ -680,12 +680,12 @@ export default function Navbar() {
             </motion.div>
 
             <motion.div variants={mobileLinkVariants} className="mt-6">
-              <button
-                onClick={() => handleNavigationAndScroll("contactUs")}
-                className="btn-primary w-full text-center rounded-full!"
+              <Link
+                href="/contact"
+                className="btn-primary w-full text-center rounded-full block!"
               >
                 Contact Us
-              </button>
+              </Link>
             </motion.div>
           </motion.div>
         )}

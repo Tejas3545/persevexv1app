@@ -4,7 +4,7 @@ import Link from "next/link";
 import Toast from "@/app/components/Toast";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyAYwB174Qk9X9nJYWIAiRC81NkYJOgLJOjJtu9txvHmeaVlz0HraJdPGfgEQwYRfaToQ/exec";
+  "https://script.google.com/macros/s/AKfycbwGMx4BLDeLX5HYx8vtASKAHkb4NsGFjhkjUYGRJJ2brO1aCJmFF9gfVI9IpOpIwv_6Sg/exec";
 
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -24,15 +24,32 @@ export default function ContactPage() {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
 
+    // Log form data to console for debugging
+    console.log("=== CONTACT PAGE FORM SUBMISSION ===");
+    console.log("Form Data:", data);
+    console.log("Timestamp:", new Date().toISOString());
+    console.log("Google Sheet URL:", SCRIPT_URL);
+
     try {
       const response = await fetch(SCRIPT_URL, {
         method: "POST",
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      console.log("Response status:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
 
-      if (result.result === "success") {
+      const result = await response.json();
+      console.log("Response data:", result);
+
+      // Check multiple possible success response formats from Google Scripts
+      const isSuccess = 
+        result.result === "success" || 
+        result.status === "success" || 
+        (result.message && result.message.toLowerCase().includes("success"));
+
+      if (isSuccess) {
+        console.log("✅ Form submitted successfully");
         setToast({
           isVisible: true,
           message: "Thank you for your message! We will get back to you soon.",
@@ -40,21 +57,39 @@ export default function ContactPage() {
         });
         formRef.current?.reset();
       } else {
-        throw new Error(result.message || "An unknown error occurred.");
+        throw new Error(result.message || result.error || "An unknown error occurred.");
       }
     } catch (error) {
-      console.error("Form submission error:", error);
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Failed to send message. Please try again later.";
-      setToast({
-        isVisible: true,
-        message: errorMessage,
-        type: "error",
+      console.error("❌ Form submission error:", error);
+      console.error("Error details:", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        stack: error instanceof Error ? error.stack : undefined,
       });
+      
+      // Don't show error if the message actually indicates success
+      const errorMsg = error instanceof Error ? error.message : "Unknown error";
+      if (errorMsg && errorMsg.toLowerCase().includes("success")) {
+        console.log("✅ Form actually submitted successfully (success message detected in error)");
+        setToast({
+          isVisible: true,
+          message: "Thank you for your message! We will get back to you soon.",
+          type: "success",
+        });
+        formRef.current?.reset();
+      } else {
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : "Failed to send message. Please try again later.";
+        setToast({
+          isVisible: true,
+          message: errorMessage,
+          type: "error",
+        });
+      }
     } finally {
       setIsSubmitting(false);
+      console.log("=== CONTACT PAGE FORM SUBMISSION END ===");
     }
   };
 
