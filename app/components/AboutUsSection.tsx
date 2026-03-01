@@ -46,7 +46,7 @@ const milestones = [
   { year: "2025", event: "Persevex Founded", description: "Started with a vision to democratize quality education" },
   { year: "2025", event: "First 500 Students", description: "Reached our first milestone of 500 enrolled students" },
   { year: "2025", event: "NSDC Recognition", description: "Received official recognition from NSDC and AICTE" },
-  { year: "2026", event: "5000+ Students", description: "Crossed 5000 students across 20+ courses" },
+  { year: "2026", event: "10000+ Students", description: "Crossed 10000 students across 20+ courses" },
   { year: "2026", event: "Expanding Domains", description: "Launched new domains including Drone Mechanics and HEVs" },
 ];
 
