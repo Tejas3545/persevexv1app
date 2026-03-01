@@ -27,6 +27,10 @@ export default function ContactPage() {
     // Log form data to console for debugging
     console.log("=== CONTACT PAGE FORM SUBMISSION ===");
     console.log("Form Data:", data);
+    console.log("📝 Name field value:", data.fullName);
+    console.log("📧 Email field value:", data.email);
+    console.log("📞 Phone field value:", data.phone);
+    console.log("💬 Message field value:", data.message);
     console.log("Timestamp:", new Date().toISOString());
     console.log("Google Sheet URL:", SCRIPT_URL);
 
@@ -229,15 +233,15 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label
-                      htmlFor="name"
+                      htmlFor="fullName"
                       className="text-sm font-medium text-muted-foreground"
                     >
                       Full Name
                     </label>
                     <input
                       type="text"
-                      name="name"
-                      id="name"
+                      name="fullName"
+                      id="fullName"
                       required
                       placeholder="John Doe"
                       className="w-full bg-card/20 border border-border rounded-lg px-4 py-3 text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"

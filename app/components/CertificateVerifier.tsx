@@ -6,9 +6,10 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CertificateData {
-  studentName: string;
-  domain: string;
-  issueDate: string;
+  studentName?: string;
+  domain?: string;
+  issueDate?: string;
+  [key: string]: any; // Allow any additional fields from the API
 }
 
 type VerificationStatus = 'verifying' | 'verified' | 'not-found' | 'error' | 'invalid-link';
@@ -83,6 +84,10 @@ function Verifier() {
         if (!response.ok) throw new Error(`Network Error: ${response.statusText}`);
         const json = await response.json();
 
+        // Debug: Log the response to see what we're getting
+        console.log('🔍 Certificate API Response:', json);
+        console.log('📋 Response data:', json.data);
+
         await wait(800);
         setLoadingState(prev => ({ ...prev, percent: 80, message: 'Validating certificate data...' }));
 
@@ -91,7 +96,15 @@ function Verifier() {
         
         await wait(400);
         if (json && json.status === 'verified' && json.data) {
-          setResult({ status: 'verified', data: json.data });
+          // Normalize field names - handle different naming conventions
+          const normalizedData = {
+            studentName: json.data.studentName || json.data.name || json.data.Name || json.data.student_name || json.data.studentname,
+            domain: json.data.domain || json.data.Domain || json.data.program || json.data.Program || json.data.course || json.data.Course,
+            issueDate: json.data.issueDate || json.data.issue_date || json.data.IssueDate || json.data.date || json.data.Date
+          };
+          
+          console.log('✅ Normalized certificate data:', normalizedData);
+          setResult({ status: 'verified', data: normalizedData });
         } else {
           setResult({ status: 'not-found', message: 'No valid record was found for this certificate ID.' });
         }
@@ -275,8 +288,13 @@ function Verifier() {
                   Student Name
                 </div>
                 <div className="text-xl font-bold text-foreground break-words">
-                  {result.data?.studentName ?? '—'}
+                  {result.data?.studentName || '—'}
                 </div>
+                {!result.data?.studentName && result.data && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Debug: {JSON.stringify(result.data)}
+                  </div>
+                )}
               </motion.div>
 
               <motion.div
@@ -292,7 +310,7 @@ function Verifier() {
                   Program / Domain
                 </div>
                 <div className="text-xl font-bold text-foreground break-words">
-                  {result.data?.domain ?? '—'}
+                  {result.data?.domain || '—'}
                 </div>
               </motion.div>
 
@@ -309,7 +327,7 @@ function Verifier() {
                   Issue Date
                 </div>
                 <div className="text-xl font-bold text-foreground break-words">
-                  {result.data?.issueDate ?? result.message ?? '—'}
+                  {result.data?.issueDate || result.message || '—'}
                 </div>
               </motion.div>
             </div>
