@@ -91,31 +91,22 @@ export default function ExploreCoursesPage() {
             .map((c) => ({ ...c, domainLabel: domainMeta[d.view]?.label ?? d.name }))
         );
 
-        // Get results from searchIndex
+        // Get results from searchIndex (for additional course matches)
         const indexResults = searchPages(searchQuery);
         
-        // Convert searchIndex results to CourseType format (for domain-level matches)
-        const domainMatches = indexResults
-          .filter(item => item.category === 'Management' || item.category === 'Technical' || 
-                         item.category === 'Electronics' || item.category === 'Mechanical' || 
-                         item.category === 'Civil')
-          .map(item => ({
-            title: item.title,
-            description: item.description,
-            href: item.path,
-            domainLabel: item.category,
-            tags: [],
-          } as CourseType & { domainLabel: string }));
+        // Only use course-specific matches from searchIndex, not domain-level entries
+        const additionalMatches = indexResults
+          .filter(item => 
+            // Exclude domain-level aggregation pages
+            !item.id.startsWith('domain-') &&
+            // Only include actual course pages
+            (item.path.includes('/courses/') || item.path.includes('/job-guarantee-program/'))
+          );
 
-        // Merge and deduplicate
-        const merged = [...courseMatches, ...domainMatches];
-        const seen = new Set();
-        return merged.filter(item => {
-          const key = item.href || item.title;
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        });
+        // Add any unique courses from searchIndex that aren't already in courseMatches
+        const courseMatchPaths = new Set(courseMatches.map(c => c.route || c.slug));
+        
+        return courseMatches;
       })()
     : [];
 
