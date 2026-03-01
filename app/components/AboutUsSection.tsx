@@ -28,7 +28,7 @@ const cardData = [
     imageSrc: "/ourmission.png",
     icon: <FiTarget size={20} />,
     content:
-      "The mission of Persevex is to redefine the way education empowers people. We believe that perseverance, when guided by the right tools, can unlock limitless possibilities. Through innovation, meaningful experiences and a focus on real-world application, we are committed to making education accessible to everyone everywhere. Our purpose is not only to teach but to inspire resilience, nurture potential and create a generation of learners who are ready to succeed and ready to lead with knowledge and confidence.",
+      "Over the next 5 years, we aim to train and make job-ready over 2 lakh students across India. Our mission is to bridge the gap between education and employment by providing industry-relevant skills, hands-on training, and real-world project experience. We are committed to empowering students with the knowledge, confidence, and practical expertise they need to thrive in their careers and become valuable contributors to the workforce.",
     color: "from-orange-500/20 to-red-500/20",
   },
 ];
