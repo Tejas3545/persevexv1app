@@ -35,11 +35,11 @@ const exploreFooterLinkColumns: FooterColumn[] = [
   {
     title: "Our Courses",
     links: [
-      { text: "Management", href: "/explore-courses" },
-      { text: "Technical", href: "/explore-courses" },
-      { text: "Electronics", href: "/explore-courses" },
-      { text: "Mechanical", href: "/explore-courses" },
-      { text: "Civil", href: "/explore-courses" },
+      { text: "Management", href: "/explore-courses#management" },
+      { text: "Technical", href: "/explore-courses#technical" },
+      { text: "Electronics", href: "/explore-courses#electronics" },
+      { text: "Mechanical", href: "/explore-courses#mechanical" },
+      { text: "Civil", href: "/explore-courses#civil" },
     ],
   },
   {

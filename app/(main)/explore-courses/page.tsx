@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -62,6 +62,15 @@ export default function ExploreCoursesPage() {
   const [activeView, setActiveView] = useState<DomainView>("management");
   const [searchQuery, setSearchQuery] = useState("");
   const [showMore, setShowMore] = useState(false);
+
+  // Handle URL hash navigation
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    const validDomains = ['management', 'technical', 'electronics', 'mechanical', 'civil'];
+    if (hash && validDomains.includes(hash)) {
+      setActiveView(hash as DomainView);
+    }
+  }, []);
 
   const activeDomain = allDomains.find((d) => d.view === activeView)!;
   const meta = domainMeta[activeView];
