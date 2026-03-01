@@ -85,7 +85,7 @@ export default function UserProfile({
       ]);
 
       if (userRes.status === 401 || userRes.status === 403) {
-        router.push("/user");
+        router.push("/internship");
         return;
       }
 

@@ -113,7 +113,7 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 md:bottom-6 bottom-6 right-4 md:right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-[60] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -121,7 +121,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="mb-4 w-[calc(100vw-3rem)] sm:w-[350px] bg-white dark:bg-[#121212] rounded-2xl shadow-2xl overflow-hidden border border-border flex flex-col"
+            className="mb-4 w-[calc(100vw-2rem)] sm:w-[350px] max-h-[calc(100vh-6rem)] bg-white dark:bg-[#121212] rounded-2xl shadow-2xl overflow-hidden border border-border flex flex-col"
           >
             {/* Header */}
             <div className="bg-blue-600 text-white p-6 relative">
@@ -304,7 +304,7 @@ export default function ChatWidget() {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-xl flex items-center justify-center transition-colors z-50"
+          className="w-16 h-16 md:w-14 md:h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-xl flex items-center justify-center transition-colors z-[60] touch-manipulation"
           aria-label="Toggle chat"
         >
           <AnimatePresence mode="wait">
@@ -316,7 +316,7 @@ export default function ChatWidget() {
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <X className="w-6 h-6" />
+                <X className="w-7 h-7 md:w-6 md:h-6" />
               </motion.div>
             ) : (
               <motion.div
@@ -326,7 +326,7 @@ export default function ChatWidget() {
                 exit={{ rotate: -90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <MessageCircle className="w-6 h-6" />
+                <MessageCircle className="w-7 h-7 md:w-6 md:h-6" />
               </motion.div>
             )}
           </AnimatePresence>

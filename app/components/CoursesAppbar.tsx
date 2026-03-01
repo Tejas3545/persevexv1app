@@ -29,7 +29,6 @@ export default function CoursePageNavbar() {
         { key: 'c3', name: 'Artificial Intelligence', href: '/courses/artificial-intelligence' },
         { key: 'c5', name: 'Data Science', href: '/courses/data-science' },
         { key: 'c4', name: 'Cyber Security', href: '/courses/cybersecurity' },
-        { key: 'c7', name: 'Generative (Gen) AI and Prompt Engineering', href: '/coming-soon' },
       ],
     },
     {
@@ -41,15 +40,9 @@ export default function CoursePageNavbar() {
     {
       branch: 'Mechanical',
       items: [
-        { key: 'm1', name: 'AutoCAD', href: '/courses/autocad ' },
+        { key: 'm1', name: 'AutoCAD', href: '/courses/autocad' },
         { key: 'm2', name: 'Drone Mechanics', href: '/courses/drone-mechanics' },
         { key: 'm3', name: 'HEVs', href: '/courses/hev' },
-      ]
-    },
-    {
-      branch: 'Business Law',
-      items: [
-        { key: 'bl1', name: 'Coming Soon', href: '/coming-soon' }
       ]
     },
     {

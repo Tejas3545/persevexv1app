@@ -114,7 +114,7 @@ export default function OfferingsSection() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-100 bg-foreground/60 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
+                    className="fixed inset-0 z-100 bg-foreground/60 backdrop-blur-sm flex items-start md:items-center justify-center p-2 md:p-8 overflow-y-auto"
                     onClick={(e) => {
                         if (e.target === e.currentTarget) {
                             setActiveIframe(null);
@@ -126,40 +126,42 @@ export default function OfferingsSection() {
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`relative bg-card rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 ${isFullscreen
+                        className={`relative bg-card rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 my-2 md:my-0 ${isFullscreen
                             ? "w-full h-full rounded-none"
-                            : "w-full max-w-6xl h-[85vh]"
+                            : "w-full max-w-6xl h-[95vh] md:h-[85vh]"
                             }`}
                     >
                         {/* Modal Header */}
-                        <div className="flex items-center justify-between px-5 py-3 bg-background border-b border-border">
-                            <div className="flex items-center gap-3">
-                                <div className="flex gap-1.5">
-                                    <div className="w-3 h-3 rounded-full bg-destructive" />
-                                    <div className="w-3 h-3 rounded-full bg-highlight" />
-                                    <div className="w-3 h-3 rounded-full bg-primary" />
+                        <div className="flex items-center justify-between px-3 md:px-5 py-2.5 md:py-3 bg-background border-b border-border">
+                            <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
+                                <div className="flex gap-1.5 shrink-0">
+                                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-destructive" />
+                                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-highlight" />
+                                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-primary" />
                                 </div>
-                                <span className="text-xs text-muted-foreground font-mono truncate max-w-[200px] md:max-w-none">
+                                <span className="text-[10px] md:text-xs text-muted-foreground font-mono truncate">
                                     {activeIframe}
                                 </span>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
                                 <button
                                     onClick={() => setIsFullscreen(!isFullscreen)}
-                                    className="p-1.5 hover:bg-accent rounded-lg transition-colors text-muted-foreground"
+                                    className="p-2 md:p-1.5 hover:bg-accent rounded-lg transition-colors text-muted-foreground touch-manipulation"
                                     aria-label="Toggle fullscreen"
                                 >
-                                    <FiMaximize2 size={16} />
+                                    <FiMaximize2 size={18} className="md:hidden" />
+                                    <FiMaximize2 size={16} className="hidden md:block" />
                                 </button>
                                 <button
                                     onClick={() => {
                                         setActiveIframe(null);
                                         setIsFullscreen(false);
                                     }}
-                                    className="p-1.5 hover:bg-accent rounded-lg transition-colors text-muted-foreground"
+                                    className="p-2 md:p-1.5 hover:bg-accent rounded-lg transition-colors text-muted-foreground touch-manipulation"
                                     aria-label="Close"
                                 >
-                                    <FiX size={18} />
+                                    <FiX size={20} className="md:hidden" />
+                                    <FiX size={18} className="hidden md:block" />
                                 </button>
                             </div>
                         </div>

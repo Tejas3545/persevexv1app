@@ -163,39 +163,39 @@ function RecognizedBySection() {
       {/* Full-screen PDF Modal - using Google Docs viewer for universal compatibility */}
       {modalPdf && (
         <div
-          className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/70 flex items-start md:items-center justify-center p-2 md:p-4 overflow-y-auto"
           onClick={() => setModalPdf(null)}
         >
           <div
-            className="relative w-full max-w-3xl bg-white rounded-2xl overflow-hidden shadow-2xl cert-modal-wrapper"
+            className="relative w-full max-w-3xl bg-white rounded-2xl overflow-hidden shadow-2xl cert-modal-wrapper my-2 md:my-0 max-h-[95vh] md:max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-5 py-3 border-b border-gray-200">
-              <span className="text-sm font-semibold text-gray-700">
+            <div className="flex items-center justify-between px-3 md:px-5 py-2.5 md:py-3 border-b border-gray-200 shrink-0">
+              <span className="text-xs md:text-sm font-semibold text-gray-700 truncate">
                 {recognitions.find((r) => r.pdfSrc === modalPdf)?.name}
               </span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3 shrink-0">
                 <a
                   href={modalPdf}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-medium text-primary hover:underline flex items-center gap-1"
+                  className="text-xs font-medium text-primary hover:underline flex items-center gap-1 whitespace-nowrap"
                 >
                   <FiExternalLink className="w-3.5 h-3.5" />
-                  Open PDF
+                  <span className="hidden sm:inline">Open PDF</span>
                 </a>
                 <button
                   onClick={() => setModalPdf(null)}
                   title="Close certificate viewer"
-                  className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 md:w-8 md:h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors touch-manipulation"
                 >
-                  <FiX className="w-4 h-4 text-gray-600" />
+                  <FiX className="w-5 h-5 md:w-4 md:h-4 text-gray-600" />
                 </button>
               </div>
             </div>
             <iframe
               src={`https://docs.google.com/gview?url=${typeof window !== "undefined" ? window.location.origin : ""}${modalPdf}&embedded=true`}
-              className="w-full cert-modal-iframe"
+              className="w-full cert-modal-iframe flex-1"
               title="Certificate viewer"
             />
           </div>

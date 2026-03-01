@@ -93,7 +93,6 @@ export default function Navbar() {
         { key: 'c3', name: 'Artificial Intelligence', href: '/courses/artificial-intelligence' },
         { key: 'c5', name: 'Data Science', href: '/courses/data-science' },
         { key: 'c4', name: 'Cyber Security', href: '/courses/cybersecurity' },
-        { key: 'c7', name: 'Generative (Gen) AI and Prompt Engineering', href: '/coming-soon' },
       ],
     },
     {
@@ -105,15 +104,9 @@ export default function Navbar() {
     {
       branch: 'Mechanical',
       items: [
-        { key: 'm1', name: 'AutoCAD', href: '/courses/autocad ' },
+        { key: 'm1', name: 'AutoCAD', href: '/courses/autocad' },
         { key: 'm2', name: 'Drone Mechanics', href: '/courses/drone-mechanics' },
         { key: 'm3', name: 'HEVs', href: '/courses/hev' },
-      ]
-    },
-    {
-      branch: 'Business Law',
-      items: [
-        { key: 'bl1', name: 'Coming Soon', href: '/coming-soon' }
       ]
     },
     {
@@ -529,6 +522,23 @@ export default function Navbar() {
                   </motion.div>
                 )}
               </AnimatePresence>
+            </motion.div>
+
+            {/* Explore All Courses */}
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
+              <Link
+                href="/explore-courses"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-lg font-bold text-primary hover:text-primary/90 transition-colors flex items-center gap-2 py-4"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="7" height="7" x="3" y="3" rx="1"/>
+                  <rect width="7" height="7" x="14" y="3" rx="1"/>
+                  <rect width="7" height="7" x="14" y="14" rx="1"/>
+                  <rect width="7" height="7" x="3" y="14" rx="1"/>
+                </svg>
+                Explore All Courses
+              </Link>
             </motion.div>
 
             <motion.div variants={mobileLinkVariants} className="border-b border-border">

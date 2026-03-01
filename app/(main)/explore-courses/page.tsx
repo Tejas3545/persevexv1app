@@ -71,6 +71,8 @@ export default function ExploreCoursesPage() {
       if (hash && validDomains.includes(hash)) {
         setActiveView(hash as DomainView);
         setSearchQuery(""); // Clear search when navigating via hash
+        // Scroll to top smoothly when category changes
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
@@ -176,6 +178,8 @@ export default function ExploreCoursesPage() {
                     setActiveView(domain.view as DomainView); 
                     setSearchQuery(""); 
                     window.location.hash = domain.view;
+                    // Scroll to top when changing category
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className={`relative w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-all duration-200 group ${
                     isActive ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
@@ -219,6 +223,8 @@ export default function ExploreCoursesPage() {
                       setActiveView(domain.view as DomainView); 
                       setSearchQuery(""); 
                       window.location.hash = domain.view;
+                      // Scroll to top when changing category
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap border transition-all flex-shrink-0 ${
                       domain.view === activeView ? "bg-primary text-white border-primary" : "bg-secondary text-foreground border-border hover:border-primary/40"

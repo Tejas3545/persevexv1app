@@ -212,68 +212,70 @@ function LmsModal({ onClose }: { onClose: () => void }) {
   return (
     // Backdrop
     <motion.div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[200] flex items-start md:items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      {/* Panel */}
+      {/* Panel - Mobile: Full height with scroll, Desktop: Max height centered */}
       <motion.div
-        className="relative w-full max-w-md bg-card border border-border rounded-3xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-md bg-card border border-border rounded-3xl shadow-2xl my-4 md:my-0 flex flex-col max-h-[95vh] md:max-h-[90vh]"
         initial={{ scale: 0.95, y: 24, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.95, y: 24, opacity: 0 }}
         transition={{ type: "spring", stiffness: 400, damping: 32 }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
+        {/* Header - Fixed at top */}
+        <div className="flex items-center justify-between px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4 border-b border-border shrink-0">
           <div>
-            <h2 className="text-xl font-black text-foreground tracking-tight">Register or login</h2>
+            <h2 className="text-lg md:text-xl font-black text-foreground tracking-tight">Register or login</h2>
             <p className="text-xs text-muted-foreground mt-0.5">Minimal steps, Secure checkout.</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 md:gap-2">
             <a
               href={LMS_REDIRECT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-bold text-primary hover:underline flex items-center gap-0.5"
+              className="text-xs font-bold text-primary hover:underline flex items-center gap-0.5 whitespace-nowrap"
             >
               Login <ArrowUpRight size={12} />
             </a>
             <button
               onClick={onClose}
               aria-label="Close"
-              className="ml-2 p-1.5 rounded-full hover:bg-muted text-muted-foreground transition-colors"
+              className="ml-1 md:ml-2 p-2 md:p-1.5 rounded-full hover:bg-muted text-muted-foreground transition-colors touch-manipulation"
             >
-              <X size={16} />
+              <X size={20} className="md:hidden" />
+              <X size={16} className="hidden md:block" />
             </button>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
+        {/* Scrollable form content */}
+        <form onSubmit={handleSubmit} className="px-4 md:px-6 py-4 md:py-5 space-y-4 md:space-y-5 overflow-y-auto flex-1">
 
           {/* ── Plan Selection ─────────────────────────────────────────── */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Select Plan</p>
-            <div className="grid grid-cols-2 gap-2">
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2.5">Select Plan</p>
+            <div className="grid grid-cols-2 gap-2.5 md:gap-2">
               {PLANS.map((plan) => (
                 <button
                   key={plan.id}
                   type="button"
                   onClick={() => setSelectedPlan(plan.id)}
-                  className={`relative flex flex-col items-start p-2.5 rounded-xl border-2 transition-all duration-200 text-left text-xs ${
+                  className={`relative flex flex-col items-start p-3 md:p-2.5 rounded-xl border-2 transition-all duration-200 text-left touch-manipulation ${
                     selectedPlan === plan.id
                       ? "border-primary bg-primary/5"
                       : "border-border hover:border-primary/40 bg-secondary/50"
                   }`}
                 >
                   {selectedPlan === plan.id && (
-                    <CheckCircle2 size={12} className="absolute top-1.5 right-1.5 text-primary" />
+                    <CheckCircle2 size={14} className="absolute top-2 right-2 text-primary md:top-1.5 md:right-1.5 md:w-3 md:h-3" />
                   )}
-                  <span className="text-xs font-bold text-foreground">{plan.label}</span>
-                  <span className="text-base font-black text-primary mt-0.5">₹{plan.price.toLocaleString("en-IN")}</span>
+                  <span className="text-xs md:text-xs font-bold text-foreground">{plan.label}</span>
+                  <span className="text-base md:text-base font-black text-primary mt-0.5">₹{plan.price.toLocaleString("en-IN")}</span>
                 </button>
               ))}
             </div>
@@ -281,17 +283,17 @@ function LmsModal({ onClose }: { onClose: () => void }) {
 
           {/* ── Payment Selection ──────────────────────────────────────── */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Payment Option</p>
-            <div className="grid grid-cols-2 gap-2">
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2.5">Payment Option</p>
+            <div className="grid grid-cols-2 gap-2.5 md:gap-2">
               {/* Reserve Seat */}
               <button
                 type="button"
                 onClick={() => setPayFull(false)}
-                className={`flex flex-col items-start p-3.5 rounded-xl border-2 transition-all duration-200 text-left relative ${
+                className={`flex flex-col items-start p-4 md:p-3.5 rounded-xl border-2 transition-all duration-200 text-left relative touch-manipulation ${
                   !payFull ? "border-primary bg-primary/5" : "border-border hover:border-primary/40 bg-secondary/50"
                 }`}
               >
-                {!payFull && <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />}
+                {!payFull && <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-primary md:w-3.5 md:h-3.5" />}
                 <span className="text-sm font-bold text-foreground">Reserve seat</span>
                 <span className="text-lg font-black text-primary mt-0.5">₹{selectedPlanObj.reserveSeat.toLocaleString("en-IN")}</span>
                 <span className="text-xs text-muted-foreground mt-0.5">Pay now</span>
@@ -300,11 +302,11 @@ function LmsModal({ onClose }: { onClose: () => void }) {
               <button
                 type="button"
                 onClick={() => setPayFull(true)}
-                className={`flex flex-col items-start p-3.5 rounded-xl border-2 transition-all duration-200 text-left relative ${
+                className={`flex flex-col items-start p-4 md:p-3.5 rounded-xl border-2 transition-all duration-200 text-left relative touch-manipulation ${
                   payFull ? "border-primary bg-primary/5" : "border-border hover:border-primary/40 bg-secondary/50"
                 }`}
               >
-                {payFull && <CheckCircle2 size={14} className="absolute top-2.5 right-2.5 text-primary" />}
+                {payFull && <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-primary md:w-3.5 md:h-3.5" />}
                 <span className="text-sm font-bold text-foreground">Pay in full</span>
                 <span className="text-lg font-black text-primary mt-0.5">₹{selectedPlanObj.price.toLocaleString("en-IN")}</span>
                 <span className="text-xs text-muted-foreground mt-0.5">Best value</span>
@@ -313,7 +315,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
           </div>
 
           {/* ── Form Fields ────────────────────────────────────────────── */}
-          <div className="space-y-3">
+          <div className="space-y-3.5 md:space-y-3">
             {/* Full Name */}
             <div>
               <input
@@ -321,15 +323,15 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                 placeholder="Full name"
                 value={form.name}
                 onChange={(e) => { setForm((f) => ({ ...f, name: e.target.value })); setErrors((er) => ({ ...er, name: "" })); }}
-                className={`w-full px-4 py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors ${errors.name ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
+                className={`w-full px-4 py-3.5 md:py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors touch-manipulation ${errors.name ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
               />
-              {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+              {errors.name && <p className="text-xs text-red-500 mt-1.5">{errors.name}</p>}
             </div>
 
             {/* Phone */}
             <div>
               <div className={`flex rounded-xl border overflow-hidden bg-background transition-colors ${errors.phone ? "border-red-400" : "border-border focus-within:border-primary"}`}>
-                <div className="flex items-center gap-1.5 px-3 py-3 bg-muted border-r border-border text-sm font-semibold text-muted-foreground shrink-0">
+                <div className="flex items-center gap-1.5 px-3 py-3.5 md:py-3 bg-muted border-r border-border text-sm font-semibold text-muted-foreground shrink-0">
                   🇮🇳 <span>+91</span>
                 </div>
                 <input
@@ -337,10 +339,10 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                   placeholder="Phone number"
                   value={form.phone}
                   onChange={(e) => { setForm((f) => ({ ...f, phone: e.target.value })); setErrors((er) => ({ ...er, phone: "" })); }}
-                  className="flex-1 px-3 py-3 text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none"
+                  className="flex-1 px-3 py-3.5 md:py-3 text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none touch-manipulation"
                 />
               </div>
-              {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+              {errors.phone && <p className="text-xs text-red-500 mt-1.5">{errors.phone}</p>}
             </div>
 
             {/* Email */}
@@ -350,9 +352,9 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                 placeholder="Email address"
                 value={form.email}
                 onChange={(e) => { setForm((f) => ({ ...f, email: e.target.value })); setErrors((er) => ({ ...er, email: "" })); }}
-                className={`w-full px-4 py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors ${errors.email ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
+                className={`w-full px-4 py-3.5 md:py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors touch-manipulation ${errors.email ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
               />
-              {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+              {errors.email && <p className="text-xs text-red-500 mt-1.5">{errors.email}</p>}
             </div>
 
             {/* College */}
@@ -362,14 +364,14 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                 placeholder="College name"
                 value={form.college}
                 onChange={(e) => { setForm((f) => ({ ...f, college: e.target.value })); setErrors((er) => ({ ...er, college: "" })); }}
-                className={`w-full px-4 py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors ${errors.college ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
+                className={`w-full px-4 py-3.5 md:py-3 rounded-xl border text-sm font-medium bg-background text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors touch-manipulation ${errors.college ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"}`}
               />
-              {errors.college && <p className="text-xs text-red-500 mt-1">{errors.college}</p>}
+              {errors.college && <p className="text-xs text-red-500 mt-1.5">{errors.college}</p>}
             </div>
           </div>
 
           {/* ── Footer / CTA ───────────────────────────────────────────── */}
-          <div className="pt-1">
+          <div className="pt-1 pb-2 md:pb-0">
             <p className="text-[11px] text-muted-foreground text-center mb-3">
               By signing up, you agree to our{" "}
               <a href="/terms-&-conditions" className="underline hover:text-foreground">T&amp;C</a>{" "}
@@ -381,10 +383,10 @@ function LmsModal({ onClose }: { onClose: () => void }) {
             <button
               type="submit"
               disabled={submitting}
-              className="btn-aptisure w-full flex items-center justify-center gap-2 text-sm font-black disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-aptisure w-full flex items-center justify-center gap-2 text-sm md:text-sm font-black py-4 md:py-3 disabled:opacity-60 disabled:cursor-not-allowed touch-manipulation"
             >
               {submitting ? (
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
@@ -393,7 +395,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
                   Pay ₹{payableAmount.toLocaleString("en-IN")} &bull; {paymentLabel}
                 </>
               )}
-        </button>
+            </button>
 
             {/* feedback message */}
             {submitMessage && (

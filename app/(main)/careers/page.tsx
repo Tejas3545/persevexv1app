@@ -790,14 +790,14 @@ export default function CareersPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[998]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-start md:items-center justify-center z-[998] p-4 overflow-y-auto"
             onClick={() => setFirmOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-background rounded-2xl p-8 max-w-lg mx-4 shadow-2xl"
+              className="bg-background rounded-2xl p-6 md:p-8 max-w-lg w-full my-4 md:my-0 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-2xl font-bold mb-4">About Persevex</h2>
@@ -809,7 +809,7 @@ export default function CareersPage() {
               </p>
               <button
                 onClick={() => setFirmOpen(false)}
-                className="mt-2 px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors"
+                className="mt-2 px-6 py-3 md:px-4 md:py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors touch-manipulation"
               >
                 Close
               </button>

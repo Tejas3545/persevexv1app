@@ -342,7 +342,7 @@ function ApplicationModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-[100] flex items-start md:items-center justify-center bg-black/60 backdrop-blur-sm p-4 md:p-6 overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -350,11 +350,11 @@ function ApplicationModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.25 }}
-        className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl my-4 md:my-0 max-h-[95vh] md:max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-border bg-secondary/30">
+        <div className="flex items-center justify-between p-4 md:p-5 border-b border-border bg-secondary/30 shrink-0">
           <div className="flex items-center gap-3">
             <div
               className={`${job.accentBg} ${job.accentText} w-10 h-10 rounded-xl flex items-center justify-center text-xs font-black flex-shrink-0`}
@@ -371,14 +371,15 @@ function ApplicationModal({
           <button
             onClick={onClose}
             aria-label="Close application form"
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+            className="w-9 h-9 md:w-8 md:h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground touch-manipulation"
           >
-            <X size={16} />
+            <X size={18} className="md:hidden" />
+            <X size={16} className="hidden md:block" />
           </button>
         </div>
 
-        {/* Body */}
-        <div className="p-5 max-h-[70vh] overflow-y-auto">
+        {/* Body - Scrollable */}
+        <div className="p-4 md:p-5 overflow-y-auto flex-1">
           <motion.form
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -397,7 +398,7 @@ function ApplicationModal({
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+                    className="w-full px-4 py-3 md:py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all touch-manipulation"
                   />
                 </div>
 

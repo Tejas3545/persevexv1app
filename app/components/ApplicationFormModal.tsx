@@ -91,7 +91,7 @@ export default function ApplicationFormModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 overflow-y-auto"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-start md:items-center justify-center z-[9999] p-4 md:p-6 overflow-y-auto"
           onClick={onClose}
         >
           <motion.div
@@ -99,26 +99,27 @@ export default function ApplicationFormModal({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="bg-background rounded-2xl shadow-2xl w-full max-w-2xl my-8"
+            className="bg-background rounded-2xl shadow-2xl w-full max-w-2xl my-4 md:my-8 max-h-[95vh] md:max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-border">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-border shrink-0">
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Apply for Position</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-foreground">Apply for Position</h2>
                 <p className="text-sm text-muted-foreground mt-1">{jobTitle}</p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-muted rounded-lg transition-colors"
+                className="p-2 hover:bg-muted rounded-lg transition-colors touch-manipulation"
                 aria-label="Close"
               >
-                <X size={20} />
+                <X size={22} className="md:hidden" />
+                <X size={20} className="hidden md:block" />
               </button>
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            {/* Form - Scrollable */}
+            <form onSubmit={handleSubmit} className="p-4 md:p-6 space-y-4 overflow-y-auto flex-1">
               {/* Full Name */}
               <div>
                 <label htmlFor="fullName" className="block text-sm font-semibold text-foreground mb-2">
@@ -131,7 +132,7 @@ export default function ApplicationFormModal({
                   required
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                  className="w-full px-4 py-3 md:py-2.5 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all touch-manipulation"
                   placeholder="Enter your full name"
                 />
               </div>
