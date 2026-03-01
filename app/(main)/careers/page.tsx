@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import ApplicationFormModal from "@/app/components/ApplicationFormModal";
 import {
   Zap,
   Heart,
@@ -173,7 +174,15 @@ const positions: Position[] = [
 ];
 
 // ─── Position Card ────────────────────────────────────────────────────────────
-function PositionCard({ position, index }: { position: Position; index: number }) {
+function PositionCard({ 
+  position, 
+  index, 
+  onApply 
+}: { 
+  position: Position; 
+  index: number;
+  onApply: (title: string, id: string) => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const typeColors: Record<string, string> = {
@@ -263,12 +272,12 @@ function PositionCard({ position, index }: { position: Position; index: number }
                   ))}
                 </ul>
               </div>
-              <a
-                href={`mailto:careers@persevex.com?subject=Application: ${position.title}`}
+              <button
+                onClick={() => onApply(position.title, position.id)}
                 className="inline-flex items-center gap-2 btn-aptisure text-sm mt-2 relative z-10 cursor-pointer"
               >
                 Apply for this role <ArrowUpRight size={14} />
-              </a>
+              </button>
             </div>
           </motion.div>
         )}
@@ -280,6 +289,8 @@ function PositionCard({ position, index }: { position: Position; index: number }
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function CareersPage() {
   const [firmOpen, setFirmOpen] = useState(false);
+  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<{ title: string; id: string }>({ title: "General Application", id: "general" });
   const [searchQuery, setSearchQuery] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("All Departments");
   const [typeFilter, setTypeFilter] = useState("All Work Types");
@@ -392,12 +403,15 @@ export default function CareersPage() {
             >
               See open roles <ChevronDown size={16} />
             </a>
-            <a
-              href="mailto:careers@persevex.com"
+            <button
+              onClick={() => {
+                setSelectedJob({ title: "General Application", id: "general" });
+                setApplicationModalOpen(true);
+              }}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
-              <Mail size={15} /> Email us
-            </a>
+              <Mail size={15} /> Apply Now
+            </button>
             <button
               onClick={() => setFirmOpen(true)}
               className="btn-aptisure inline-flex items-center gap-2 cursor-pointer"
@@ -633,6 +647,10 @@ export default function CareersPage() {
                         key={position.id}
                         position={position}
                         index={posIndex}
+                        onApply={(title, id) => {
+                          setSelectedJob({ title, id });
+                          setApplicationModalOpen(true);
+                        }}
                       />
                     ))}
                   </div>
@@ -678,12 +696,15 @@ export default function CareersPage() {
               We hire on culture fit and skill first. If you're exceptional at what you do and
               passionate about education — let us know.
             </p>
-            <a
-              href="mailto:careers@persevex.com?subject=Open Application"
+            <button
+              onClick={() => {
+                setSelectedJob({ title: "Open Application", id: "open" });
+                setApplicationModalOpen(true);
+              }}
               className="btn-aptisure inline-flex items-center gap-2 cursor-pointer"
             >
-              <Mail size={15} /> careers@persevex.com
-            </a>
+              <Mail size={15} /> Apply Now
+            </button>
           </motion.div>
         </div>
       </section>
@@ -754,6 +775,14 @@ export default function CareersPage() {
         </div>
       </section>
 
+      {/* Application Form Modal */}
+      <ApplicationFormModal
+        isOpen={applicationModalOpen}
+        onClose={() => setApplicationModalOpen(false)}
+        jobTitle={selectedJob.title}
+        jobId={selectedJob.id}
+      />
+
       {/* Firm modal popup - moved to end to avoid z-index conflicts */}
       <AnimatePresence>
         {firmOpen && (
@@ -761,7 +790,7 @@ export default function CareersPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[999]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[998]"
             onClick={() => setFirmOpen(false)}
           >
             <motion.div

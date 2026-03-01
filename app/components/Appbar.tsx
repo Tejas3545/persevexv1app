@@ -172,7 +172,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 left-0 right-0 z-50 h-16 md:h-18 flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${isScrolled
+        className={`sticky top-0 left-0 right-0 z-[999] h-16 md:h-18 flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${isScrolled
           ? "navbar-glass shadow-sm"
           : "bg-card/60 backdrop-blur-sm"
           }`}
@@ -446,7 +446,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[100] bg-card flex flex-col pt-20 px-6 overflow-y-auto"
+            className="fixed inset-0 z-[998] bg-card flex flex-col pt-20 px-6 overflow-y-auto"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
@@ -643,7 +643,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[99999] bg-background/95 backdrop-blur-sm lg:hidden flex items-start justify-center pt-20 px-4"
+            className="fixed inset-0 z-[9999] bg-background/95 backdrop-blur-sm lg:hidden flex items-start justify-center pt-20 px-4"
             onClick={() => setIsSearchOpen(false)}
           >
             <motion.div

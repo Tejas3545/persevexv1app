@@ -173,12 +173,12 @@ export default function CampusAmbassadorPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-4 items-center"
             >
               <a href="#apply" className="btn-aptisure text-base">
                 Apply Now <FiArrowRight className="inline ml-2" />
               </a>
-              <a href="#benefits" className="btn-outline rounded-full text-base">
+              <a href="#benefits" className="rounded-full text-base bg-white dark:bg-[#0a0a0a] border border-border text-foreground hover:bg-muted px-8 py-3 inline-flex items-center justify-center font-bold transition-all duration-300">
                 Learn More
               </a>
             </motion.div>
