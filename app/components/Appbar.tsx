@@ -172,7 +172,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 left-0 right-0 z-[999] h-16 md:h-18 flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${isScrolled
+        className={`sticky top-0 left-0 right-0 z-[999] h-16 md:h-18 flex items-center justify-between px-4 md:px-10 transition-all duration-300 ${isScrolled
           ? "navbar-glass shadow-sm"
           : "bg-card/60 backdrop-blur-sm"
           }`}
@@ -395,36 +395,26 @@ export default function Navbar() {
           <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle - Clean with LMS Button */}
         <div className="flex items-center gap-2 lg:hidden z-50">
           <button
             onClick={openLms}
-            className="btn-aptisure flex items-center gap-1.5 text-xs px-3 py-2"
+            className="btn-aptisure flex items-center gap-1.5 text-xs font-semibold px-3 py-2 whitespace-nowrap"
           >
-            Persevex LMS
+            LMS
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
             </svg>
           </button>
-          <button
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="p-2 rounded-lg hover:bg-muted transition-colors border border-border/50"
-            aria-label="Search site"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-          </button>
           <ThemeToggle />
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            className="p-2.5 rounded-lg hover:bg-muted transition-colors"
             aria-label="Toggle menu"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-foreground">
               {isMobileMenuOpen ? (
                 <>
                   <line x1="18" y1="6" x2="6" y2="18" />
@@ -446,16 +436,44 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[998] bg-card flex flex-col pt-20 px-6 overflow-y-auto"
+            className="fixed inset-0 z-[998] bg-card flex flex-col pt-20 px-6 pb-8 overflow-y-auto"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
             exit="hidden"
           >
-            <motion.div variants={mobileLinkVariants}>
+            {/* Search in Mobile Menu */}
+            <motion.div variants={mobileLinkVariants} className="mb-6">
+              <button
+                onClick={() => {
+                  setIsSearchOpen(!isSearchOpen);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <span className="text-sm text-muted-foreground">Search courses, pages...</span>
+              </button>
+            </motion.div>
+
+            {/* Home Link */}
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
+              <Link
+                href="/"
+                onClick={handleGoHome}
+                className="text-lg font-semibold text-foreground block py-4"
+              >
+                Home
+              </Link>
+            </motion.div>
+
+            {/* Programs Dropdown */}
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
               <button
                 onClick={() => setIsMobileProgramsOpen(!isMobileProgramsOpen)}
-                className="text-lg font-semibold text-foreground py-3 flex items-center justify-between w-full"
+                className="text-lg font-semibold text-foreground flex items-center justify-between w-full py-4"
               >
                 Programs
                 <motion.svg
@@ -513,60 +531,60 @@ export default function Navbar() {
               </AnimatePresence>
             </motion.div>
 
-            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
               <Link
                 href="/enroll"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block"
+                className="text-lg font-semibold text-foreground block py-4"
               >
                 Enroll Now
               </Link>
             </motion.div>
 
-            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
               <Link
                 href="/campus-ambassador"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block"
+                className="text-lg font-semibold text-foreground block py-4"
               >
                 Campus Ambassador
               </Link>
             </motion.div>
 
-            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
               <Link
                 href="/support"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block"
+                className="text-lg font-semibold text-foreground block py-4"
               >
                 Support
               </Link>
             </motion.div>
 
-            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
               <Link
                 href="/reviews"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block"
+                className="text-lg font-semibold text-foreground block py-4"
               >
                 Reviews
               </Link>
             </motion.div>
 
-            <motion.div variants={mobileLinkVariants} className="border-b border-border py-3">
+            <motion.div variants={mobileLinkVariants} className="border-b border-border">
               <Link
                 href="/careers"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block"
+                className="text-lg font-semibold text-foreground block py-4"
               >
                 Careers
               </Link>
             </motion.div>
 
-            <motion.div variants={mobileLinkVariants} className="w-full border-b border-border pb-3">
+            <motion.div variants={mobileLinkVariants} className="w-full border-b border-border">
               <button
                 onClick={() => setIsMobileOfferingsOpen(!isMobileOfferingsOpen)}
-                className="text-lg font-semibold text-foreground py-3 flex items-center justify-between w-full"
+                className="text-lg font-semibold text-foreground py-4 flex items-center justify-between w-full"
               >
                 Offerings
                 <motion.svg

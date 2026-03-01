@@ -44,6 +44,11 @@ export default function CoursePage({ params }: { params: Promise<{ course: strin
     });
   }, [setSectionRefs]);
 
+  // Scroll to top when course page loads/changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [resolvedParams.course]);
+
   if (!course) {
     notFound();
   }

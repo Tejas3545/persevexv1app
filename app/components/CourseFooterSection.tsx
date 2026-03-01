@@ -39,7 +39,12 @@ const renderFooterLink = (link: string | { title: string; slug: string }) => {
     );
   }
 
-  const isStaticText = linkText.toLowerCase().includes('india');
+  // Check if text is an address (contains location names or postal code)
+  const lowerText = linkText.toLowerCase();
+  const isStaticText = lowerText.includes('india') || 
+                       lowerText.includes('bengaluru') || 
+                       lowerText.includes('karnataka') ||
+                       /\d{6}/.test(linkText); // Check for 6-digit postal code
   if (isStaticText) {
     return (
       <span className="text-muted-foreground text-sm">

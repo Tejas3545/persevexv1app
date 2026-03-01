@@ -87,7 +87,7 @@ export default function FooterSection() {
                     <Link
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer block py-2 md:py-0"
                     >
                       {link.name}
                     </Link>
@@ -120,14 +120,14 @@ export default function FooterSection() {
                   {(link as any).isLms ? (
                     <button
                       onClick={() => openLms()}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-left"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-left block py-2 md:py-0"
                     >
                       {link.name}
                     </button>
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors block py-2 md:py-0"
                     >
                       {link.name}
                     </Link>
@@ -182,17 +182,12 @@ export default function FooterSection() {
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Address</p>
-                <a
-                  href="https://www.google.com/maps/place/Persevex/@12.9170198,77.6140372,17z/data=!3m1!4b1!4m6!3m5!1s0x8831241fd1fd7071:0xeeb76170c31bbd52!8m2!3d12.9170198!4d77.6189081!16s%2Fg%2F11xcx6przr?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm block text-muted-foreground hover:text-primary transition-colors font-medium"
-                >
+                <p className="text-sm text-muted-foreground font-medium">
                   5a, 1A Cross Rd,<br/>
                   Dollar Scheme Colony,<br/>
                   1st Stage, BTM 1st Stage,<br/>
                   Bengaluru, Karnataka 560068
-                </a>
+                </p>
               </div>
             </div>
           </div>
@@ -221,7 +216,13 @@ export default function FooterSection() {
                     <li key={course.slug}>
                       <Link
                         href={`/courses/${course.slug}`}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
+                        onClick={(e) => {
+                          // Force scroll to top on navigation
+                          setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }, 100);
+                        }}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors block py-2 md:py-0"
                       >
                         {course.title}
                       </Link>
