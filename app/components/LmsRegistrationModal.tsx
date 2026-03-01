@@ -212,7 +212,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
   return (
     // Backdrop
     <motion.div
-      className="fixed inset-0 z-[200] flex items-start md:items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-[9999] flex items-start md:items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -220,7 +220,7 @@ function LmsModal({ onClose }: { onClose: () => void }) {
     >
       {/* Panel - Mobile: Full height with scroll, Desktop: Max height centered */}
       <motion.div
-        className="relative w-full max-w-md bg-card border border-border rounded-3xl shadow-2xl my-4 md:my-0 flex flex-col max-h-[95vh] md:max-h-[90vh]"
+        className="relative w-full max-w-md bg-card border border-border rounded-3xl shadow-2xl my-4 md:my-0 flex flex-col max-h-[95vh] md:max-h-[90vh] mt-20 md:mt-4"
         initial={{ scale: 0.95, y: 24, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.95, y: 24, opacity: 0 }}

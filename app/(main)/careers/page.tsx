@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ApplicationFormModal from "@/app/components/ApplicationFormModal";
+import FooterSection from "@/app/components/FooterSection";
 import {
   Zap,
   Heart,
@@ -817,6 +818,9 @@ export default function CareersPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Footer */}
+      <FooterSection />
     </main>
   );
 }

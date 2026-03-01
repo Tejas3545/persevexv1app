@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import BlogBackground from "@/app/components/Blogs/BlogBackground";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import prisma from "@/lib/prisma";
-import { DUMMY_BLOGS } from "../dummyBlogs";
 
 const getBlog = async (slug: string) => {
   try {
@@ -12,14 +11,11 @@ const getBlog = async (slug: string) => {
         slug: slug,
       },
     });
-    if (blog) return blog;
+    return blog;
   } catch (error) {
-    console.warn("Failed to fetch from db, checking dummies.");
+    console.error("Failed to fetch blog from database:", error);
+    return null;
   }
-  
-  // Back up locally
-  const dummyBlog = DUMMY_BLOGS.find(b => b.slug === slug);
-  return dummyBlog || null;
 };
 
 type Params = Promise<{ slug: string }>

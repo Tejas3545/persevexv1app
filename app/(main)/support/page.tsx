@@ -15,6 +15,7 @@ import {
   FiZap,
 } from "react-icons/fi";
 import Link from "next/link";
+import FooterSection from "@/app/components/FooterSection";
 
 const supportFaqs = [
   {
@@ -503,7 +504,7 @@ export default function SupportPage() {
                     onChange={(e) =>
                       setTicketData({ ...ticketData, name: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="Your name"
                   />
                 </div>
@@ -518,7 +519,7 @@ export default function SupportPage() {
                     onChange={(e) =>
                       setTicketData({ ...ticketData, email: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -535,7 +536,7 @@ export default function SupportPage() {
                   onChange={(e) =>
                     setTicketData({ ...ticketData, category: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                 >
                   <option value="">Select a category</option>
                   <option value="enrollment">Enrollment & Courses</option>
@@ -557,7 +558,7 @@ export default function SupportPage() {
                   onChange={(e) =>
                     setTicketData({ ...ticketData, subject: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                   placeholder="Brief description of your issue"
                 />
               </div>
@@ -573,7 +574,7 @@ export default function SupportPage() {
                     setTicketData({ ...ticketData, message: e.target.value })
                   }
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all resize-none"
                   placeholder="Describe your issue in detail..."
                 />
               </div>
@@ -599,6 +600,9 @@ export default function SupportPage() {
           )}
         </div>
       </section>
+
+      {/* Footer */}
+      <FooterSection />
     </main>
   );
 }

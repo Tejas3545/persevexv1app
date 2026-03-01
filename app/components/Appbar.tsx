@@ -193,7 +193,11 @@ export default function Navbar() {
           >
             <Link
               href="/explore-courses"
-              className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer flex items-center gap-1 px-4 py-2.5 rounded-full"
+              className={`text-sm font-semibold transition-all duration-300 cursor-pointer flex items-center gap-1 px-4 py-2.5 rounded-full ${
+                pathname === '/explore-courses' || pathname?.startsWith('/courses/')
+                  ? 'bg-primary text-white shadow-md'
+                  : 'text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800'
+              }`}
             >
               Programs
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${isDesktopDropdownOpen ? 'rotate-180' : ''}`}>
@@ -213,27 +217,43 @@ export default function Navbar() {
 
           <Link
             href="/campus-ambassador"
-            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
+            className={`text-sm font-semibold transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full ${
+              pathname === '/campus-ambassador'
+                ? 'bg-primary text-white shadow-md'
+                : 'text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800'
+            }`}
           >
             Campus Ambassador
           </Link>
 
           <Link
             href="/support"
-            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
+            className={`text-sm font-semibold transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full ${
+              pathname === '/support'
+                ? 'bg-primary text-white shadow-md'
+                : 'text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800'
+            }`}
           >
             Support
           </Link>
 
           <Link
             href="/reviews"
-            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
+            className={`text-sm font-semibold transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full ${
+              pathname === '/reviews'
+                ? 'bg-primary text-white shadow-md'
+                : 'text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800'
+            }`}
           >
             Reviews
           </Link>
           <Link
             href="/careers"
-            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full"
+            className={`text-sm font-semibold transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full ${
+              pathname === '/careers'
+                ? 'bg-primary text-white shadow-md'
+                : 'text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800'
+            }`}
           >
             Careers
           </Link>
@@ -287,7 +307,11 @@ export default function Navbar() {
 
           <Link
             href="/job-portal"
-            className="text-sm font-semibold text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full flex items-center gap-1.5"
+            className={`text-sm font-semibold transition-all duration-300 cursor-pointer px-4 py-2.5 rounded-full flex items-center gap-1.5 ${
+              pathname === '/job-portal'
+                ? 'bg-primary text-white shadow-md'
+                : 'text-foreground hover:bg-white hover:shadow-sm dark:hover:bg-slate-800'
+            }`}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             Job Portal
@@ -456,7 +480,11 @@ export default function Navbar() {
               <Link
                 href="/"
                 onClick={handleGoHome}
-                className="text-lg font-semibold text-foreground block py-4"
+                className={`text-lg font-semibold block py-4 ${
+                  pathname === '/'
+                    ? 'text-primary'
+                    : 'text-foreground'
+                }`}
               >
                 Home
               </Link>
@@ -529,7 +557,11 @@ export default function Navbar() {
               <Link
                 href="/explore-courses"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-bold text-primary hover:text-primary/90 transition-colors flex items-center gap-2 py-4"
+                className={`text-lg font-bold transition-colors flex items-center gap-2 py-4 ${
+                  pathname === '/explore-courses'
+                    ? 'text-primary'
+                    : 'text-primary hover:text-primary/90'
+                }`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="7" height="7" x="3" y="3" rx="1"/>
@@ -545,7 +577,11 @@ export default function Navbar() {
               <Link
                 href="/enroll"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block py-4"
+                className={`text-lg font-semibold block py-4 ${
+                  pathname === '/enroll'
+                    ? 'text-primary'
+                    : 'text-foreground'
+                }`}
               >
                 Enroll Now
               </Link>
@@ -555,7 +591,11 @@ export default function Navbar() {
               <Link
                 href="/campus-ambassador"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block py-4"
+                className={`text-lg font-semibold block py-4 ${
+                  pathname === '/campus-ambassador'
+                    ? 'text-primary'
+                    : 'text-foreground'
+                }`}
               >
                 Campus Ambassador
               </Link>
@@ -565,7 +605,11 @@ export default function Navbar() {
               <Link
                 href="/support"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block py-4"
+                className={`text-lg font-semibold block py-4 ${
+                  pathname === '/support'
+                    ? 'text-primary'
+                    : 'text-foreground'
+                }`}
               >
                 Support
               </Link>
@@ -575,7 +619,11 @@ export default function Navbar() {
               <Link
                 href="/reviews"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block py-4"
+                className={`text-lg font-semibold block py-4 ${
+                  pathname === '/reviews'
+                    ? 'text-primary'
+                    : 'text-foreground'
+                }`}
               >
                 Reviews
               </Link>
@@ -585,7 +633,11 @@ export default function Navbar() {
               <Link
                 href="/careers"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold text-foreground block py-4"
+                className={`text-lg font-semibold block py-4 ${
+                  pathname === '/careers'
+                    ? 'text-primary'
+                    : 'text-foreground'
+                }`}
               >
                 Careers
               </Link>

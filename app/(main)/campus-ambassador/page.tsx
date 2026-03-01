@@ -14,6 +14,7 @@ import {
   FiInstagram,
   FiLinkedin,
 } from "react-icons/fi";
+import FooterSection from "@/app/components/FooterSection";
 
 const benefits = [
   {
@@ -392,7 +393,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="Your full name"
                   />
                 </div>
@@ -407,7 +408,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -425,7 +426,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="+91 XXXXX XXXXX"
                   />
                 </div>
@@ -440,7 +441,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, college: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="Your college name"
                   />
                 </div>
@@ -458,7 +459,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, year: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                   >
                     <option value="">Select year</option>
                     <option value="1st Year">1st Year</option>
@@ -479,7 +480,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, branch: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="e.g., Computer Science"
                   />
                 </div>
@@ -496,7 +497,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, linkedin: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="linkedin.com/in/yourprofile"
                   />
                 </div>
@@ -510,7 +511,7 @@ export default function CampusAmbassadorPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, instagram: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all"
                     placeholder="@yourhandle"
                   />
                 </div>
@@ -527,7 +528,7 @@ export default function CampusAmbassadorPage() {
                     setFormData({ ...formData, motivation: e.target.value })
                   }
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border text-foreground text-sm focus:outline-none focus:border-primary transition-all resize-none"
                   placeholder="Tell us about your motivation and what you can bring to the program..."
                 />
               </div>
@@ -553,6 +554,9 @@ export default function CampusAmbassadorPage() {
           )}
         </div>
       </section>
+
+      {/* Footer */}
+      <FooterSection />
     </main>
   );
 }
