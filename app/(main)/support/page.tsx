@@ -199,6 +199,9 @@ function FaqAccordion({ questions }: { questions: { question: string; answer: st
 }
 
 export default function SupportPage() {
+  // Google Sheet submission URL for support ticket form
+  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx06Zn_I3Axy30MURSeNwhAXjIWnWauCUekbWfiPWDvAh7uX0QAZ04Ef855dvyTe6s/exec";
+  
   const [ticketData, setTicketData] = useState({
     name: "",
     email: "",
@@ -212,10 +215,49 @@ export default function SupportPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Basic validation
+    if (!ticketData.name || !ticketData.email || !ticketData.subject || !ticketData.message) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setSubmitted(true);
-    setIsSubmitting(false);
+    
+    try {
+      // Prepare payload matching Google Sheets expected format
+      const formData = {
+        fullName: ticketData.name,
+        email: ticketData.email,
+        category: ticketData.category,
+        subject: ticketData.subject,
+        message: ticketData.message
+      };
+
+      // Submit to Google Sheet
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        body: JSON.stringify(formData),
+        mode: "no-cors" // keeps the request simple
+      });
+
+      // Mark as submitted
+      setSubmitted(true);
+      
+      // Reset form
+      setTicketData({
+        name: "",
+        email: "",
+        subject: "",
+        category: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error("Error submitting support ticket:", error);
+      alert("Error submitting ticket. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
