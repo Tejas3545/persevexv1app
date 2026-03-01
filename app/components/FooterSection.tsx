@@ -70,7 +70,7 @@ export default function FooterSection() {
   };
 
   return (
-    <footer className="bg-card text-foreground border-t border-border pt-16 pb-8" id="footer">
+    <footer className="bg-card text-foreground border-t border-border pt-16 pb-8 md:pb-8 pb-32" id="footer">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         
         {/* Top 5 Columns - Aptisure Style with Newsletter */}
@@ -182,12 +182,17 @@ export default function FooterSection() {
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Address</p>
-                <p className="text-sm text-muted-foreground font-medium">
+                <a
+                  href="https://www.google.com/maps/place/Persevex/@12.9170198,77.6140372,17z/data=!3m1!4b1!4m6!3m5!1s0x8831241fd1fd7071:0xeeb76170c31bbd52!8m2!3d12.9170198!4d77.6189081!16s%2Fg%2F11xcx6przr?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm block text-muted-foreground hover:text-primary transition-colors font-medium"
+                >
                   5a, 1A Cross Rd,<br/>
                   Dollar Scheme Colony,<br/>
                   1st Stage, BTM 1st Stage,<br/>
                   Bengaluru, Karnataka 560068
-                </p>
+                </a>
               </div>
             </div>
           </div>
@@ -197,7 +202,7 @@ export default function FooterSection() {
         <div className="border-t border-border mb-12"></div>
 
         {/* PROGRAMS SECTION - Aptisure Style */}
-        <div className="mb-16">
+        <div className="mb-16 relative z-10">
           <h3 className="text-2xl font-bold text-foreground mb-2">
             PROGRAMS
           </h3>
