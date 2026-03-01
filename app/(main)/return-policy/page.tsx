@@ -192,7 +192,7 @@ export default function CancellationRefundPage() {
               className="scroll-mt-24"
             >
               <div className="flex items-baseline gap-3 mb-4">
-                <span className="text-3xl font-black text-primary/20">{section.number}</span>
+                <span className="text-3xl font-black text-blue-600 dark:text-primary/50">{section.number}</span>
                 <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
               </div>
               <div className="text-sm text-muted-foreground leading-relaxed">

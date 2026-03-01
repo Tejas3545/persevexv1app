@@ -19,13 +19,13 @@ export default function BlogList({ blogs }: { blogs: Post[] }) {
       {blogs.map((blog) => (
         <div
           key={blog.id}
-          className="relative block p-6 border border-border rounded-lg hover:bg-background/50 transition-colors group"
+          className="relative block p-6 border border-border rounded-lg bg-card hover:bg-accent/50 transition-colors group shadow-sm"
         >
           <Link href={`/blogs/${blog.slug}`} className="block">
             {blog.title ? (
-              <h2 className="text-3xl font-semibold mb-2">{blog.title}</h2>
+              <h2 className="text-3xl font-semibold mb-2 text-foreground">{blog.title}</h2>
             ) : (
-              <div className="prose prose-invert max-w-none mb-2 prose-p:mt-0 prose-p:mb-2 prose-headings:my-3">
+              <div className="prose dark:prose-invert max-w-none mb-2 prose-p:mt-0 prose-p:mb-2 prose-headings:my-3">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {truncateContent(blog.content, 250)}
                 </ReactMarkdown>
@@ -33,14 +33,14 @@ export default function BlogList({ blogs }: { blogs: Post[] }) {
             )}
             
             {(blog.author || blog.createdAt) && (
-              <p className="text-muted-foreground mb-2">
+              <p className="text-muted-foreground mb-2 text-sm">
                 {blog.author && `By ${blog.author} on `}
                 {new Date(blog.createdAt).toLocaleDateString()}
               </p>
             )}
             
             {blog.description && (
-              <p className="text-muted-foreground">{blog.description}</p>
+              <p className="text-muted-foreground text-sm">{blog.description}</p>
             )}
           </Link>
         </div>
