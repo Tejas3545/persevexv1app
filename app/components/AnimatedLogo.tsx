@@ -3,46 +3,71 @@ import React from "react";
 import Image from "next/image";
 import { useMemo, useEffect, useRef } from "react";
 
-class Particle {
+// Geometric shape class for spiral morphing animation
+class GeometricShape {
   x: number;
   y: number;
   size: number;
-  vx: number;
-  vy: number;
-  life: number;
+  rotation: number;
+  rotationSpeed: number;
+  alpha: number;
+  sides: number;
+  color: string;
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, size: number, sides: number) {
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 3 + 1;
-    this.vx = -(Math.random() * 1.5 + 1);
-    this.vy = (Math.random() - 0.5) * 2;
-    this.life = 1;
+    this.size = size;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+    this.alpha = 0.3 + Math.random() * 0.4;
+    this.sides = sides;
+    const colors = [
+      "59, 130, 246", // blue
+      "147, 51, 234", // purple
+      "236, 72, 153", // pink
+      "14, 165, 233", // sky
+    ];
+    this.color = colors[Math.floor(Math.random() * colors.length)];
   }
 
   update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.life -= 0.015;
+    this.rotation += this.rotationSpeed;
+    this.alpha *= 0.99;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = `rgba(253, 224, 71, ${this.life * 0.8})`;
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.globalAlpha = this.alpha;
+    ctx.strokeStyle = `rgba(${this.color}, ${this.alpha})`;
+    ctx.lineWidth = 2;
+    
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
+    for (let i = 0; i <= this.sides; i++) {
+      const angle = (i / this.sides) * Math.PI * 2;
+      const x = Math.cos(angle) * this.size;
+      const y = Math.sin(angle) * this.size;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.restore();
   }
 }
 
-const CometTrail = ({
+const SpiralMorphEffect = ({
   opacity,
-  rotation,
 }: {
   opacity: number;
-  rotation: number;
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const opacityRef = useRef(opacity);
+  const shapesRef = useRef<GeometricShape[]>([]);
+  const spiralAngleRef = useRef(0);
 
   useEffect(() => {
     opacityRef.current = opacity;
@@ -62,99 +87,68 @@ const CometTrail = ({
     ctx.scale(dpr, dpr);
 
     let animationFrameId: number;
-    const particles: Particle[] = [];
-    const maxParticles = 150;
-
-    const coreX = canvas.width / dpr - 50;
-    const coreY = canvas.height / dpr / 2;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.globalAlpha = opacityRef.current;
 
-      ctx.globalCompositeOperation = "lighter";
+      // Create spiral morphing shapes
+      spiralAngleRef.current += 0.08;
+      if (Math.random() > 0.7) {
+        const radius = 60 + Math.random() * 100;
+        const angle = spiralAngleRef.current;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+        const sides = 3 + Math.floor(Math.random() * 5); // polygons from triangle to heptagon
+        const size = 20 + Math.random() * 40;
+        shapesRef.current.push(new GeometricShape(x, y, size, sides));
+      }
 
-      const tailLength = 400;
-      const tailStartWidth = 40;
-      const tailEndWidth = 200;
-
-      for (let i = 0; i < tailLength; i += 4) {
-        const progress = i / tailLength;
-        const x = coreX - i;
-
-        const currentWidth =
-          tailStartWidth + (tailEndWidth - tailStartWidth) * progress;
-
-        const puffsPerSegment = 3;
-        for (let j = 0; j < puffsPerSegment; j++) {
-          const yOffset = (Math.random() - 0.5) * currentWidth;
-          const y = coreY + yOffset;
-
-          const baseRadius = 40;
-          const radius =
-            (baseRadius + Math.random() * 20) * (progress * 0.8 + 0.2);
-
-          const alpha = (1 - progress * 0.7) * (Math.random() * 0.1 + 0.05);
-
-          const tailPartGradient = ctx.createRadialGradient(
-            x,
-            y,
-            0,
-            x,
-            y,
-            radius
-          );
-          tailPartGradient.addColorStop(0, `rgba(253, 224, 71, ${alpha})`);
-          tailPartGradient.addColorStop(1, `rgba(217, 119, 6, 0)`);
-
-          ctx.fillStyle = tailPartGradient;
-          ctx.beginPath();
-          ctx.arc(x, y, radius, 0, Math.PI * 2);
-          ctx.fill();
+      // Draw and update shapes
+      for (let i = shapesRef.current.length - 1; i >= 0; i--) {
+        const shape = shapesRef.current[i];
+        shape.update();
+        shape.draw(ctx);
+        
+        if (shape.alpha < 0.01) {
+          shapesRef.current.splice(i, 1);
         }
       }
 
-      ctx.globalCompositeOperation = "source-over";
-
-      if (particles.length < maxParticles && Math.random() > 0.6) {
-        for (let k = 0; k < 2; k++) {
-          const spawnDist = Math.random() * tailLength * 0.8;
-          const progress = spawnDist / tailLength;
-          const spawnX = coreX - spawnDist;
-
-          const spawnWidth =
-            tailStartWidth + (tailEndWidth - tailStartWidth) * progress;
-          const spawnY = coreY + (Math.random() - 0.5) * spawnWidth;
-
-          particles.push(new Particle(spawnX, spawnY));
-        }
-      }
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.update();
-        p.draw(ctx);
-        if (p.life <= 0) {
-          particles.splice(i, 1);
-        }
-      }
-
-      const coreGradient = ctx.createRadialGradient(
-        coreX,
-        coreY,
+      // Draw central pulsing glow
+      const pulseSize = 50 + Math.sin(spiralAngleRef.current * 0.5) * 15;
+      const gradient = ctx.createRadialGradient(
+        centerX,
+        centerY,
         0,
-        coreX,
-        coreY,
-        30
+        centerX,
+        centerY,
+        pulseSize
       );
-      coreGradient.addColorStop(0, "rgba(255, 255, 224, 1)");
-      coreGradient.addColorStop(0.3, "rgba(253, 224, 71, 0.8)");
-      coreGradient.addColorStop(1, "rgba(217, 119, 6, 0)");
-
-      ctx.fillStyle = coreGradient;
+      gradient.addColorStop(0, `rgba(59, 130, 246, ${0.6 * opacityRef.current})`);
+      gradient.addColorStop(0.5, `rgba(147, 51, 234, ${0.3 * opacityRef.current})`);
+      gradient.addColorStop(1, "rgba(59, 130, 246, 0)");
+      
+      ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.arc(coreX, coreY, 30, 0, Math.PI * 2);
+      ctx.arc(centerX, centerY, pulseSize, 0, Math.PI * 2);
       ctx.fill();
+
+      // Draw connecting spiral path
+      ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 * opacityRef.current})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (let i = 0; i < 360; i += 5) {
+        const angle = (i * Math.PI) / 180 + spiralAngleRef.current;
+        const radius = 30 + (i / 360) * 120;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
 
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -163,17 +157,12 @@ const CometTrail = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      shapesRef.current = [];
     };
   }, []);
 
   return (
-    <div
-      className="absolute top-1/2 left-1/2 w-[800px] h-[200px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-      // eslint-disable-next-line react/forbid-dom-props
-      style={{
-        transform: `rotate(${rotation}deg) translate(-400px, 0)`,
-      }}
-    >
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );
@@ -186,55 +175,82 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
         return {
           x1: -500,
           y1: -350,
-          r1: -15,
+          r1: -180,
           x2: 0,
           y2: 0,
           r2: 0,
-          trailAngle: 45,
+          scale1: 0.3,
+          scale2: 1,
         };
       case "from-bottom-left":
         return {
           x1: -500,
           y1: 350,
-          r1: 15,
+          r1: 180,
           x2: 0,
           y2: 0,
           r2: 0,
-          trailAngle: -45,
+          scale1: 0.3,
+          scale2: 1,
         };
       case "from-top":
-        return { x1: 0, y1: -400, r1: 0, x2: 0, y2: 0, r2: 0, trailAngle: 90 };
+        return { 
+          x1: 0, 
+          y1: -400, 
+          r1: -360, 
+          x2: 0, 
+          y2: 0, 
+          r2: 0,
+          scale1: 0.2,
+          scale2: 1,
+        };
       case "from-bottom-right":
         return {
           x1: 500,
           y1: 350,
-          r1: -15,
+          r1: -180,
           x2: 0,
           y2: 0,
           r2: 0,
-          trailAngle: -135,
+          scale1: 0.3,
+          scale2: 1,
         };
       case "from-top-right":
         return {
           x1: 500,
           y1: -350,
-          r1: 15,
+          r1: 180,
           x2: 0,
           y2: 0,
           r2: 0,
-          trailAngle: 135,
+          scale1: 0.3,
+          scale2: 1,
         };
       default:
-        return { x1: 0, y1: 0, r1: 0, x2: 0, y2: 0, r2: 0, trailAngle: 0 };
+        return { 
+          x1: 0, 
+          y1: 0, 
+          r1: 0, 
+          x2: 0, 
+          y2: 0, 
+          r2: 0, 
+          scale1: 1, 
+          scale2: 1 
+        };
     }
   }, [logo.animation]);
 
   const movementDuration = 2.0;
-  const fadeDuration = 0.4;
+  const fadeDuration = 0.5;
 
-  const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+  // Easing function for smooth spiral entrance
+  const easeOutBack = (t: number) => {
+    const c1 = 1.70158;
+    const c3 = c1 + 1;
+    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+  };
 
-  const easedProgress = easeOutQuart(Math.min(1, progress / movementDuration));
+  const easedProgress = easeOutBack(Math.min(1, progress / movementDuration));
 
   const currentX =
     animationPath.x1 + (animationPath.x2 - animationPath.x1) * easedProgress;
@@ -242,24 +258,26 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
     animationPath.y1 + (animationPath.y2 - animationPath.y1) * easedProgress;
   const currentRotation =
     animationPath.r1 + (animationPath.r2 - animationPath.r1) * easedProgress;
+  const currentScale =
+    animationPath.scale1 + (animationPath.scale2 - animationPath.scale1) * easedProgress;
 
-  const logoAndTrailOpacity = progress > 0.01 ? 1 : 0;
+  const logoAndEffectOpacity = progress > 0.01 ? 1 : 0;
 
-  const trailFadeProgress = Math.max(
+  const effectFadeProgress = Math.max(
     0,
     (progress - movementDuration) / fadeDuration
   );
-  const trailFinalOpacity = 1 - trailFadeProgress;
+  const effectFinalOpacity = 1 - effectFadeProgress;
 
   const isMovementComplete = progress >= movementDuration;
-  const isFadeComplete = trailFadeProgress >= 1;
+  const isFadeComplete = effectFadeProgress >= 1;
 
   return (
     <>
       <div
         // eslint-disable-next-line react/forbid-dom-props
         style={{
-          opacity: logoAndTrailOpacity,
+          opacity: logoAndEffectOpacity,
           transform: `translate(${currentX}px, ${currentY}px)`,
           transition: "opacity 0.2s linear",
           visibility: isFadeComplete ? "hidden" : "visible",
@@ -269,12 +287,12 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
         <div
           // eslint-disable-next-line react/forbid-dom-props
           style={{
-            transform: `rotate(${currentRotation}deg)`,
+            transform: `rotate(${currentRotation}deg) scale(${currentScale})`,
             visibility: isMovementComplete ? "hidden" : "visible",
           }}
           className="relative z-10"
         >
-          <div className="p-2 rounded-md shadow-lg ">
+          <div className="p-2 rounded-md shadow-2xl">
             <Image
               src={logo.src}
               alt={logo.alt}
@@ -284,26 +302,30 @@ const AnimatedLogo = ({ logo, progress }: { logo: any; progress: number }) => {
             />
           </div>
         </div>
-        <CometTrail
-          opacity={trailFinalOpacity}
-          rotation={animationPath.trailAngle}
-        />
+        <div
+          // eslint-disable-next-line react/forbid-dom-props
+          style={{
+            opacity: effectFinalOpacity,
+          }}
+        >
+          <SpiralMorphEffect opacity={effectFinalOpacity} />
+        </div>
       </div>
       <div
         // eslint-disable-next-line react/forbid-dom-props
         style={{
           opacity: isMovementComplete ? 1 : 0,
-          transition: "opacity 0.3s ease-in",
+          transition: "opacity 0.4s ease-in",
           transform: `rotate(${animationPath.r2}deg)`,
         }}
       >
-        <div className=" p- rounded-md   ">
+        <div className="p-2 rounded-md">
           <Image
             src={logo.src}
             alt={logo.alt}
             width={140}
             height={70}
-            className="object-contain  w-full"
+            className="object-contain w-full"
           />
         </div>
       </div>

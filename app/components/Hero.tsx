@@ -26,6 +26,21 @@ const programSuggestions = [
   { name: "Embedded Systems", category: "Program • Electronics", href: "/courses/embedded-systems" },
 ];
 
+// Domain names for rotating placeholder
+const domainPlaceholders = [
+  "Artificial Intelligence",
+  "Web Development",
+  "Data Science",
+  "Cyber Security",
+  "Digital Marketing",
+  "Machine Learning",
+  "Cloud Computing",
+  "Business Analytics",
+  "Human Resources",
+  "Finance",
+  "IoT & Embedded Systems",
+];
+
 // Animated counter hook
 function useCounter(end: number, duration: number = 2000) {
   const [count, setCount] = useState(0);
@@ -94,13 +109,14 @@ function FloatingParticle({ x, y, size, delay, duration }: {
 }) {
   return (
     <motion.div
-      className="absolute rounded-full bg-primary/40 dark:bg-primary/60 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+      className="absolute rounded-sm rotate-45 bg-primary/40 dark:bg-primary/60 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
       style={{ left: `${x}%`, top: `${y}%`, width: size, height: size }}
       animate={{
         y: [0, -40, 0],
         x: [0, 20, 0],
         opacity: [0.3, 0.8, 0.3],
         scale: [1, 1.5, 1],
+        rotate: [45, 135, 225],
       }}
       transition={{
         duration,
@@ -127,127 +143,319 @@ const particles = [
   { x: 25, y: 85, size: 5, delay: 1.1, duration: 5.2 },
 ];
 
-function OrbitIcon({ icon: Icon, color, radius, initialAngle, duration, reverse = false, size = 48 }: any) {
+// Use stable pseudo-random values based on index to fix hydration mismatch
+const getStableRandom = (index: number, max: number) => {
+  return Math.abs(Math.sin(index * 13.5) * max);
+};
+
+// CourseHeroCard - Dynamic Interactive Course/Project Display
+const CourseHeroCard = ({ index, title, rating, students, icon: Icon, delay }: any) => {
   return (
     <motion.div
-      className="absolute left-1/2 top-1/2"
-      initial={{ rotate: initialAngle }}
-      animate={{ rotate: initialAngle + (reverse ? -360 : 360) }}
-      transition={{ duration, repeat: Infinity, ease: "linear" }}
-      style={{ width: radius * 2, height: radius * 2, marginLeft: -radius, marginTop: -radius }}
+      className="absolute bg-[#ffffff] dark:bg-[#111111] border border-border rounded-xl shadow-xl p-4 flex flex-col gap-3 group backdrop-blur-xl"
+      initial={{ opacity: 0, scale: 0.8, y: 50 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: delay }}
+      whileHover={{ scale: 1.05, zIndex: 50 }}
+      style={{
+        width: 260,
+        ...index === 0 ? { top: '10%', left: '0%', zIndex: 10 } : {},
+        ...index === 1 ? { top: '40%', right: '0%', zIndex: 20 } : {},
+        ...index === 2 ? { bottom: '10%', left: '10%', zIndex: 30 } : {},
+      }}
     >
-      <motion.div
-        className="absolute flex items-center justify-center"
-        style={{ 
-          width: size, 
-          height: size, 
-          left: '50%', 
-          top: 0, 
-          marginLeft: -size / 2, 
-          marginTop: -size / 2,
-        }}
-        initial={{ rotate: -initialAngle }}
-        animate={{ rotate: -(initialAngle + (reverse ? -360 : 360)) }}
-        transition={{ duration, repeat: Infinity, ease: "linear" }}
-      >
-        {/* Glowing background */}
-        <div className={`absolute inset-0 rounded-full opacity-20 blur-md bg-current ${color}`} />
-        {/* Glassmorphism container */}
-        <div className="relative w-full h-full bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-sm border border-border/50 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
-          <Icon className={`w-1/2 h-1/2 ${color}`} />
+      <div className="flex justify-between items-start">
+        <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500">
+          <Icon size={20} />
         </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function OrbitingAnimation() {
-  return (
-    <div className="relative w-full max-w-[600px] aspect-square flex items-center justify-center mx-auto">
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl" />
-
-      {/* Central Core */}
-      <div className="absolute z-20 flex items-center justify-center">
-        {/* Pulsing rings */}
-        <motion.div 
-          className="absolute w-32 h-32 rounded-full border-2 border-primary/30"
-          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute w-32 h-32 rounded-full border-2 border-primary/20"
-          animate={{ scale: [1, 2, 1], opacity: [0.3, 0, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        />
-        
-        {/* Core Logo */}
-        <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-[0_0_40px_rgba(59,130,246,0.5)]">
-          <div className="absolute inset-1 rounded-full bg-white/10 backdrop-blur-sm" />
-          <span className="relative text-5xl font-bold text-white drop-shadow-lg">P</span>
+        <div className="flex pt-1 gap-0.5">
+          {[...Array(5)].map((_, i) => (
+            <motion.svg key={i} xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill={i < Math.floor(rating) ? "#eab308" : "none"} stroke={i < Math.floor(rating) ? "#eab308" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: delay + (i * 0.1) }}
+            >
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </motion.svg>
+          ))}
         </div>
       </div>
+      <div>
+        <h3 className="font-bold text-sm text-foreground mb-1">{title}</h3>
+        <p className="text-xs text-muted-foreground flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          {students.toLocaleString()}+ students
+        </p>
+      </div>
+      <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-1">
+        <motion.div 
+          className="h-full bg-blue-500" 
+          initial={{ width: 0 }} 
+          animate={{ width: `${getStableRandom(index, 40) + 40}%` }} 
+          transition={{ duration: 1.5, delay: delay + 0.5 }}
+        />
+      </div>
+    </motion.div>
+  );
+};
 
-      {/* SVG Connecting Lines (Static background pattern) */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 dark:opacity-30" viewBox="0 0 600 600">
-        <defs>
-          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="currentColor" className="text-primary" stopOpacity="1" />
-            <stop offset="100%" stopColor="currentColor" className="text-primary" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <circle cx="300" cy="300" r="110" fill="none" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 8" />
-        <circle cx="300" cy="300" r="180" fill="none" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
-        <circle cx="300" cy="300" r="250" fill="none" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 16" />
-        
-        {/* Cross lines */}
-        <line x1="300" y1="50" x2="300" y2="550" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
-        <line x1="50" y1="300" x2="550" y2="300" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
-        <line x1="123" y1="123" x2="477" y2="477" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
-        <line x1="123" y1="477" x2="477" y2="123" stroke="url(#glow)" strokeWidth="1" strokeDasharray="4 12" />
+// Main Creative Animation - A modern app simulation
+const CreativeAppAnimation = () => {
+  return (
+    <div className="relative w-full aspect-square max-w-[600px] mx-auto flex items-center justify-center p-8">
+      
+      {/* Background Graphic Grid */}
+      <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 gap-2 opacity-[0.03] dark:opacity-[0.05] pointer-events-none">
+        {[...Array(36)].map((_, i) => (
+          <div key={i} className="border border-foreground rounded-sm" />
+        ))}
+      </div>
+
+      {/* Main Video/Platform Player Mockup - Central focal point */}
+      <motion.div
+        className="relative w-[320px] md:w-[400px] h-[240px] bg-gradient-to-br from-white/90 to-white/50 dark:from-[#111111]/90 dark:to-[#0a0a0a]/50 backdrop-blur-xl border border-border shadow-2xl rounded-2xl overflow-hidden z-10"
+        initial={{ y: 0 }}
+        animate={{ y: [-10, 10, -10] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      >
+        {/* Mockup Header */}
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50">
+          <div className="flex gap-1.5 border border-border px-2 py-1 rounded-md">
+            <div className="w-2 h-2 rounded-full bg-red-500" />
+            <div className="w-2 h-2 rounded-full bg-amber-500" />
+            <div className="w-2 h-2 rounded-full bg-green-500" />
+          </div>
+          <div className="flex-1 bg-muted px-3 py-1 rounded-md flex items-center h-6">
+            <div className="w-4 h-4 rounded-sm bg-muted-foreground/30 mr-2" />
+            <div className="h-1.5 w-24 bg-muted-foreground/30 rounded-sm" />
+          </div>
+        </div>
+
+        {/* Mockup Body - Platform simulation */}
+        <div className="p-4 flex gap-4 h-full relative">
+          {/* Sidebar */}
+          <div className="w-16 flex flex-col gap-3 shrink-0">
+            {[...Array(4)].map((_, i) => (
+              <motion.div 
+                key={i} 
+                className={`h-8 rounded-lg ${i === 0 ? 'bg-primary/20 border border-primary/30' : 'bg-muted'}`}
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+              />
+            ))}
+          </div>
+
+          {/* Main Content Area */}
+          <div className="flex-1 flex flex-col gap-3">
+            {/* Hero Banner within platform */}
+            <div className="h-20 rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/10 flex flex-col justify-center px-4 relative overflow-hidden">
+               <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" 
+                  animate={{ x: ['-100%', '200%'] }} 
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  style={{ skewX: -20 }}
+               />
+               <div className="w-20 h-2 bg-blue-500/50 rounded-sm mb-2" />
+               <div className="w-32 h-2 bg-foreground/50 rounded-sm" />
+            </div>
+
+            {/* Grid of lessons/modules */}
+            <div className="grid grid-cols-2 gap-2">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-12 rounded-lg bg-muted flex items-center px-2 gap-2">
+                  <div className="w-6 h-6 rounded-md bg-background flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  </div>
+                  <div className="flex-1">
+                    <div className="h-1.5 w-full bg-foreground/20 rounded-full mb-1" />
+                    <div className="h-1 w-2/3 bg-foreground/10 rounded-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Floating Interactive Elements around center */}
+      <CourseHeroCard index={0} title="Machine Learning" rating={4.8} students={1250} icon={Cpu} delay={0.2} />
+      <CourseHeroCard index={1} title="Full Stack Web" rating={4.9} students={3420} icon={Code2} delay={0.5} />
+      <CourseHeroCard index={2} title="Cloud Architecture" rating={4.7} students={890} icon={Server} delay={0.8} />
+
+      {/* Connecting animated dashed lines indicating "Learning path" */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ filter: "drop-shadow(0 0 8px rgba(59,130,246,0.3))" }}>
+        <motion.path
+          d="M 130 140 C 200 140, 250 250, 300 250"
+          fill="none"
+          stroke="currentColor"
+          className="text-blue-500/40"
+          strokeWidth="2"
+          strokeDasharray="4 4"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1, strokeDashoffset: [0, -20] }}
+          transition={{ pathLength: { duration: 1.5, delay: 1 }, strokeDashoffset: { duration: 1, repeat: Infinity, ease: "linear" } }}
+        />
+        <motion.path
+          d="M 450 300 C 400 300, 350 250, 300 250"
+          fill="none"
+          stroke="currentColor"
+          className="text-purple-500/40"
+          strokeWidth="2"
+          strokeDasharray="4 4"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1, strokeDashoffset: [0, 20] }}
+          transition={{ pathLength: { duration: 1.5, delay: 1.5 }, strokeDashoffset: { duration: 1, repeat: Infinity, ease: "linear" } }}
+        />
+        <motion.path
+          d="M 210 490 C 250 490, 280 350, 300 250"
+          fill="none"
+          stroke="currentColor"
+          className="text-cyan-500/40"
+          strokeWidth="2"
+          strokeDasharray="4 4"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1, strokeDashoffset: [0, -20] }}
+          transition={{ pathLength: { duration: 1.5, delay: 2 }, strokeDashoffset: { duration: 1, repeat: Infinity, ease: "linear" } }}
+        />
       </svg>
-
-      {/* Orbit 1 - Inner */}
-      <motion.div 
-        className="absolute w-[220px] h-[220px] rounded-full border border-primary/20"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="absolute top-0 left-1/2 w-32 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent -translate-x-1/2" />
-      </motion.div>
-      <OrbitIcon icon={Code2} color="text-blue-500" radius={110} initialAngle={0} duration={20} size={44} />
-      <OrbitIcon icon={Database} color="text-green-500" radius={110} initialAngle={120} duration={20} size={44} />
-      <OrbitIcon icon={Layout} color="text-purple-500" radius={110} initialAngle={240} duration={20} size={44} />
-
-      {/* Orbit 2 - Middle */}
-      <motion.div 
-        className="absolute w-[360px] h-[360px] rounded-full border border-primary/15"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="absolute bottom-0 left-1/2 w-48 h-[1px] bg-gradient-to-r from-transparent via-blue-400 to-transparent -translate-x-1/2" />
-      </motion.div>
-      <OrbitIcon icon={Globe} color="text-cyan-500" radius={180} initialAngle={45} duration={30} reverse size={52} />
-      <OrbitIcon icon={Smartphone} color="text-pink-500" radius={180} initialAngle={135} duration={30} reverse size={52} />
-      <OrbitIcon icon={Server} color="text-orange-500" radius={180} initialAngle={225} duration={30} reverse size={52} />
-      <OrbitIcon icon={Shield} color="text-red-500" radius={180} initialAngle={315} duration={30} reverse size={52} />
-
-      {/* Orbit 3 - Outer */}
-      <motion.div 
-        className="absolute w-[500px] h-[500px] rounded-full border border-primary/10"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="absolute top-1/2 right-0 w-64 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent -translate-y-1/2 origin-right rotate-90" />
-      </motion.div>
-      <OrbitIcon icon={Terminal} color="text-emerald-500" radius={250} initialAngle={30} duration={40} size={56} />
-      <OrbitIcon icon={Wifi} color="text-indigo-500" radius={250} initialAngle={102} duration={40} size={56} />
-      <OrbitIcon icon={Cloud} color="text-sky-500" radius={250} initialAngle={174} duration={40} size={56} />
-      <OrbitIcon icon={Blocks} color="text-yellow-500" radius={250} initialAngle={246} duration={40} size={56} />
-      <OrbitIcon icon={Cpu} color="text-rose-500" radius={250} initialAngle={318} duration={40} size={56} />
     </div>
   );
-}
+};
+
+// Career Trajectory Animation - focuses on the step-by-step journey from learning to career
+const CareerTrajectoryAnimation = () => {
+  return (
+    <div className="relative w-full aspect-square max-w-[600px] mx-auto flex items-center justify-center p-8 perspective-1000">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Dynamic soaring particles indicating upward momentum */}
+        {[...Array(10)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute bg-blue-500/20 rounded-sm rotate-45"
+            style={{
+              width: 10 + getStableRandom(i, 20),
+              height: 10 + getStableRandom(i, 20),
+              left: `${10 + getStableRandom(i, 80)}%`,
+              bottom: "-10%",
+            }}
+            animate={{
+              y: ["0%", "-1000%"],
+              opacity: [0, 0.8, 0],
+              rotate: [45, 135, 225]
+            }}
+            transition={{
+              duration: 5 + getStableRandom(i, 5),
+              repeat: Infinity,
+              delay: getStableRandom(i, 5),
+              ease: "linear",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* The Connecting Glowing Path */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ filter: "drop-shadow(0 0 12px rgba(59,130,246,0.6))" }}>
+        <motion.path
+          d="M 100 450 C 200 450, 250 300, 300 300 C 350 300, 400 150, 500 150"
+          fill="none"
+          stroke="url(#gradient-path)"
+          strokeWidth="4"
+          strokeDasharray="8 8"
+          initial={{ strokeDashoffset: 100 }}
+          animate={{ strokeDashoffset: 0 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        />
+        <defs>
+          <linearGradient id="gradient-path" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="50%" stopColor="#a855f7" />
+            <stop offset="100%" stopColor="#22c55e" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* Step 1: Learning */}
+      <motion.div
+        className="absolute bottom-[10%] left-[5%] w-[220px] bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl border border-blue-500/30 rounded-xl shadow-xl p-4 z-10"
+        initial={{ opacity: 0, y: 30, rotateY: 10 }}
+        animate={{ opacity: 1, y: [0, -10, 0], rotateY: [10, 15, 10] }}
+        transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" }, rotateY: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
+      >
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-500">
+            <Terminal size={20} />
+          </div>
+          <div>
+            <h3 className="font-bold text-sm text-foreground">Interactive Learning</h3>
+            <p className="text-xs text-muted-foreground">AI-Driven Modules</p>
+          </div>
+        </div>
+        <div className="space-y-2">
+          <div className="h-1.5 w-full bg-muted rounded-sm overflow-hidden">
+            <motion.div className="h-full bg-blue-500" animate={{ width: ["0%", "100%", "0%"] }} transition={{ duration: 4, repeat: Infinity }} />
+          </div>
+          <div className="h-1.5 w-3/4 bg-muted rounded-sm overflow-hidden">
+            <motion.div className="h-full bg-blue-400" animate={{ width: ["0%", "80%", "0%"] }} transition={{ duration: 4, delay: 0.5, repeat: Infinity }} />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Step 2: Projects */}
+      <motion.div
+        className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[240px] bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl border border-purple-500/30 rounded-xl shadow-xl p-4 z-20"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1, y: [0, -15, 0] }}
+        transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 } }}
+      >
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-500">
+            <Blocks size={20} />
+          </div>
+          <div>
+            <h3 className="font-bold text-sm text-foreground">Real-World Projects</h3>
+            <p className="text-xs text-muted-foreground">Industry standard</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2 mt-2">
+          {[1,2,3,4].map(i => (
+             <motion.div key={i} className="h-12 bg-muted rounded-md border border-border/50 flex items-center justify-center"
+               animate={{ backgroundColor: ["rgba(168,85,247,0.05)", "rgba(168,85,247,0.2)", "rgba(168,85,247,0.05)"] }}
+               transition={{ duration: 2, delay: i * 0.3, repeat: Infinity }}
+             >
+               <Code2 size={14} className="text-muted-foreground/50" />
+             </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Step 3: Career */}
+      <motion.div
+        className="absolute top-[10%] right-[5%] w-[220px] bg-gradient-to-br from-green-500/10 to-emerald-500/5 dark:from-green-500/20 dark:to-background border border-green-500/40 rounded-xl shadow-[0_0_30px_rgba(34,197,94,0.2)] p-4 z-30"
+        initial={{ opacity: 0, y: -30, rotateY: -10 }}
+        animate={{ opacity: 1, y: [0, -10, 0], rotateY: [-10, -15, -10] }}
+        transition={{ y: { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }, rotateY: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 } }}
+      >
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-500 shrink-0">
+            <Briefcase size={20} />
+          </div>
+          <div>
+            <h3 className="font-bold text-sm text-foreground">Career Placement</h3>
+            <p className="text-xs text-green-600 dark:text-green-400 font-medium">Hired!</p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <div className="flex-1 space-y-1.5">
+             <div className="h-2 w-full bg-foreground/20 rounded-sm" />
+             <div className="h-2 w-5/6 bg-foreground/20 rounded-sm" />
+             <div className="h-2 w-2/3 bg-foreground/20 rounded-sm" />
+          </div>
+          <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center rotate-12 shrink-0 border border-green-500/30">
+             <CheckCircle2 size={24} className="text-green-500" />
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -260,7 +468,17 @@ export default function Hero() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Rotate placeholder text
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % domainPlaceholders.length);
+    }, 2500); // Change every 2.5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -378,7 +596,7 @@ export default function Hero() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Mouse following glow */}
         <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full bg-primary/15 dark:bg-primary/20 blur-[120px] -translate-x-1/2 -translate-y-1/2"
+          className="absolute w-[800px] h-[800px] bg-primary/15 dark:bg-primary/20 blur-[120px] -translate-x-1/2 -translate-y-1/2"
           animate={{
             x: mousePosition.x,
             y: mousePosition.y,
@@ -388,12 +606,12 @@ export default function Hero() {
         
         {/* Static ambient orbs */}
         <motion.div
-          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-[120px]"
+          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-[50px] rotate-45 bg-blue-500/10 dark:bg-blue-600/15 blur-[120px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-purple-500/10 dark:bg-purple-600/15 blur-[120px]"
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-[50px] rotate-45 bg-purple-500/10 dark:bg-purple-600/15 blur-[120px]"
           animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         />
@@ -435,12 +653,12 @@ export default function Hero() {
               animate="visible"
             >
               <motion.span
-                className="inline-flex items-center gap-2 bg-accent text-primary text-sm font-semibold px-4 py-1.5 rounded-full mb-6 border border-border"
+                className="inline-flex items-center gap-2 bg-accent text-primary text-sm font-semibold px-4 py-1.5 rounded-sm mb-6 border border-border"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
                 <motion.span
-                  className="w-2 h-2 rounded-full bg-primary"
+                  className="w-2 h-2 rounded-sm bg-primary rotate-45"
                   animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
@@ -501,7 +719,7 @@ export default function Hero() {
                   value={searchQuery}
                   onChange={handleInputChange}
                   onFocus={handleFocus}
-                  placeholder="Search any program (AI, DSA, DevOps, Finance...)"
+                  placeholder={`Search ${domainPlaceholders[placeholderIndex]}...`}
                   className="flex-1 bg-transparent py-2 px-2 text-foreground outline-none text-base placeholder:text-muted-foreground w-full border-none focus:ring-0"
                   style={{ boxShadow: 'none' }}
                   onKeyDown={handleKeyPress}
@@ -615,7 +833,7 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
           >
-            <OrbitingAnimation />
+            <CareerTrajectoryAnimation />
           </motion.div>
         </div>
       </div>
