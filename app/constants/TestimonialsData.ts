@@ -13,7 +13,7 @@ export interface Testimonial {
 
 export const testimonialsData: Testimonial[] = [
   {
-    headline: "Brandby is phenomenal",
+    headline: "Persevex is phenomenal",
     quote: "The Portfolio Management course provided me with a structured approach to asset allocation and risk management. My clients have seen consistent returns even in volatile markets.",
     name: "David K.",
     title: "Goldman Sachs",
@@ -23,7 +23,7 @@ export const testimonialsData: Testimonial[] = [
     planetImage: '/artificialint.webp' // New
   },
   {
-    headline: "Choosing Brandby was one of the best decisions",
+    headline: "Choosing Persevex was one of the best decisions",
     quote: "The Finance program at Persevex helped me land a role as an Analyst. The learning was top-notch, the internship was valuable, and the support was great throughout. Highly recommended for anyone serious about finance.",
     name: "Ravi K.",
     title: "Xaviers",

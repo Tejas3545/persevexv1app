@@ -30,8 +30,8 @@ const contactInfo = [
   {
     icon: <FiMapPin size={20} />,
     label: "Address",
-    value: "Greater Noida, Uttar Pradesh, India",
-    href: "https://maps.google.com/?q=Greater+Noida+Uttar+Pradesh",
+    value: "5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068, India",
+    href: "https://maps.google.com/?q=5a,+1A+Cross+Rd,+Dollar+Scheme+Colony,+1st+Stage,+BTM+1st+Stage,+Bengaluru,+Karnataka+560068,+India",
     color: "bg-red-500/10 text-red-500",
   },
 ];

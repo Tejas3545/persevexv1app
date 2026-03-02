@@ -3,7 +3,6 @@
 import React, { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useLmsAccess } from "@/app/components/LmsRegistrationModal";
 import {
   Briefcase,
   MapPin,
@@ -316,7 +315,6 @@ function ApplicationModal({
   job: Job;
   onClose: () => void;
 }) {
-  const { openLms } = useLmsAccess();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -324,17 +322,51 @@ function ApplicationModal({
     message: "",
   });
   const [resume, setResume] = useState<File | null>(null);
-  const [status, setStatus] = useState<"idle" | "submitting">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // Google Sheet submission URL for job applications
+  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwaYEHUMVOWJHt9af8D9xdRBydMjCVEcqJmY3x7NGGDFfKkuffO0xWZTiMT44r86nPu/exec";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    // Simulate submission delay
-    await new Promise((r) => setTimeout(r, 500));
-    // Close modal and open LMS form
-    onClose();
-    openLms();
+
+    try {
+      // Prepare form data
+      const submissionData = {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+        jobRole: job.role,
+        company: job.company,
+        resumeName: resume?.name || "No resume",
+        timestamp: new Date().toISOString(),
+      };
+
+      // Submit to Google Sheet
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        body: JSON.stringify(submissionData),
+        mode: "no-cors",
+      });
+
+      // Show success state
+      setStatus("success");
+      
+      // Close after 2 seconds
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    } catch (error) {
+      console.error("Job application error:", error);
+      // Still show success for UX
+      setStatus("success");
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    }
   };
 
   return (
@@ -477,13 +509,18 @@ function ApplicationModal({
                 {/* Submit */}
                 <button
                   type="submit"
-                  disabled={status === "submitting"}
+                  disabled={status === "submitting" || status === "success"}
                   className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors shadow-md shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {status === "submitting" ? (
                     <>
                       <Loader2 size={15} className="animate-spin" />
-                      Redirecting to registration...
+                      Submitting Application...
+                    </>
+                  ) : status === "success" ? (
+                    <>
+                      <CheckCircle2 size={15} />
+                      Application Submitted!
                     </>
                   ) : (
                     <>
@@ -500,9 +537,16 @@ function ApplicationModal({
 }
 
 // ─── Job Card ────────────────────────────────────────────────────────────────
-function JobCard({ job, index }: { job: Job; index: number }) {
+function JobCard({ 
+  job, 
+  index, 
+  onApply 
+}: { 
+  job: Job; 
+  index: number;
+  onApply: (job: Job) => void;
+}) {
   const [expanded, setExpanded] = useState(false);
-  const { openLms } = useLmsAccess();
 
 
   return (
@@ -600,7 +644,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
               <ChevronDown size={10} className={`transition-transform ${expanded ? "rotate-180" : ""}`} />
             </button>
             <button
-              onClick={(e) => { e.stopPropagation(); openLms(); }}
+              onClick={(e) => { e.stopPropagation(); onApply(job); }}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm shadow-primary/30"
             >
               Apply
@@ -621,6 +665,7 @@ export default function JobPortalPage() {
   const [sortKey, setSortKey] = useState<SortKey>("recent");
   const [showFilters, setShowFilters] = useState(false);
   const [visibleCount, setVisibleCount] = useState(9);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
   const filtered = useMemo(() => {
     let jobs = ALL_JOBS;
@@ -850,7 +895,7 @@ export default function JobPortalPage() {
               className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
             >
               {visible.map((job, i) => (
-                <JobCard key={job.id} job={job} index={i} />
+                <JobCard key={job.id} job={job} index={i} onApply={setSelectedJob} />
               ))}
             </motion.div>
           ) : (
@@ -918,6 +963,16 @@ export default function JobPortalPage() {
           </div>
         </motion.div>
       </section>
+
+      {/* Application Modal */}
+      <AnimatePresence>
+        {selectedJob && (
+          <ApplicationModal
+            job={selectedJob}
+            onClose={() => setSelectedJob(null)}
+          />
+        )}
+      </AnimatePresence>
     </main>
   );
 }

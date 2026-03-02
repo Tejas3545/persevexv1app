@@ -50,7 +50,7 @@ const exploreFooterLinkColumns: FooterColumn[] = [
         href: "mailto:support@persevex.com",
         icon: <FiMail />,
       },
-      { text: "5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068", href: "#", icon: <FiMapPin /> },
+      { text: "5a, 1A Cross Rd, Dollar Scheme Colony, 1st Stage, BTM 1st Stage, Bengaluru, Karnataka 560068, India", href: "https://maps.google.com/?q=5a,+1A+Cross+Rd,+Dollar+Scheme+Colony,+1st+Stage,+BTM+1st+Stage,+Bengaluru,+Karnataka+560068,+India", icon: <FiMapPin /> },
     ],
   },
 ];

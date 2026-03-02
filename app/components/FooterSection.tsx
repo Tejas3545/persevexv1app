@@ -183,10 +183,9 @@ export default function FooterSection() {
               <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1">Address</p>
                 <p className="text-sm text-muted-foreground font-medium">
-                  5a, 1A Cross Rd,<br/>
-                  Dollar Scheme Colony,<br/>
+                  5a, 1A Cross Rd, Dollar Scheme Colony,<br/>
                   1st Stage, BTM 1st Stage,<br/>
-                  Bengaluru, Karnataka 560068
+                  Bengaluru, Karnataka 560068, India
                 </p>
               </div>
             </div>
